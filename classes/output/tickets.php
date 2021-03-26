@@ -62,10 +62,13 @@ class tickets implements renderable, templatable {
     public function export_for_template(renderer_base $output) {
         global $CFG, $USER;
 
+        $syscontext = \context_system::instance();
+        $fs = get_file_storage();
         $dateformat = get_string('strftimedatetimeshort');
         foreach ($this->tickets as $ticket) {
-            $ticket->availabledateformated = userdate($ticket->availabledate,$dateformat);
-            $ticket->enabled = $ticket->availabledate > time() && $ticket->available > 0;
+            $ticket->availabledateformated = !empty($ticket->availabledate) ? userdate($ticket->availabledate,$dateformat) :
+                                                                                get_string('unlimited', 'block_ludifica');
+            $ticket->enabled = (empty($ticket->availabledate) || $ticket->availabledate > time()) && $ticket->available > 0;
 
             $compliance = \block_ludifica\controller::requirements_compliance($USER->id, $ticket);
 
@@ -78,11 +81,32 @@ class tickets implements renderable, templatable {
                                                     get_string('notavailable', 'block_ludifica') :
                                                     get_string('notavailabledate', 'block_ludifica');
             }
+
+            $files = $fs->get_area_files($syscontext->id, 'block_ludifica', 'ticket', $ticket->id);
+            foreach ($files as $file) {
+                $filename = $file->get_filename();
+
+                if (!empty($filename) && $filename != '.') {
+                    $path = '/' . implode('/', array($file->get_contextid(),
+                                                        'block_ludifica',
+                                                        'ticket',
+                                                        $file->get_itemid() . $file->get_filepath() . $filename));
+
+                    $ticket->thumbnail = \moodle_url::make_file_url('/pluginfile.php', $path);
+
+                    // Only one image by ticket.
+                    break;
+                }
+            }
         }
 
+        $hasmanage = has_capability('block/ludifica:manage', $syscontext);
+
         $defaultvariables = [
-            'tickets' => $this->tickets,
-            'baseurl' => $CFG->wwwroot
+            'tickets' => array_values($this->tickets),
+            'baseurl' => $CFG->wwwroot,
+            'canedit' => $hasmanage,
+            'sesskey' => sesskey()
         ];
 
         return $defaultvariables;

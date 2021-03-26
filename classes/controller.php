@@ -312,7 +312,7 @@ class controller {
 
         $infodata = is_string($ticket->infodata) ? json_decode($ticket->infodata) : $ticket->infodata;
 
-        if (property_exists($infodata, 'requirements') && is_array($infodata->requirements)) {
+        if (is_object($infodata) && property_exists($infodata, 'requirements') && is_array($infodata->requirements)) {
             $player = new player($userid);
             foreach ($infodata->requirements as $requirement) {
                 if (property_exists($requirement, 'type')) {
@@ -330,5 +330,24 @@ class controller {
         }
 
         return true;
+    }
+
+    /**
+     * List the available tickets types.
+     */
+    public static function get_tickets_types() {
+        return array('default' => get_string('ticketstype_default', 'block_ludifica'));
+    }
+
+    /**
+     * To generate a random string with a specific length.
+     *
+     * @param int $len String length.
+     * @return string Random string.
+     */
+    public static function generate_code($len = 10) {
+        $word = array_merge(range('a', 'z'), range('A', 'Z'));
+        shuffle($word);
+        return substr(implode($word), 0, $len);
     }
 }

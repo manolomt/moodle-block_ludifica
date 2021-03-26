@@ -1,0 +1,27 @@
+#tickets-list .oneticket {
+    margin-bottom: 20px;
+}
+
+#tickets-list .oneticket .picture-box img {
+    max-width: 150px;
+    max-height: 150px;
+}
+
+#tickets-list .oneticket .ticketcontent {
+    display: flex;
+}
+
+#tickets-list .oneticket .card-header a {
+    float: right;
+    cursor: pointer;
+}
+
+#tickets-list .oneticket .card-header a i {
+    border: 2px solid;
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.block_ludifica-modal {
+    display: none;
+}

@@ -20,10 +20,14 @@ $query = optional_param('q', '', PARAM_TEXT);
 $spage = optional_param('spage', 0, PARAM_INT);
 $sort = optional_param('sort', 'name', PARAM_TEXT);
 $bypage = optional_param('bypage', 20, PARAM_INT);
+$msg = optional_param('msg', '', PARAM_TEXT);
+$delete = optional_param('delete', 0, PARAM_INT);
+$confirm = optional_param('confirm', '', PARAM_ALPHANUM);   // Md5 confirmation hash.
 
 require_login();
 
 $syscontext = context_system::instance();
+$hasmanage = has_capability('block/ludifica:manage', $syscontext);
 
 $PAGE->set_context($syscontext);
 $PAGE->set_url('/blocks/ludifica/tickets.php');
@@ -31,15 +35,54 @@ $PAGE->set_pagelayout('incourse');
 $PAGE->set_heading(get_string('tickets', 'block_ludifica'));
 $PAGE->set_title(get_string('tickets', 'block_ludifica'));
 
-$hasmanage = has_capability('block/ludifica:manage', $syscontext);
-
 $sortavailable = array('name', 'available', 'availabledate', 'cost');
 if (!in_array($sort, $sortavailable)) {
     $sort = 'name';
 }
 
 echo $OUTPUT->header();
+
+// Delete a ticket, after confirmation
+if ($hasmanage && $delete && confirm_sesskey()) {
+    $ticket = $DB->get_record('block_ludifica_ticket', array('id' => $delete), '*', MUST_EXIST);
+
+    if ($confirm != md5($delete)) {
+        $returnurl = new moodle_url('/blocks/ludifica/tickets.php', array('sort' => $sort, 'bypage' => $bypage, 'spage'=>$spage));
+        echo $OUTPUT->heading(get_string('ticketdelete', 'block_ludifica'));
+        $optionsyes = array('delete' => $delete, 'confirm' => md5($delete), 'sesskey' => sesskey());
+        echo $OUTPUT->confirm(get_string('deletecheck', '', "'{$ticket->name}'"),
+                                new moodle_url($returnurl, $optionsyes), $returnurl);
+        echo $OUTPUT->footer();
+        die;
+    } else if (data_submitted()) {
+
+        $fs = get_file_storage();
+        $files = $fs->get_area_files($syscontext->id, 'block_ludifica', 'ticket', $ticket->id);
+
+        foreach ($files as $file) {
+            $file->delete();
+        }
+
+        $DB->delete_records('block_ludifica_usertickets', array('ticketid' => $ticket->id));
+        $DB->delete_records('block_ludifica_ticket', array('id' => $ticket->id));
+
+        $event = \block_ludifica\event\ticket_deleted::create(array(
+            'objectid' => $ticket->id,
+            'context' => $syscontext
+        ));
+        $event->add_record_snapshot('block_ludifica_ticket', $ticket);
+        $event->trigger();
+
+        $msg = 'recorddeleted';
+    }
+}
+
 echo $OUTPUT->heading(get_string('tickets', 'block_ludifica'));
+
+if (!empty($msg)) {
+    $msg = get_string($msg, 'block_ludifica');
+    echo $OUTPUT->notification($msg, 'notifysuccess');
+}
 
 $tickets = $DB->get_records('block_ludifica_ticket', null, $sort . ' ASC', '*', $spage * $bypage, $bypage);
 $ticketscount = $DB->count_records('block_ludifica_ticket');
