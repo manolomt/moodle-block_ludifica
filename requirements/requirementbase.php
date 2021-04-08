@@ -36,7 +36,7 @@ class requirementbase {
     /**
      * var \stdClass Complement options.
      */
-    private $options;
+    protected $options;
 
     /**
      * var array Default properties list, key => value format.
@@ -66,6 +66,13 @@ class requirementbase {
      */
     public function compliance(\block_ludifica\player $player) {
         return true;
+    }
+
+    /**
+     * Compliance text to user.
+     */
+    public function caption() {
+        return '';
     }
 
 }

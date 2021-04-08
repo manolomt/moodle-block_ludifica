@@ -60,17 +60,35 @@ class tickets implements renderable, templatable {
      * @return array Context variables for the template
      */
     public function export_for_template(renderer_base $output) {
-        global $CFG, $USER;
+        global $CFG, $USER, $DB;
 
         $syscontext = \context_system::instance();
+        $hasmanage = has_capability('block/ludifica:manage', $syscontext);
+
+        $player = new \block_ludifica\player($USER->id);
+
         $fs = get_file_storage();
         $dateformat = get_string('strftimedatetimeshort');
-        foreach ($this->tickets as $ticket) {
+        foreach ($this->tickets as $key => $ticket) {
+
+            if (!$hasmanage && !$ticket->enabled) {
+                unset($this->tickets[$key]);
+                continue;
+            }
+
+            $ticket->usertickets = $DB->count_records('block_ludifica_usertickets', array('userid' => $USER->id,
+                                                                               'ticketid' => $ticket->id));
+
             $ticket->availabledateformated = !empty($ticket->availabledate) ? userdate($ticket->availabledate,$dateformat) :
                                                                                 get_string('unlimited', 'block_ludifica');
             $ticket->enabled = (empty($ticket->availabledate) || $ticket->availabledate > time()) && $ticket->available > 0;
 
             $compliance = \block_ludifica\controller::requirements_compliance($USER->id, $ticket);
+            $compliancecaptions = \block_ludifica\controller::requirements_text($USER->id, $ticket);
+
+            $ticket->hascompliancecaptions = count($compliancecaptions) > 0;
+            $ticket->compliancecaptions = $compliancecaptions;
+            $ticket->compliancecaption = implode(',', $compliancecaptions);
 
             $ticket->enabled = $ticket->enabled && $compliance;
 
@@ -80,6 +98,14 @@ class tickets implements renderable, templatable {
                                                 $ticket->available <= 0 ?
                                                     get_string('notavailable', 'block_ludifica') :
                                                     get_string('notavailabledate', 'block_ludifica');
+            } else {
+                if ($ticket->usertickets >= $ticket->byuser) {
+                    $ticket->notenabledtext = get_string('maxtickets', 'block_ludifica');
+                    $ticket->enabled = false;
+                } else if ($player->general->coins < $ticket->cost) {
+                    $ticket->notenabledtext = get_string('notcostcompliance', 'block_ludifica');
+                    $ticket->enabled = false;
+                }
             }
 
             $files = $fs->get_area_files($syscontext->id, 'block_ludifica', 'ticket', $ticket->id);
@@ -99,8 +125,6 @@ class tickets implements renderable, templatable {
                 }
             }
         }
-
-        $hasmanage = has_capability('block/ludifica:manage', $syscontext);
 
         $defaultvariables = [
             'tickets' => array_values($this->tickets),

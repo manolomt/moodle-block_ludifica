@@ -28,6 +28,15 @@ include_once($CFG->dirroot . '/blocks/ludifica/requirements/requirementbase.php'
 
 /**
  * Level requirement.
+ * Configuration example:
+ * {
+ *  "requirements" : [
+ *      {
+ *          "type" : "level",
+ *          "options" : { "min" : 1 }
+ *      }
+ *  ]
+ * }
  *
  * @copyright 2021 David Herney @ BambuCo
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -37,12 +46,20 @@ class level extends requirementbase {
     /**
      * var array Default properties list, key => value format.
      */
-    protected $defaultoptions = ['level' => 0];
+    protected $defaultoptions = ['min' => 0];
 
     public function compliance($player) {
-        $level = controller::calc_level($player->general->points);
+        $level = \block_ludifica\controller::calc_level($player->general->points);
 
-        return $level >= $this->options->level;
+        return $level->index >= $this->options->min;
+    }
+
+    /**
+     * Compliance text to user.
+     */
+    public function caption() {
+        $levels = \block_ludifica\controller::get_levels();
+        return get_string('levelrequired', 'block_ludifica', $levels[$this->options->min]->name);
     }
 
 }

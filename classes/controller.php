@@ -265,7 +265,7 @@ class controller {
         return $level;
     }
 
-    private static function get_levels() {
+    public static function get_levels() {
         if (!self::$LEVELS) {
             self::$LEVELS = array();
 
@@ -275,6 +275,7 @@ class controller {
                 $level = new \stdClass();
                 $level->maxpoints = null;
                 $level->name = get_string('defaultlevel', 'block_ludifica');
+                $level->index = 0;
                 return [$level];
             }
 
@@ -285,6 +286,7 @@ class controller {
 
                 $level = new \stdClass();
                 $level->name = trim($fields[0]);
+                $level->index = $key;
 
                 if (count($fields) != 2) {
                     // If it is the last line is the maximum level. If not, it is not a valid line.
@@ -309,6 +311,7 @@ class controller {
      * If a ticket is avalilable according the requirement compliance.
      */
     public static function requirements_compliance($userid, $ticket) {
+        global $CFG;
 
         $infodata = is_string($ticket->infodata) ? json_decode($ticket->infodata) : $ticket->infodata;
 
@@ -319,17 +322,49 @@ class controller {
                     $fullpath = $CFG->dirroot . '/blocks/ludifica/requirements/' . $requirement->type . '/requirement.php';
                     if (file_exists($fullpath)) {
                         include_once($fullpath);
-                        $class = 'requirements\\' . $type;
+                        $class = 'block_ludifica\\requirements\\' . $requirement->type;
                         $options = property_exists($requirement, 'options') ? $requirement->options : null;
                         $logic = new $class($options);
 
-                        return $logic->compliance($player);
+                        if (!$logic->compliance($player)) {
+                            return false;
+                        }
                     }
                 }
             }
         }
 
         return true;
+    }
+
+    /**
+     * Text to user about the requirement compliance.
+     */
+    public static function requirements_text($userid, $ticket) {
+        global $CFG;
+
+        $captions = array();
+
+        $infodata = is_string($ticket->infodata) ? json_decode($ticket->infodata) : $ticket->infodata;
+
+        if (is_object($infodata) && property_exists($infodata, 'requirements') && is_array($infodata->requirements)) {
+            $player = new player($userid);
+            foreach ($infodata->requirements as $requirement) {
+                if (property_exists($requirement, 'type')) {
+                    $fullpath = $CFG->dirroot . '/blocks/ludifica/requirements/' . $requirement->type . '/requirement.php';
+                    if (file_exists($fullpath)) {
+                        include_once($fullpath);
+                        $class = 'block_ludifica\\requirements\\' . $requirement->type;
+                        $options = property_exists($requirement, 'options') ? $requirement->options : null;
+                        $logic = new $class($options);
+
+                        $captions[] = $logic->caption($player);
+                    }
+                }
+            }
+        }
+
+        return $captions;
     }
 
     /**

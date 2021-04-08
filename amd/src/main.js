@@ -21,7 +21,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/notification'], function($, Notification) {
+define(['jquery', 'core/notification', 'core/modal_factory', 'core/templates'],
+function($, Notification, ModalFactory, Templates) {
 
     var wwwroot = M.cfg.wwwroot;
 
@@ -30,6 +31,29 @@ define(['jquery', 'core/notification'], function($, Notification) {
      *
      */
     var init = function() {
+
+        // Load default controls.
+
+        // Modal.
+        $('.block_ludifica-modal').each(function() {
+            var $element = $(this);
+            var title = $element.attr('title');
+            var props = {
+                title: title || '',
+                body: $element.html()
+            };
+
+            if ($element.find('footer').length > 0) {
+                props.footer = $element.find('footer');
+            }
+
+            if ($element.data('type')) {
+                props.type = $element.data('type');
+            }
+
+            ModalFactory.create(props, $('.block_ludifica-modalcontroller[data-ref-id="' + $element.attr('id') + '"]'));
+        });
+
     };
 
     return {

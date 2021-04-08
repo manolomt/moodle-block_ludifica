@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
  *
  * @param int $oldversion
  */
-function xmldb_block_greatcourses_upgrade($oldversion) {
+function xmldb_block_ludifica_upgrade($oldversion) {
     global $CFG, $DB;
 
     return true;

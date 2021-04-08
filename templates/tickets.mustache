@@ -28,12 +28,12 @@
 
 <div id="tickets-list" class="row">
 {{#tickets}}
-    <div class="col-lg-6 oneticket">
+    <div id="ticket-{{id}}" class="col-lg-6 oneticket">
         <div class="card">
             <h3 class="card-header">
                 {{name}}
                 {{#moreinfo}}
-                    <a class="block_ludifica-modalcontroller" data-ref="moreinfo-ticket-{{id}}">
+                    <a class="block_ludifica-modalcontroller" data-ref-id="moreinfo-ticket-{{id}}">
                         {{#pix}} i/info, core, {{#str}} moreinfo, block_ludifica {{/str}} {{/pix}}
                     </a>
                 {{/moreinfo}}
@@ -49,26 +49,30 @@
                         {{description}}
                     </p>
                     <p>
-                        <strong>{{#str}} available, block_ludifica {{/str}}</strong> {{available}}<br />
+                        <strong>{{#str}} available, block_ludifica {{/str}}</strong> <val key="available">{{available}}</val><br />
                         <strong>{{#str}} availabledate, block_ludifica {{/str}}</strong> {{availabledateformated}}<br />
-                        <strong>{{#str}} requiretext, block_ludifica {{/str}}</strong> {{requiretext}}<br />
-                        <strong>{{#str}} cost, block_ludifica {{/str}}</strong> {{cost}}
+                        <strong>{{#str}} ticketbyuser, block_ludifica {{/str}}</strong> {{byuser}}<br />
+                        {{#hascompliancecaptions}}
+                            <strong>{{#str}} requiretext, block_ludifica {{/str}}</strong> {{{compliancecaption}}}<br />
+                        {{/hascompliancecaptions}}
+                        <strong>{{#str}} cost, block_ludifica {{/str}}</strong> {{cost}}<br />
+                        <em><strong>{{#str}} usertickets, block_ludifica {{/str}}</strong> <val key="usertickets">{{usertickets}}</val></em>
                     </p>
                 </div>
             </div>
             {{#moreinfo}}
-            <div id="moreinfo-ticket-{{id}}" class="block_ludifica-modal" data-width="200" data-height="200">
+            <div id="moreinfo-ticket-{{id}}" class="block_ludifica-modal" title="{{name}}">
                 {{{moreinfo}}}
             </div>
             {{/moreinfo}}
-            {{^enabled}}
+            {{#notenabledtext}}
             <div class="alert alert-dismissible alert-danger">
                 {{notenabledtext}}
             </div>
-            {{/enabled}}
+            {{/notenabledtext}}
             <div class="card-footer">
                 {{#enabled}}
-                    <button type="button" class="btn btn-primary">{{#str}} buy, block_ludifica {{/str}}</button>
+                    <button type="button" class="btn btn-primary" data-action="buy" data-id="{{id}}">{{#str}} buy, block_ludifica {{/str}}</button>
                 {{/enabled}}
                 {{#canedit}}
                     <a href="{{baseurl}}/blocks/ludifica/ticket_edit.php?id={{id}}" class="btn btn-primary">{{#str}} edit {{/str}}</a>

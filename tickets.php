@@ -34,6 +34,8 @@ $PAGE->set_url('/blocks/ludifica/tickets.php');
 $PAGE->set_pagelayout('incourse');
 $PAGE->set_heading(get_string('tickets', 'block_ludifica'));
 $PAGE->set_title(get_string('tickets', 'block_ludifica'));
+$PAGE->requires->js_call_amd('block_ludifica/main', 'init');
+$PAGE->requires->js_call_amd('block_ludifica/tickets', 'init');
 
 $sortavailable = array('name', 'available', 'availabledate', 'cost');
 if (!in_array($sort, $sortavailable)) {
