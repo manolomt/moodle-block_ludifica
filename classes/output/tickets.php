@@ -76,8 +76,11 @@ class tickets implements renderable, templatable {
                 continue;
             }
 
-            $ticket->usertickets = $DB->count_records('block_ludifica_usertickets', array('userid' => $USER->id,
+            $ticket->usertickets = $DB->get_records('block_ludifica_usertickets', array('userid' => $USER->id,
                                                                                'ticketid' => $ticket->id));
+
+            $ticket->userticketscount = count($ticket->usertickets);
+            $ticket->usertickets = array_values($ticket->usertickets);
 
             $ticket->availabledateformated = !empty($ticket->availabledate) ? userdate($ticket->availabledate,$dateformat) :
                                                                                 get_string('unlimited', 'block_ludifica');
@@ -99,7 +102,7 @@ class tickets implements renderable, templatable {
                                                     get_string('notavailable', 'block_ludifica') :
                                                     get_string('notavailabledate', 'block_ludifica');
             } else {
-                if ($ticket->usertickets >= $ticket->byuser) {
+                if ($ticket->userticketscount >= $ticket->byuser) {
                     $ticket->notenabledtext = get_string('maxtickets', 'block_ludifica');
                     $ticket->enabled = false;
                 } else if ($player->general->coins < $ticket->cost) {
@@ -124,6 +127,8 @@ class tickets implements renderable, templatable {
                     break;
                 }
             }
+
+            $ticket->cangive = $ticket->userticketscount > 0;
         }
 
         $defaultvariables = [

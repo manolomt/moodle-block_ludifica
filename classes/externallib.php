@@ -43,15 +43,76 @@ class external extends \external_api {
      * To validade input parameters
      * @return \external_function_parameters
      */
-    public static function buyticket_parameters() {
+    public static function get_ticket_parameters() {
         return new \external_function_parameters(
             array(
-                'id' => new \external_value(PARAM_INT, 'Specification id', VALUE_REQUIRED)
+                'id' => new \external_value(PARAM_INT, 'Ticket id', VALUE_REQUIRED)
             )
         );
     }
 
-    public static function buyticket($id) {
+    public static function get_ticket($id) {
+        global $DB, $USER;
+
+        $ticket = $DB->get_record('block_ludifica_ticket', array('id' => $id), '*', MUST_EXIST);
+
+        if (isloggedin() && !isguestuser()) {
+            $ticket->usertickets = $DB->get_records('block_ludifica_usertickets', array('userid' => $USER->id,
+                                                                                        'ticketid' => $id));
+        } else {
+            $ticket->usertickets = [];
+        }
+
+        return $ticket;
+    }
+
+    /**
+     * Validate the return value
+     * @return \external_single_structure
+     */
+    public static function get_ticket_returns() {
+        return new \external_single_structure(
+            array(
+                'id' => new \external_value(PARAM_INT, 'Ticket id'),
+                'name' => new \external_value(PARAM_TEXT, 'Ticket name'),
+                'description' => new \external_value(PARAM_TEXT, 'Ticket description'),
+                'moreinfo' => new \external_value(PARAM_RAW, 'Aditional info'),
+                'type' => new \external_value(PARAM_TEXT, 'Ticket type'),
+                'cost' => new \external_value(PARAM_INT, 'Ticket cost'),
+                'availabledate' => new \external_value(PARAM_INT, 'End time to buy the ticket'),
+                'available' => new \external_value(PARAM_INT, 'Total available tickets'),
+                'byuser' => new \external_value(PARAM_INT, 'User available tickets'),
+                'timecreated' => new \external_value(PARAM_INT, 'Ticket created time'),
+                'usertickets' => new \external_multiple_structure(
+                    new \external_single_structure(
+                        array(
+                            'id' => new \external_value(PARAM_INT, 'User ticket id'),
+                            'userid' => new \external_value(PARAM_INT, 'User id'),
+                            'usercode' => new \external_value(PARAM_TEXT, 'Unique user ticket code'),
+                            'timecreated' => new \external_value(PARAM_INT, 'Time created'),
+                            'timeused' => new \external_value(PARAM_INT, 'Time used, null if not used yet', VALUE_DEFAULT, null),
+                        ),
+                        'An user to access the resource'),
+                    'User access list', VALUE_DEFAULT, array()
+                )
+            ),
+            'A ticket info', VALUE_DEFAULT, null
+        );
+    }
+
+    /**
+     * To validade input parameters
+     * @return \external_function_parameters
+     */
+    public static function buy_ticket_parameters() {
+        return new \external_function_parameters(
+            array(
+                'id' => new \external_value(PARAM_INT, 'Ticket id', VALUE_REQUIRED)
+            )
+        );
+    }
+
+    public static function buy_ticket($id) {
         global $DB, $USER;
 
         $ticket = $DB->get_record('block_ludifica_ticket', array('id' => $id), '*', MUST_EXIST);
@@ -80,35 +141,59 @@ class external extends \external_api {
             $data->timeused = time();
             $DB->insert_record('block_ludifica_usertickets', $data);
 
-            $ticket->usertickets = $usertickets + 1;
-
-            return $ticket;
+            return true;
         }
 
-        return null;
+        return false;
     }
 
     /**
      * Validate the return value
      * @return \external_single_structure
      */
-    public static function buyticket_returns() {
-        return new \external_single_structure(
+    public static function buy_ticket_returns() {
+        return new \external_value(PARAM_BOOL, 'True if ticket was bought');
+    }
+
+
+    /**
+     * To validade input parameters
+     * @return \external_function_parameters
+     */
+    public static function give_ticket_parameters() {
+        return new \external_function_parameters(
             array(
-                'id' => new \external_value(PARAM_INT, 'Ticket id'),
-                'name' => new \external_value(PARAM_TEXT, 'Ticket name'),
-                'description' => new \external_value(PARAM_TEXT, 'Ticket description'),
-                'moreinfo' => new \external_value(PARAM_RAW, 'Aditional info'),
-                'type' => new \external_value(PARAM_TEXT, 'Ticket type'),
-                'cost' => new \external_value(PARAM_INT, 'Ticket cost'),
-                'availabledate' => new \external_value(PARAM_INT, 'End time to buy the ticket'),
-                'available' => new \external_value(PARAM_INT, 'Total available tickets'),
-                'byuser' => new \external_value(PARAM_INT, 'User available tickets'),
-                'timecreated' => new \external_value(PARAM_INT, 'Ticket created time'),
-                'usertickets' => new \external_value(PARAM_INT, 'User tickets')
-            ),
-            'A ticket info', VALUE_DEFAULT, null
+                'ticketid' => new \external_value(PARAM_INT, 'Ticket id', VALUE_REQUIRED),
+                'contactid' => new \external_value(PARAM_INT, 'Contact id', VALUE_REQUIRED)
+            )
         );
+    }
+
+    public static function give_ticket($ticketid, $contactid) {
+        global $DB, $USER;
+
+        $usertickets = $DB->get_records('block_ludifica_usertickets',
+                                            array('userid' => $USER->id, 'ticketid' => $ticketid),
+                                            '', '*', 0, 1);
+
+        if (count($usertickets) > 0) {
+
+            $ticket = reset($usertickets);
+            $ticket->userid = $contactid;
+            $DB->update_record('block_ludifica_usertickets', $ticket);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Validate the return value
+     * @return \external_single_structure
+     */
+    public static function give_ticket_returns() {
+        return new \external_value(PARAM_BOOL, 'True if ticket was given');
     }
 
 

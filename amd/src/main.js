@@ -21,8 +21,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/notification', 'core/modal_factory', 'core/templates'],
-function($, Notification, ModalFactory, Templates) {
+define(['jquery', 'core/modal_factory'],
+function($, ModalFactory) {
 
     var wwwroot = M.cfg.wwwroot;
 

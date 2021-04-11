@@ -32,11 +32,9 @@
         <div class="card">
             <h3 class="card-header">
                 {{name}}
-                {{#moreinfo}}
-                    <a class="block_ludifica-modalcontroller" data-ref-id="moreinfo-ticket-{{id}}">
-                        {{#pix}} i/info, core, {{#str}} moreinfo, block_ludifica {{/str}} {{/pix}}
-                    </a>
-                {{/moreinfo}}
+                <a class="block_ludifica-modalcontroller moreinfo-ticket" data-ref-id="moreinfo-ticket-{{id}}">
+                    {{#pix}} i/info, core, {{#str}} moreinfo, block_ludifica {{/str}} {{/pix}}
+                </a>
             </h3>
             <div class="card-body ticketcontent">
                 {{#thumbnail}}
@@ -56,24 +54,39 @@
                             <strong>{{#str}} requiretext, block_ludifica {{/str}}</strong> {{{compliancecaption}}}<br />
                         {{/hascompliancecaptions}}
                         <strong>{{#str}} cost, block_ludifica {{/str}}</strong> {{cost}}<br />
-                        <em><strong>{{#str}} usertickets, block_ludifica {{/str}}</strong> <val key="usertickets">{{usertickets}}</val></em>
+                        <em><strong>{{#str}} usertickets, block_ludifica {{/str}}</strong> <val key="usertickets">{{userticketscount}}</val></em>
                     </p>
                 </div>
             </div>
-            {{#moreinfo}}
             <div id="moreinfo-ticket-{{id}}" class="block_ludifica-modal" title="{{name}}">
-                {{{moreinfo}}}
+                <div id="moreinfo-ticket-content-{{id}}">
+                    <div class="card usertickets" {{^usertickets}}style="display: none;"{{/usertickets}}>
+                        <h3 class="card-header">{{#str}} usercodes, block_ludifica {{/str}} </h3>
+                        <ul class="list-group">
+                        {{#usertickets}}
+                            <li class="list-group-item">{{usercode}}</li>
+                        {{/usertickets}}
+                        </ul>
+                    </div>
+
+                    {{#moreinfo}}
+                        <h3>{{#str}} moreinfo, block_ludifica {{/str}} </h3>
+                        {{{moreinfo}}}
+                    {{/moreinfo}}
+                </div>
             </div>
-            {{/moreinfo}}
             {{#notenabledtext}}
             <div class="alert alert-dismissible alert-danger">
                 {{notenabledtext}}
             </div>
             {{/notenabledtext}}
             <div class="card-footer">
-                {{#enabled}}
-                    <button type="button" class="btn btn-primary" data-action="buy" data-id="{{id}}">{{#str}} buy, block_ludifica {{/str}}</button>
-                {{/enabled}}
+                <button type="button" class="btn btn-primary" data-action="buy" data-id="{{id}}" {{^enabled}}style="display: none"{{/enabled}}>
+                    {{#str}} buy, block_ludifica {{/str}}
+                </button>
+                <button type="button" class="btn btn-primary" data-action="give" data-id="{{id}}" {{^cangive}}style="display: none"{{/cangive}}>
+                    {{#str}} give, block_ludifica {{/str}}
+                </button>
                 {{#canedit}}
                     <a href="{{baseurl}}/blocks/ludifica/ticket_edit.php?id={{id}}" class="btn btn-primary">{{#str}} edit {{/str}}</a>
                     <a href="{{baseurl}}/blocks/ludifica/tickets.php?delete={{id}}&sesskey={{sesskey}}" class="btn btn-danger">{{#str}} delete {{/str}}</a>

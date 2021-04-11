@@ -381,7 +381,7 @@ class controller {
      * @return string Random string.
      */
     public static function generate_code($len = 10) {
-        $word = array_merge(range('a', 'z'), range('A', 'Z'));
+        $word = array_merge(range('a', 'z'), range(0, 9));
         shuffle($word);
         return substr(implode($word), 0, $len);
     }

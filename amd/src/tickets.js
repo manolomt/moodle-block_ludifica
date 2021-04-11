@@ -21,17 +21,97 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/notification', 'core/str', 'core/ajax'],
-function($, Notification, Str, Ajax) {
+define(['jquery', 'core/notification', 'core/str', 'core/ajax', 'block_ludifica/alertc'],
+function($, Notification, Str, Ajax, Alertc) {
 
     var wwwroot = M.cfg.wwwroot;
     var s = [];
+    var contacts = null;
+
+    function give_view(ticketid) {
+
+        var $content = $('<div></div>');
+        var $contactslist = $('<select id="block_ludifica_ticket_given_contact" class="form-control"></select>');
+
+        $content.append('<strong>' + s['giveticketmessage'] + '</strong>');
+
+        contacts.forEach(contact => {
+            $contactslist.append('<option value="' + contact.id + '">' + contact.name + '</option>');
+        });
+
+        $content.append($contactslist);
+
+        Notification.confirm(s['giveticket'], $content.html(), s['give'], s['cancel'], function() {
+            var contactid = parseInt($('#block_ludifica_ticket_given_contact').val());
+
+            // Buy the ticket.
+            Ajax.call([{
+                methodname: 'block_ludifica_give_ticket',
+                args: { 'ticketid': ticketid, 'contactid': contactid },
+                done: function (data) {
+
+                    if (data) {
+                        Alertc.success(s['given']);
+                        update_ticketdata(ticketid);
+                    } else {
+                        Alertc.error(s['notgive']);
+                    }
+
+                },
+                fail: function (e) {
+                    Alertc.error(e.message);
+                    console.log(e);
+                }
+            }]);
+
+        });
+    }
+
+    function update_ticketdata(ticketid) {
+        Ajax.call([{
+            methodname: 'block_ludifica_get_ticket',
+            args: { 'id': ticketid },
+            done: function (data) {
+
+                if (data && typeof(data) == 'object') {
+                    var $ticket = $('#ticket-' + ticketid);
+                    var $usertickets = $('#moreinfo-ticket-content-' + ticketid + ' .usertickets');
+                    var $userticketslist = $usertickets.find('ul');
+
+                    $ticket.find('val[key="available"]').html(data.available);
+                    $ticket.find('val[key="usertickets"]').html(data.usertickets.length);
+
+                    $userticketslist.empty();
+                    if (data.usertickets.length > 0) {
+                        $ticket.find('[data-action="give"]').show();
+                        $usertickets.show();
+
+                        data.usertickets.forEach(one => {
+                            $userticketslist.append('<li class="list-group-item">' + one.usercode + '</li>');
+                        });
+                    } else {
+                        $usertickets.hide();
+                        $ticket.find('[data-action="give"]').hide();
+                    }
+
+                    if (data.available <= 0 || data.byuser <= data.usertickets.length) {
+                        $ticket.find('[data-action="buy"]').hide();
+                    } else  {
+                        $ticket.find('[data-action="buy"]').show();
+                    }
+                }
+            },
+            fail: function (e) {
+                console.log(e);
+            }
+        }]);
+    }
 
     /**
      * Initialise all for tickets.
      *
      */
-    var init = function() {
+    var init = function(userid) {
 
         // Load used strings.
         var strings = [
@@ -39,8 +119,17 @@ function($, Notification, Str, Ajax) {
             { key: 'buyticketmessage', component: 'block_ludifica' },
             { key: 'buy', component: 'block_ludifica' },
             { key: 'notbuy', component: 'block_ludifica' },
+            { key: 'give', component: 'block_ludifica' },
+            { key: 'given', component: 'block_ludifica' },
+            { key: 'notgive', component: 'block_ludifica' },
+            { key: 'giveticket', component: 'block_ludifica' },
+            { key: 'giveticketmessage', component: 'block_ludifica' },
+            { key: 'notcontacts', component: 'block_ludifica' },
+            { key: 'bought', component: 'block_ludifica' },
             { key: 'cancel' },
             { key: 'continue' },
+            { key: 'error' },
+            { key: 'info' },
         ];
         strings.forEach(function(one, index) {
             s[one.key] = one.key;
@@ -56,27 +145,21 @@ function($, Notification, Str, Ajax) {
         // Buy.
         $('[data-action="buy"]').on('click', function() {
             var $element = $(this);
+            var ticketid = $element.data('id');
 
             Notification.confirm(s['buyticket'], s['buyticketmessage'], s['buy'], s['cancel'], function() {
-                var ticketid = $element.data('id');
 
                 // Buy the ticket.
                 Ajax.call([{
-                    methodname: 'block_ludifica_buyticket',
+                    methodname: 'block_ludifica_buy_ticket',
                     args: { 'id': ticketid },
                     done: function (data) {
 
-                        if (data && typeof(data) == 'object') {
-                            var $ticket = $('#ticket-' + ticketid);
-
-                            $ticket.find('val[key="available"]').html(data.available);
-                            $ticket.find('val[key="usertickets"]').html(data.usertickets);
-
-                            if (data.available <= 0 || data.byuser <= data.usertickets) {
-                                $ticket.find('[data-action="buy"]').hide();
-                            }
+                        if (data) {
+                            Alertc.success(s['bought']);
+                            update_ticketdata(ticketid);
                         } else {
-                            Notification.alert('', s['notbuy'], s['continue']);
+                            Alertc.error(s['notbuy']);
                         }
 
                     },
@@ -87,6 +170,45 @@ function($, Notification, Str, Ajax) {
                 }]);
 
             });
+
+        });
+
+        // Give a ticket.
+        $('[data-action="give"]').on('click', function() {
+            var $element = $(this);
+            var ticketid = $element.data('id');
+
+            // Request the user contacts list.
+            if (!contacts) {
+                Ajax.call([{
+                    methodname: 'core_message_get_user_contacts',
+                    args: { 'userid': userid },
+                    done: function (data) {
+
+                        if (data && typeof(data) == 'object' && data.length > 0) {
+
+                            contacts = [];
+                            data.forEach(contact => {
+                                if (!contact.isdeleted && !contact.isblocked && contact.iscontact) {
+                                    contacts.push({ 'name' : contact.fullname, 'id': contact.id });
+                                }
+                            });
+
+                            give_view(ticketid);
+
+                        } else {
+                            Alertc.warning(s['notcontacts']);
+                        }
+
+                    },
+                    fail: function (e) {
+                        Alertc.error(e.message);
+                        console.log(e);
+                    }
+                }]);
+            } else {
+                give_view(ticketid);
+            }
 
         });
 

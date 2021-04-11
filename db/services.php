@@ -24,11 +24,29 @@
  */
 
 $functions = array(
-    'block_ludifica_buyticket' => array(
+    'block_ludifica_get_ticket' => array(
         'classname' => '\block_ludifica\external',
-        'methodname' => 'buyticket',
+        'methodname' => 'get_ticket',
+        'classpath' => 'blocks/ludifica/classes/externallib.php',
+        'description' => 'Get a ticket',
+        'type' => 'read',
+        'ajax' => true,
+        'loginrequired' => false
+    ),
+    'block_ludifica_buy_ticket' => array(
+        'classname' => '\block_ludifica\external',
+        'methodname' => 'buy_ticket',
         'classpath' => 'blocks/ludifica/classes/externallib.php',
         'description' => 'Buy a ticket',
+        'type' => 'write',
+        'ajax' => true,
+        'loginrequired' => true
+    ),
+    'block_ludifica_give_ticket' => array(
+        'classname' => '\block_ludifica\external',
+        'methodname' => 'give_ticket',
+        'classpath' => 'blocks/ludifica/classes/externallib.php',
+        'description' => 'Give a ticket',
         'type' => 'write',
         'ajax' => true,
         'loginrequired' => true
@@ -49,7 +67,7 @@ $functions = array(
 
 $services = array(
         'Ludifica webservices' => array(
-                'functions' => array ('block_ludifica_buyticket'),
+                'functions' => array ('block_ludifica_get_ticket', 'block_ludifica_buy_ticket', 'block_ludifica_give_ticket'),
                 'restrictedusers' => 0, // if 1, the administrator must manually select which user can use this service.
                 // (Administration > Plugins > Web services > Manage services > Authorised users)
                 'enabled' => 0, // if 0, then token linked to this service won't work
