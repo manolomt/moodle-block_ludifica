@@ -39,3 +39,7 @@
 .alertc-control .alert {
     margin: 0;
 }
+
+.usercode.usercode-used {
+    text-decoration: line-through;
+}

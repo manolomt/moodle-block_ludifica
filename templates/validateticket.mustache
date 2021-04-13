@@ -1,0 +1,63 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template block_ludifica/tickets
+
+    This template renders the template content area for a resource.
+
+    Example context (json):
+    {
+        "tickets": [],
+        "baseurl": "https://moodle_wwwroot_url"
+    }
+}}
+
+{{#ticket}}
+<div class="card">
+    <h3 class="card-header">
+        {{name}}
+    </h3>
+    <div class="card-body ticketcontent">
+        {{#thumbnail}}
+        <div class="picture-box">
+            <img src="{{thumbnail}}" alt="{{name}}" />
+        </div>
+        {{/thumbnail}}
+        <div class="info-box">
+            <p>
+                {{#user}}
+                    <strong>{{#str}} owner, block_ludifica {{/str}}</strong> {{fullname}}
+                {{/user}}
+            </p>
+            <p>
+                {{description}}
+            </p>
+        </div>
+    </div>
+    <div class="card-footer">
+        {{#used}}
+            <strong>{{#str}} useddate, block_ludifica {{/str}}</strong> {{.}}
+        {{/used}}
+        {{^used}}
+        <a href="{{baseurl}}/blocks/ludifica/ticket_validate.php?{{{params}}}" class="btn btn-primary">
+            {{#str}} useup, block_ludifica {{/str}}
+        </a>
+        {{/used}}
+    </div>
+<div>
+{{/ticket}}
+<hr />

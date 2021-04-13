@@ -21,8 +21,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/notification', 'core/str', 'core/ajax', 'block_ludifica/alertc'],
-function($, Notification, Str, Ajax, Alertc) {
+define(['jquery', 'core/notification', 'core/str', 'core/ajax', 'block_ludifica/alertc', 'core/modal_factory'],
+function($, Notification, Str, Ajax, Alertc, ModalFactory) {
 
     var wwwroot = M.cfg.wwwroot;
     var s = [];
@@ -77,6 +77,7 @@ function($, Notification, Str, Ajax, Alertc) {
                     var $ticket = $('#ticket-' + ticketid);
                     var $usertickets = $('#moreinfo-ticket-content-' + ticketid + ' .usertickets');
                     var $userticketslist = $usertickets.find('ul');
+                    var userticketsavailable = 0;
 
                     $ticket.find('val[key="available"]').html(data.available);
                     $ticket.find('val[key="usertickets"]').html(data.usertickets.length);
@@ -87,14 +88,35 @@ function($, Notification, Str, Ajax, Alertc) {
                         $usertickets.show();
 
                         data.usertickets.forEach(one => {
-                            $userticketslist.append('<li class="list-group-item">' + one.usercode + '</li>');
+                            var $tplitem = $('<li class="list-group-item"></li>');
+                            var $tplusercode = $('<span class="usercode">' + one.usercode + ' </span>');
+
+                            $tplitem.append($tplusercode);
+
+                            if (one.timeused) {
+                                $tplusercode.addClass('usercode-used');
+
+                                var userdate = s['usedat'].replace('USERDATE', one.timeusedformatted);
+                                var $tpltimeused = $('<em> ' + userdate + '</em>');
+                                $tplitem.append($tpltimeused);
+                            }
+
+                            $userticketslist.append($tplitem);
+                            if (!one.timeused) {
+                                userticketsavailable++;
+                            }
                         });
                     } else {
                         $usertickets.hide();
+                    }
+
+                    if (userticketsavailable == 0) {
                         $ticket.find('[data-action="give"]').hide();
                     }
 
-                    if (data.available <= 0 || data.byuser <= data.usertickets.length) {
+                    if (data.available <= 0 ||
+                            data.byuser <= data.usertickets.length) {
+
                         $ticket.find('[data-action="buy"]').hide();
                     } else  {
                         $ticket.find('[data-action="buy"]').show();
@@ -126,6 +148,7 @@ function($, Notification, Str, Ajax, Alertc) {
             { key: 'giveticketmessage', component: 'block_ludifica' },
             { key: 'notcontacts', component: 'block_ludifica' },
             { key: 'bought', component: 'block_ludifica' },
+            { key: 'usedat', component: 'block_ludifica', param: 'USERDATE' },
             { key: 'cancel' },
             { key: 'continue' },
             { key: 'error' },
@@ -209,6 +232,22 @@ function($, Notification, Str, Ajax, Alertc) {
             } else {
                 give_view(ticketid);
             }
+
+        });
+
+        // More info.
+        $('[data-action="showmore"]').on('click', function() {
+            var $element = $(this);
+            var ticketid = $element.data('id');
+            var $more = $('#moreinfo-ticket-' + ticketid);
+            var props = {
+                title: $more.attr('title'),
+                body: $more.html()
+            };
+
+            ModalFactory.create(props).then(function(modal) {
+                modal.show();
+            });
 
         });
 

@@ -69,6 +69,7 @@ class tickets implements renderable, templatable {
 
         $fs = get_file_storage();
         $dateformat = get_string('strftimedatetimeshort');
+        $uticketavaile = 0;
         foreach ($this->tickets as $key => $ticket) {
 
             if (!$hasmanage && !$ticket->enabled) {
@@ -82,7 +83,16 @@ class tickets implements renderable, templatable {
             $ticket->userticketscount = count($ticket->usertickets);
             $ticket->usertickets = array_values($ticket->usertickets);
 
-            $ticket->availabledateformated = !empty($ticket->availabledate) ? userdate($ticket->availabledate,$dateformat) :
+            foreach($ticket->usertickets as $uticket) {
+
+                if (!$uticket->timeused) {
+                    $uticketavaile++;
+                } else {
+                    $uticket->timeusedformatted = userdate($uticket->timeused, $dateformat);
+                }
+            }
+
+            $ticket->availabledateformated = !empty($ticket->availabledate) ? userdate($ticket->availabledate, $dateformat) :
                                                                                 get_string('unlimited', 'block_ludifica');
             $ticket->enabled = (empty($ticket->availabledate) || $ticket->availabledate > time()) && $ticket->available > 0;
 
@@ -128,7 +138,7 @@ class tickets implements renderable, templatable {
                 }
             }
 
-            $ticket->cangive = $ticket->userticketscount > 0;
+            $ticket->cangive = $ticket->userticketscount > 0 && $uticketavaile > 0;
         }
 
         $defaultvariables = [

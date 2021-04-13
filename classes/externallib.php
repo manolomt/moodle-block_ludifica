@@ -59,6 +59,12 @@ class external extends \external_api {
         if (isloggedin() && !isguestuser()) {
             $ticket->usertickets = $DB->get_records('block_ludifica_usertickets', array('userid' => $USER->id,
                                                                                         'ticketid' => $id));
+
+            // Hack for external presentation.
+            $dateformat = get_string('strftimedatetimeshort');
+            foreach($ticket->usertickets as $uticket) {
+                $uticket->timeusedformatted = $uticket->timeused ? userdate($uticket->timeused, $dateformat) : null;
+            }
         } else {
             $ticket->usertickets = [];
         }
@@ -91,6 +97,7 @@ class external extends \external_api {
                             'usercode' => new \external_value(PARAM_TEXT, 'Unique user ticket code'),
                             'timecreated' => new \external_value(PARAM_INT, 'Time created'),
                             'timeused' => new \external_value(PARAM_INT, 'Time used, null if not used yet', VALUE_DEFAULT, null),
+                            'timeusedformatted' => new \external_value(PARAM_TEXT, 'Time used formatted', VALUE_DEFAULT, null),
                         ),
                         'An user to access the resource'),
                     'User access list', VALUE_DEFAULT, array()
@@ -118,6 +125,7 @@ class external extends \external_api {
         $ticket = $DB->get_record('block_ludifica_ticket', array('id' => $id), '*', MUST_EXIST);
         $usertickets = $DB->count_records('block_ludifica_usertickets', array('userid' => $USER->id,
                                                                                         'ticketid' => $id));
+
         $player = new \block_ludifica\player($USER->id);
 
         if ($ticket->enabled && (empty($ticket->availabledate) || $ticket->availabledate > time()) && $ticket->available > 0 &&
@@ -138,7 +146,7 @@ class external extends \external_api {
             $data->infodata = '{}';
             $data->usercode = $usercode;
             $data->timecreated = time();
-            $data->timeused = time();
+            $data->timeused = null;
             $DB->insert_record('block_ludifica_usertickets', $data);
 
             return true;
@@ -173,7 +181,7 @@ class external extends \external_api {
         global $DB, $USER;
 
         $usertickets = $DB->get_records('block_ludifica_usertickets',
-                                            array('userid' => $USER->id, 'ticketid' => $ticketid),
+                                            array('userid' => $USER->id, 'ticketid' => $ticketid, 'timeused' => null),
                                             '', '*', 0, 1);
 
         if (count($usertickets) > 0) {

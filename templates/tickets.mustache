@@ -32,7 +32,7 @@
         <div class="card">
             <h3 class="card-header">
                 {{name}}
-                <a class="block_ludifica-modalcontroller moreinfo-ticket" data-ref-id="moreinfo-ticket-{{id}}">
+                <a class="moreinfo-ticket" data-action="showmore" data-id="{{id}}">
                     {{#pix}} i/info, core, {{#str}} moreinfo, block_ludifica {{/str}} {{/pix}}
                 </a>
             </h3>
@@ -58,13 +58,16 @@
                     </p>
                 </div>
             </div>
-            <div id="moreinfo-ticket-{{id}}" class="block_ludifica-modal" title="{{name}}">
+            <div id="moreinfo-ticket-{{id}}" title="{{name}}" style="display: none;">
                 <div id="moreinfo-ticket-content-{{id}}">
                     <div class="card usertickets" {{^usertickets}}style="display: none;"{{/usertickets}}>
                         <h3 class="card-header">{{#str}} usercodes, block_ludifica {{/str}} </h3>
                         <ul class="list-group">
                         {{#usertickets}}
-                            <li class="list-group-item">{{usercode}}</li>
+                            <li class="list-group-item">
+                                <span class="usercode {{#timeusedformatted}}usercode-used{{/timeusedformatted}}">{{usercode}}</span>
+                                {{#timeusedformatted}}<em>{{#str}} usedat, block_ludifica, {{timeusedformatted}} {{/str}}</em>{{/timeusedformatted}}
+                            </li>
                         {{/usertickets}}
                         </ul>
                     </div>
