@@ -77,6 +77,9 @@ class tickets implements renderable, templatable {
                 continue;
             }
 
+            $ticketcore = new \block_ludifica\ticket($ticket);
+            $ticket->thumbnail = $ticketcore->get_thumbnail();
+
             $ticket->usertickets = $DB->get_records('block_ludifica_usertickets', array('userid' => $USER->id,
                                                                                'ticketid' => $ticket->id));
 
@@ -121,22 +124,6 @@ class tickets implements renderable, templatable {
                 }
             }
 
-            $files = $fs->get_area_files($syscontext->id, 'block_ludifica', 'ticket', $ticket->id);
-            foreach ($files as $file) {
-                $filename = $file->get_filename();
-
-                if (!empty($filename) && $filename != '.') {
-                    $path = '/' . implode('/', array($file->get_contextid(),
-                                                        'block_ludifica',
-                                                        'ticket',
-                                                        $file->get_itemid() . $file->get_filepath() . $filename));
-
-                    $ticket->thumbnail = \moodle_url::make_file_url('/pluginfile.php', $path);
-
-                    // Only one image by ticket.
-                    break;
-                }
-            }
 
             $ticket->cangive = $ticket->userticketscount > 0 && $uticketavaile > 0;
         }

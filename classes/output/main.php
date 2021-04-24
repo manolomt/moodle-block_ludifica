@@ -64,6 +64,7 @@ class main implements renderable, templatable {
 
         $defaultvariables = [
             'player' => $this->player->get_profile(),
+            'tickets' => array_values($this->player->get_tickets()),
             'baseurl' => $CFG->wwwroot
         ];
 

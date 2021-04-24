@@ -25,13 +25,13 @@ namespace block_ludifica\event;
 
 defined('MOODLE_INTERNAL') || die();
 
-class ticket_updated extends \core\event\base {
+class avatar_created extends \core\event\base {
 
     /**
      * Init method.
      */
     protected function init() {
-        $this->data['objecttable'] = 'block_ludifica_tickets';
+        $this->data['objecttable'] = 'block_ludifica_avatars';
         $this->data['crud'] = 'c';
         $this->data['edulevel'] = self::LEVEL_OTHER;
     }
@@ -42,7 +42,7 @@ class ticket_updated extends \core\event\base {
      * @return string
      */
     public static function get_name() {
-        return get_string('eventticket_updated', 'block_ludifica');
+        return get_string('eventavatar_created', 'block_ludifica');
     }
 
     /**
@@ -51,7 +51,7 @@ class ticket_updated extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return "The user with id '$this->userid' created the ticket with id '$this->objectid'.";
+        return "The user with id '$this->userid' created the avatar with id '$this->objectid'.";
     }
 
     /**
@@ -60,7 +60,7 @@ class ticket_updated extends \core\event\base {
      * @return \moodle_url
      */
     public function get_url() {
-        return new \moodle_url('/blocks/ludifica/ticket_edit.php', array('id' => $this->objectid));
+        return new \moodle_url('/blocks/ludifica/avatar_edit.php', array('id' => $this->objectid));
     }
 
 }

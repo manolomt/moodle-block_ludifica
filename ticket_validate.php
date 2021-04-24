@@ -64,7 +64,7 @@ if ($data = $form->get_data()) {
                                                                     'userid' => $user->id
                                                                 ), '*', MUST_EXIST);
 
-    $ticket = $DB->get_record('block_ludifica_ticket', array('id' => $userticket->ticketid), '*', MUST_EXIST);
+    $ticket = $DB->get_record('block_ludifica_tickets', array('id' => $userticket->ticketid), '*', MUST_EXIST);
 
 }
 

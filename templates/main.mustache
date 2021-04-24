@@ -31,16 +31,31 @@
 
 {{#player}}
 <div class="player_info">
-    <div>
-        <h2>{{fullname}}</h2>
-        <h3>
-            {{#str}} numpoints, block_ludifica, {{points}} {{/str}} |
-            {{#str}} numcoins, block_ludifica, {{coins}} {{/str}} |
-            {{#str}} labellevel, block_ludifica, {{#level}}{{name}}{{/level}} {{/str}}
-        </h3>
+    <div class="avatar-box">
+        <img src="{{avatarurl}}" alt="{{fullname}}" /><br />
+        <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="btn btn-secondary">{{#str}} avatars, block_ludifica {{/str}}</a>
     </div>
     <div>
-        <img src="{{avatarurl}}" alt="{{fullname}}" />
+        <div>
+            <h2>{{fullname}}</h2>
+            <h3>
+                <span>{{#str}} numpoints, block_ludifica, {{points}} {{/str}}</span>
+                <span>{{#str}} numcoins, block_ludifica, {{coins}} {{/str}}</span>
+                <span>{{#str}} labellevel, block_ludifica, {{#level}}{{name}}{{/level}} {{/str}}</span>
+            </h3>
+        </div>
+        <div class="tickets-box">
+            <h2> {{#str}} tickets, block_ludifica {{/str}} </h2>
+            <div>
+            {{#tickets}}
+                <div class="oneticket">
+                    <img src="{{thumbnail}}" title="{{name}}" />
+                    <div class="count">{{count}}</div>
+                </div>
+            {{/tickets}}
+            </div>
+            <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="btn btn-secondary">{{#str}} tickets, block_ludifica {{/str}}</a>
+        </div>
     </div>
 
 </div>

@@ -54,7 +54,7 @@ class external extends \external_api {
     public static function get_ticket($id) {
         global $DB, $USER;
 
-        $ticket = $DB->get_record('block_ludifica_ticket', array('id' => $id), '*', MUST_EXIST);
+        $ticket = $DB->get_record('block_ludifica_tickets', array('id' => $id), '*', MUST_EXIST);
 
         if (isloggedin() && !isguestuser()) {
             $ticket->usertickets = $DB->get_records('block_ludifica_usertickets', array('userid' => $USER->id,
@@ -122,7 +122,7 @@ class external extends \external_api {
     public static function buy_ticket($id) {
         global $DB, $USER;
 
-        $ticket = $DB->get_record('block_ludifica_ticket', array('id' => $id), '*', MUST_EXIST);
+        $ticket = $DB->get_record('block_ludifica_tickets', array('id' => $id), '*', MUST_EXIST);
         $usertickets = $DB->count_records('block_ludifica_usertickets', array('userid' => $USER->id,
                                                                                         'ticketid' => $id));
 
@@ -138,7 +138,7 @@ class external extends \external_api {
             }
 
             $ticket->available--;
-            $DB->update_record('block_ludifica_ticket', array('id' => $id, 'available' => $ticket->available));
+            $DB->update_record('block_ludifica_tickets', array('id' => $id, 'available' => $ticket->available));
 
             $data = new \stdClass();
             $data->userid = $USER->id;
@@ -202,6 +202,91 @@ class external extends \external_api {
      */
     public static function give_ticket_returns() {
         return new \external_value(PARAM_BOOL, 'True if ticket was given');
+    }
+
+    /**
+     * To validade input parameters
+     * @return \external_function_parameters
+     */
+    public static function buy_avatar_parameters() {
+        return new \external_function_parameters(
+            array(
+                'id' => new \external_value(PARAM_INT, 'Avatar id', VALUE_REQUIRED)
+            )
+        );
+    }
+
+    public static function buy_avatar($id) {
+        global $DB, $USER;
+
+        $avatar = $DB->get_record('block_ludifica_avatars', array('id' => $id), '*', MUST_EXIST);
+        $useravatar = $DB->count_records('block_ludifica_useravatars', array('userid' => $USER->id,
+                                                                                'avatarid' => $id));
+
+        $player = new \block_ludifica\player($USER->id);
+
+        if ($avatar->enabled && $useravatar == 0 && $player->general->coins >= $avatar->cost &&
+                $avatar->type == \block_ludifica\avatar::$DEFAULT_TYPE) {
+
+            $data = new \stdClass();
+            $data->userid = $USER->id;
+            $data->avatarid = $id;
+            $data->timecreated = time();
+            $DB->insert_record('block_ludifica_useravatars', $data);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Validate the return value
+     * @return \external_single_structure
+     */
+    public static function buy_avatar_returns() {
+        return new \external_value(PARAM_BOOL, 'True if avatar was bought');
+    }
+
+
+    /**
+     * To validade input parameters
+     * @return \external_function_parameters
+     */
+    public static function use_avatar_parameters() {
+        return new \external_function_parameters(
+            array(
+                'id' => new \external_value(PARAM_INT, 'Avatar id', VALUE_REQUIRED)
+            )
+        );
+    }
+
+    public static function use_avatar($id) {
+        global $DB, $USER;
+
+        $general = $DB->get_record('block_ludifica_general', array('userid' => $USER->id), '*', MUST_EXIST);
+        $useravatar = $DB->count_records('block_ludifica_useravatars', array('userid' => $USER->id,
+                                                                                'avatarid' => $id));
+
+        // Check if user has the avatar.
+        if ($useravatar > 0) {
+
+            $general->avatarid = $id;
+            $general->timeupdated = time();
+            $DB->update_record('block_ludifica_general', $general);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Validate the return value
+     * @return \external_single_structure
+     */
+    public static function use_avatar_returns() {
+        return new \external_value(PARAM_BOOL, 'True if avatar was assigned to user');
     }
 
 

@@ -29,13 +29,15 @@ require_login();
 $syscontext = context_system::instance();
 $hasmanage = has_capability('block/ludifica:manage', $syscontext);
 
+$player = new \block_ludifica\player();
+
 $PAGE->set_context($syscontext);
-$PAGE->set_url('/blocks/ludifica/tickets.php');
+$PAGE->set_url('/blocks/ludifica/avatars.php');
 $PAGE->set_pagelayout('incourse');
-$PAGE->set_heading(get_string('tickets', 'block_ludifica'));
-$PAGE->set_title(get_string('tickets', 'block_ludifica'));
+$PAGE->set_heading(get_string('avatars', 'block_ludifica'));
+$PAGE->set_title(get_string('avatars', 'block_ludifica'));
 $PAGE->requires->js_call_amd('block_ludifica/main', 'init');
-$PAGE->requires->js_call_amd('block_ludifica/tickets', 'init', [$USER->id]);
+$PAGE->requires->js_call_amd('block_ludifica/avatars', 'init', [$USER->id, $player->general->avatarid]);
 
 $sortavailable = array('name', 'available', 'availabledate', 'cost');
 if (!in_array($sort, $sortavailable)) {
@@ -46,11 +48,11 @@ echo $OUTPUT->header();
 
 // Delete a ticket, after confirmation
 if ($hasmanage && $delete && confirm_sesskey()) {
-    $ticket = $DB->get_record('block_ludifica_tickets', array('id' => $delete), '*', MUST_EXIST);
+    $ticket = $DB->get_record('block_ludifica_avatars', array('id' => $delete), '*', MUST_EXIST);
 
     if ($confirm != md5($delete)) {
-        $returnurl = new moodle_url('/blocks/ludifica/tickets.php', array('sort' => $sort, 'bypage' => $bypage, 'spage'=>$spage));
-        echo $OUTPUT->heading(get_string('ticketdelete', 'block_ludifica'));
+        $returnurl = new moodle_url('/blocks/ludifica/avatars.php', array('sort' => $sort, 'bypage' => $bypage, 'spage'=>$spage));
+        echo $OUTPUT->heading(get_string('avatardelete', 'block_ludifica'));
         $optionsyes = array('delete' => $delete, 'confirm' => md5($delete), 'sesskey' => sesskey());
         echo $OUTPUT->confirm(get_string('deletecheck', '', "'{$ticket->name}'"),
                                 new moodle_url($returnurl, $optionsyes), $returnurl);
@@ -65,35 +67,41 @@ if ($hasmanage && $delete && confirm_sesskey()) {
             $file->delete();
         }
 
-        $DB->delete_records('block_ludifica_usertickets', array('ticketid' => $ticket->id));
-        $DB->delete_records('block_ludifica_tickets', array('id' => $ticket->id));
+        $DB->delete_records('block_ludifica_useravatars', array('ticketid' => $ticket->id));
+        $DB->delete_records('block_ludifica_avatars', array('id' => $ticket->id));
 
         $event = \block_ludifica\event\ticket_deleted::create(array(
             'objectid' => $ticket->id,
             'context' => $syscontext
         ));
-        $event->add_record_snapshot('block_ludifica_tickets', $ticket);
+        $event->add_record_snapshot('block_ludifica_avatars', $ticket);
         $event->trigger();
 
         $msg = 'recorddeleted';
     }
 }
 
-echo $OUTPUT->heading(get_string('tickets', 'block_ludifica'));
+echo $OUTPUT->heading(get_string('avatars', 'block_ludifica'));
 
 if (!empty($msg)) {
     $msg = get_string($msg, 'block_ludifica');
     echo $OUTPUT->notification($msg, 'notifysuccess');
 }
 
-$tickets = $DB->get_records('block_ludifica_tickets', null, $sort . ' ASC', '*', $spage * $bypage, $bypage);
-$ticketscount = $DB->count_records('block_ludifica_tickets');
+$conditions = null;
+if (!$hasmanage) {
+    // ToDo: Not integrated specific user avatars yet.
+    $conditions = array('enabled' => 1, 'type' => \block_ludifica\avatar::$DEFAULT_TYPE);
+}
+
+$avatars = $DB->get_records('block_ludifica_avatars', $conditions, $sort . ' ASC', '*', $spage * $bypage, $bypage);
+$avatarscount = $DB->count_records('block_ludifica_avatars');
 
 
-$pagingbar = new paging_bar($ticketscount, $spage, $bypage, "/blocks/ludifica/index.php?q={$query}&amp;sort={$sort}&amp;");
+$pagingbar = new paging_bar($avatarscount, $spage, $bypage, "/blocks/ludifica/index.php?q={$query}&amp;sort={$sort}&amp;");
 $pagingbar->pagevar = 'spage';
 
-$renderable = new \block_ludifica\output\tickets($tickets);
+$renderable = new \block_ludifica\output\avatars($avatars);
 $renderer = $PAGE->get_renderer('block_ludifica');
 
 echo $renderer->render($renderable);

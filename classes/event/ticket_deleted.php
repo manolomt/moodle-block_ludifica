@@ -31,7 +31,7 @@ class ticket_deleted extends \core\event\base {
      * Init method.
      */
     protected function init() {
-        $this->data['objecttable'] = 'block_ludifica_ticket';
+        $this->data['objecttable'] = 'block_ludifica_tickets';
         $this->data['crud'] = 'c';
         $this->data['edulevel'] = self::LEVEL_OTHER;
     }

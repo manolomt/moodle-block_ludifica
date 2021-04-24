@@ -19,9 +19,9 @@ defined('MOODLE_INTERNAL') || die;
 require_once($CFG->libdir . '/formslib.php');
 
 /**
- * The form for handling editing a ticket.
+ * The form for handling editing a avatar.
  */
-class block_ludifica_ticket_edit extends moodleform {
+class block_ludifica_avatar_edit extends moodleform {
     protected $_data;
 
     /**
@@ -35,15 +35,6 @@ class block_ludifica_ticket_edit extends moodleform {
         // this contains the data of this form.
         $this->_data  = $this->_customdata['data'];
 
-        if (!$this->_data) {
-        } else {
-            $this->_data->moreinfo = array('text' => $this->_data->moreinfo);
-            if ($this->_data->infodata == 'null') {
-                $this->_data->infodata = '';
-            }
-        }
-
-        $dateattributes = array('stopyear' => date('Y', time()) + 15, 'startyear' => date('Y', time()));
         $editoroptions = array('maxfiles' => 0, 'maxbytes' => $CFG->maxbytes,
                                     'trusttext' => false, 'noclean' => true);
         $editorattributes = array ('rows'=> 5, 'cols'=>50);
@@ -56,36 +47,22 @@ class block_ludifica_ticket_edit extends moodleform {
         $mform->addRule('name', get_string('missingfield', 'block_ludifica'), 'required', null, 'client');
         $mform->setType('name', PARAM_TEXT);
 
-        $mform->addElement('filemanager', 'attachments_filemanager', get_string('thumbnail', 'block_ludifica'),
+        $mform->addElement('filemanager', 'attachments_filemanager', get_string('avatarbust', 'block_ludifica'),
                                 null, $filemanageroptions);
 
         $mform->addElement('textarea', 'description', get_string('description'), 'cols="30" rows="5"');
         $mform->addRule('description', get_string('missingfield', 'block_ludifica'), 'required', null, 'client');
         $mform->setType('description', PARAM_TEXT);
 
-        $mform->addElement('editor', 'moreinfo', get_string('moreinfo', 'block_ludifica'), $editorattributes, $editoroptions);
-
-        $types = \block_ludifica\ticket::get_types();
-        $mform->addElement('select', 'type', get_string('ticketstype', 'block_ludifica'), $types);
-
-        $mform->addElement('text', 'code', get_string('ticketcode', 'block_ludifica'), 'maxlength="31" size="30"');
-        $mform->setType('code', PARAM_TEXT);
-        $mform->addHelpButton('code', 'ticketcode', 'block_ludifica');
+        $types = \block_ludifica\avatar::get_types();
+        $mform->addElement('select', 'type', get_string('avatartype', 'block_ludifica'), $types);
 
         $mform->addElement('text', 'cost', get_string('cost', 'block_ludifica'), 'maxlength="10" size="10"');
         $mform->setType('cost', PARAM_INT);
 
-        $mform->addElement('date_time_selector', 'availabledate', get_string('ticketavailabledate', 'block_ludifica'),
-                            $dateattributes);
-
-        $mform->addElement('text', 'available', get_string('ticketavailable', 'block_ludifica'), 'maxlength="10" size="10"');
-        $mform->setType('available', PARAM_INT);
-
-        $mform->addElement('text', 'byuser', get_string('ticketbyuser', 'block_ludifica'), 'maxlength="10" size="10"');
-        $mform->setType('byuser', PARAM_INT);
-
-        $mform->addElement('textarea', 'infodata', get_string('infodata', 'block_ludifica'), 'cols="30" rows="10"');
-        $mform->setType('infodata', PARAM_TEXT);
+        $mform->addElement('textarea', 'sources', get_string('avatarsources', 'block_ludifica'), 'cols="30" rows="10"');
+        $mform->setType('sources', PARAM_TEXT);
+        $mform->addHelpButton('sources', 'avatarsources', 'block_ludifica');
 
         $values = array('1' => get_string('yes'), '0' => get_string('no'));
         $mform->addElement('select', 'enabled', get_string('enabled', 'block_ludifica'), $values);

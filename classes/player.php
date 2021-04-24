@@ -33,7 +33,7 @@ defined('MOODLE_INTERNAL') || die();
  */
 class player {
 
-    const DEFAULT_AVATAR = 'default';
+    const DEFAULT_AVATAR = null;
 
     /**
      * var \stdClass Info about the player.
@@ -59,12 +59,19 @@ class player {
             $general->userid = $this->data->id;
             $general->points = 0;
             $general->coins = 0;
-            $general->avatar = self::DEFAULT_AVATAR;
+            $general->avatarid = self::DEFAULT_AVATAR;
             $general->timeupdated = time();
             $general->id = $DB->insert_record('block_ludifica_general', $general, true);
         }
 
         $this->data->general = $general;
+
+        if ($this->data->general->avatarid) {
+            $this->data->avatar = $DB->get_record('block_ludifica_avatars',
+                                                    array('id' => $this->data->general->avatarid), '*', MUST_EXIST);
+        } else {
+            $this->data->avatar = null;
+        }
     }
 
     public function get_profile() {
@@ -75,12 +82,40 @@ class player {
         $info->points = $this->data->general->points;
         $info->coins = $this->data->general->coins;
         $info->level = controller::calc_level($this->data->general->points);
-        $info->avatar = $this->data->general->avatar;
-        $info->avatarurl = $this->data->general->avatar == self::DEFAULT_AVATAR ?
-                                                            $OUTPUT->image_url('defaultavatar', 'block_ludifica') :
-                                                            '';//ToDO: Agregar método para calcular el avatar adecuado
+        $info->avatar = $this->data->avatar;
+
+        if ($this->data->avatar) {
+            $avatar = new avatar($this->data->avatar);
+            $info->avatarurl = $avatar->get_uri($info->level->index);
+        } else {
+            $info->avatarurl = avatar::default_avatar();
+        }
 
         return $info;
+    }
+
+    public function get_tickets() {
+        global $OUTPUT, $DB, $USER;
+
+        $usertickets = $DB->get_records('block_ludifica_usertickets', array('userid' => $USER->id));
+
+        $response = array();
+        foreach ($usertickets as $one) {
+
+            if (!isset($response[$one->ticketid])) {
+                $ticket = new ticket($one->ticketid);
+                $info = new \stdClass();
+                $info->thumbnail = $ticket->get_thumbnail();
+                $info->name = $ticket->name;
+                $info->count = 1;
+                $response[$one->ticketid] = $info;
+            } else {
+                $info = $response[$one->ticketid];
+                $info->count++;
+            }
+        }
+
+        return $response;
     }
 
     public function __get($name) {

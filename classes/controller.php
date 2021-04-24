@@ -262,6 +262,7 @@ class controller {
         $level = new \stdClass();
         $level->name = '';
         $level->maxpoints = 0;
+        $level->index = 0;
         return $level;
     }
 
@@ -365,13 +366,6 @@ class controller {
         }
 
         return $captions;
-    }
-
-    /**
-     * List the available tickets types.
-     */
-    public static function get_tickets_types() {
-        return array('default' => get_string('ticketstype_default', 'block_ludifica'));
     }
 
     /**

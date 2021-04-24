@@ -51,6 +51,24 @@ $functions = array(
         'ajax' => true,
         'loginrequired' => true
     ),
+    'block_ludifica_buy_avatar' => array(
+        'classname' => '\block_ludifica\external',
+        'methodname' => 'buy_avatar',
+        'classpath' => 'blocks/ludifica/classes/externallib.php',
+        'description' => 'Buy an avatar',
+        'type' => 'write',
+        'ajax' => true,
+        'loginrequired' => true
+    ),
+    'block_ludifica_use_avatar' => array(
+        'classname' => '\block_ludifica\external',
+        'methodname' => 'use_avatar',
+        'classpath' => 'blocks/ludifica/classes/externallib.php',
+        'description' => 'Use the specified avatar',
+        'type' => 'write',
+        'ajax' => true,
+        'loginrequired' => true
+    ),
 /*
     'block_ludifica_accessrevoke' => array(
         'classname' => '\block_ludifica\external',
@@ -67,7 +85,8 @@ $functions = array(
 
 $services = array(
         'Ludifica webservices' => array(
-                'functions' => array ('block_ludifica_get_ticket', 'block_ludifica_buy_ticket', 'block_ludifica_give_ticket'),
+                'functions' => array ('block_ludifica_get_ticket', 'block_ludifica_buy_ticket', 'block_ludifica_give_ticket',
+                                        'block_ludifica_buy_avatar'),
                 'restrictedusers' => 0, // if 1, the administrator must manually select which user can use this service.
                 // (Administration > Plugins > Web services > Manage services > Authorised users)
                 'enabled' => 0, // if 0, then token linked to this service won't work

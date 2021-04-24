@@ -21,7 +21,7 @@ $id = optional_param('id', 0, PARAM_INT);
 
 $ticket = null;
 if (!empty($id)) {
-    $ticket = $DB->get_record('block_ludifica_ticket', array('id' => $id), '*', MUST_EXIST);
+    $ticket = $DB->get_record('block_ludifica_tickets', array('id' => $id), '*', MUST_EXIST);
 }
 
 require_login();
@@ -82,15 +82,15 @@ if ($editform->is_cancelled()) {
     $ticket->enabled = $data->enabled;
 
     if (!empty($ticket->id)) {
-        $DB->update_record('block_ludifica_ticket', $ticket);
+        $DB->update_record('block_ludifica_tickets', $ticket);
 
         $event = \block_ludifica\event\ticket_updated::create(array(
             'objectid' => $ticket->id,
             'context' => $syscontext,
-        ));
+v        ));
         $event->trigger();
     } else {
-        $id = $DB->insert_record('block_ludifica_ticket', $ticket, true);
+        $id = $DB->insert_record('block_ludifica_tickets', $ticket, true);
 
         $event = \block_ludifica\event\ticket_created::create(array(
             'objectid' => $id,
