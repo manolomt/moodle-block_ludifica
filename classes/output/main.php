@@ -44,13 +44,20 @@ class main implements renderable, templatable {
     private $player;
 
     /**
+     * var array List of tabs to print.
+     */
+    private $tabs;
+
+    /**
      * Constructor.
      *
      * @param \block_ludifica\player $player The player user information.
      */
-    public function __construct($player) {
+    public function __construct($tabs, $player) {
 
         $this->player = $player;
+        $this->tabs = $tabs;
+
     }
 
     /**
@@ -60,13 +67,56 @@ class main implements renderable, templatable {
      * @return array Context variables for the template
      */
     public function export_for_template(renderer_base $output) {
-        global $CFG;
+        global $CFG, $COURSE;
+
+        $icons = array('profile' => 'address-card',
+                        'topbycourse' => 'sort-amount-up',
+                        'topbysite' => 'trophy',
+                        'lastmonth' => 'calendar-check',
+                    );
+
+        $showtabs = array();
+        foreach ($this->tabs as $k => $tab) {
+            $one = new \stdClass();
+            $one->title = get_string('tabtitle_' . $tab, 'block_ludifica');
+            $one->key = $tab;
+            $one->icon = $icons[$tab];
+            $one->state = $k == 0 ? 'active' : '';
+            $showtabs[] = $one;
+        }
+
+        $activetab = false;
 
         $defaultvariables = [
-            'player' => $this->player->get_profile(),
-            'tickets' => array_values($this->player->get_tickets()),
+            'hastabs' => count($this->tabs) > 1,
+            'tabs' => $showtabs,
             'baseurl' => $CFG->wwwroot
         ];
+
+        if (in_array('profile', $this->tabs)) {
+            $defaultvariables['player'] = $this->player->get_profile();
+            $defaultvariables['tickets'] = array_values($this->player->get_tickets());
+            $defaultvariables['profilestate'] = 'active';
+            $activetab = true;
+        }
+
+        if (in_array('topbycourse', $this->tabs)) {
+            $defaultvariables['topbycourse'] = array_values(\block_ludifica\controller::get_topbycourse($COURSE->id));
+            $defaultvariables['topbycoursestate'] = !$activetab ? 'active' : '';
+            $activetab = true;
+        }
+
+        if (in_array('topbysite', $this->tabs)) {
+            $defaultvariables['topbysite'] = array_values(\block_ludifica\controller::get_topbysite());
+            $defaultvariables['topbysitestate'] = !$activetab ? 'active' : '';
+            $activetab = true;
+        }
+
+        if (in_array('lastmonth', $this->tabs)) {
+            $defaultvariables['lastmonth'] = array_values(\block_ludifica\controller::get_lastmonth($COURSE->id));
+            $defaultvariables['lastmonthstate'] = !$activetab ? 'active' : '';
+            $activetab = true;
+        }
 
         return $defaultvariables;
     }

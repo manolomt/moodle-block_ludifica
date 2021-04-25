@@ -38,5 +38,12 @@ class block_ludifica_edit_form extends block_edit_form {
         $mform->addElement('text', 'config_title', get_string('customtitle', 'block_ludifica'));
         $mform->setType('config_title', PARAM_TEXT);
 
+        $mform->addElement('checkbox', 'config_tabprofile', get_string('tabprofile', 'block_ludifica'));
+
+        $mform->addElement('checkbox', 'config_tabtopbycourse', get_string('tabtopbycourse', 'block_ludifica'));
+
+        $mform->addElement('checkbox', 'config_tabtopbysite', get_string('tabtopbysite', 'block_ludifica'));
+
+        $mform->addElement('checkbox', 'config_tablastmonth', get_string('tablastmonth', 'block_ludifica'));
     }
 }

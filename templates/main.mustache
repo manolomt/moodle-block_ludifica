@@ -29,34 +29,46 @@
     }
 }}
 
-{{#player}}
-<div class="player_info">
-    <div class="avatar-box">
-        <img src="{{avatarurl}}" alt="{{fullname}}" /><br />
-        <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="btn btn-secondary">{{#str}} avatars, block_ludifica {{/str}}</a>
-    </div>
-    <div>
-        <div>
-            <h2>{{fullname}}</h2>
-            <h3>
-                <span>{{#str}} numpoints, block_ludifica, {{points}} {{/str}}</span>
-                <span>{{#str}} numcoins, block_ludifica, {{coins}} {{/str}}</span>
-                <span>{{#str}} labellevel, block_ludifica, {{#level}}{{name}}{{/level}} {{/str}}</span>
-            </h3>
+{{#hastabs}}
+    <div class="block_ludifica-tabs">
+    {{#tabs}}
+        <div data-ref="#tab-{{key}}" title="{{title}}" class="{{state}}">
+            <i class="fa fa-{{icon}}"></i>
         </div>
-        <div class="tickets-box">
-            <h2> {{#str}} tickets, block_ludifica {{/str}} </h2>
-            <div>
-            {{#tickets}}
-                <div class="oneticket">
-                    <img src="{{thumbnail}}" title="{{name}}" />
-                    <div class="count">{{count}}</div>
-                </div>
-            {{/tickets}}
-            </div>
-            <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="btn btn-secondary">{{#str}} tickets, block_ludifica {{/str}}</a>
-        </div>
+    {{/tabs}}
     </div>
+{{/hastabs}}
 
+{{#player}}
+<div id="tab-profile" class="block_ludifica-tabcontent {{profilestate}}">
+    <div class="player_info">
+        <div class="avatar-box">
+            <img src="{{avatarurl}}" alt="{{fullname}}" /><br />
+            <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="btn btn-secondary">{{#str}} avatars, block_ludifica {{/str}}</a>
+        </div>
+        <div>
+            <div>
+                <h2>{{fullname}}</h2>
+                <h3>
+                    <span>{{#str}} numpoints, block_ludifica, {{points}} {{/str}}</span>
+                    <span>{{#str}} numcoins, block_ludifica, {{coins}} {{/str}}</span>
+                    <span>{{#str}} labellevel, block_ludifica, {{#level}}{{name}}{{/level}} {{/str}}</span>
+                </h3>
+            </div>
+            <div class="tickets-box">
+                <h2> {{#str}} tickets, block_ludifica {{/str}} </h2>
+                <div>
+                {{#tickets}}
+                    <div class="oneticket">
+                        <img src="{{thumbnail}}" title="{{name}}" />
+                        <div class="count">{{count}}</div>
+                    </div>
+                {{/tickets}}
+                </div>
+                <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="btn btn-secondary">{{#str}} tickets, block_ludifica {{/str}}</a>
+            </div>
+        </div>
+
+    </div>
 </div>
 {{/player}}

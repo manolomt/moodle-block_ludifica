@@ -379,4 +379,19 @@ class controller {
         shuffle($word);
         return substr(implode($word), 0, $len);
     }
+
+    public static function get_topbycourse($courseid) {
+        $list = array();
+        return $list;
+    }
+
+    public static function get_topbysite() {
+        $list = array();
+        return $list;
+    }
+
+    public static function get_lastmonth($courseid) {
+        $list = array();
+        return $list;
+    }
 }

@@ -60,7 +60,24 @@ class block_ludifica extends block_base {
         $this->content->text   = '';
         $this->content->footer = '';
 
-//        $amount = get_config('block_ludifica', 'singleamount');
+        $tabs = array();
+
+        // Profile tab is printed by default if not exists the configuration parameter.
+        if (!property_exists($this->config, 'tabprofile') || $this->config->tabprofile) {
+            $tabs[] = 'profile';
+        }
+
+        if ($this->page->course->id != SITEID && property_exists($this->config, 'tabtopbycourse') && $this->config->tabtopbycourse) {
+            $tabs[] = 'topbycourse';
+        }
+
+        if (property_exists($this->config, 'tabtopbysite') && $this->config->tabtopbysite) {
+            $tabs[] = 'topbysite';
+        }
+
+        if ($this->page->course->id != SITEID && property_exists($this->config, 'tablastmonth') && $this->config->tablastmonth) {
+            $tabs[] = 'lastmonth';
+        }
 
         $html = '';
 
@@ -68,14 +85,18 @@ class block_ludifica extends block_base {
         if (isguestuser($USER)) {
             // Can not view info of guest - thre is nothing to see there.
             $html = '';
+        } else if (count($tabs) == 0) {
+            // Not tabs selected to print.
+            $html = '';
         } else {
 
             $info = new \block_ludifica\player();
 
             // Load templates to display the block content.
-            $renderable = new \block_ludifica\output\main($info);
+            $renderable = new \block_ludifica\output\main($tabs, $info);
             $renderer = $this->page->get_renderer('block_ludifica');
             $html .= $renderer->render($renderable);
+            $this->page->requires->js_call_amd('block_ludifica/main', 'init');
 
         }
 

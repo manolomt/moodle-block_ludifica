@@ -54,6 +54,30 @@ function($, ModalFactory) {
             ModalFactory.create(props, $('.block_ludifica-modalcontroller[data-ref-id="' + $element.attr('id') + '"]'));
         });
 
+        // Tabs.
+        $('.block_ludifica-tabs').each(function() {
+            var $tabs = $(this);
+            var tabslist = [];
+
+            $tabs.find('[data-ref]').each(function() {
+                var $tab = $(this);
+                tabslist.push($tab);
+
+                $tab.on('click', function() {
+                    tabslist.forEach(one => {
+                        $(one.data('ref')).removeClass('active');
+                    });
+
+                    $tabs.find('.active[data-ref]').removeClass('active');
+
+                    $tab.addClass('active');
+                    $($tab.data('ref')).addClass('active');
+                });
+
+            });
+
+        });
+
     };
 
     return {
