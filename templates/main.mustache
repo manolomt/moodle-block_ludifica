@@ -72,3 +72,72 @@
     </div>
 </div>
 {{/player}}
+
+{{#hastopbycourse}}
+<div id="tab-topbycourse" class="block_ludifica-tabcontent {{topbycoursestate}}">
+    <table class="generaltable">
+        <thead>
+            <tr>
+                <th>{{#str}}positionhead, block_ludifica{{/str}}</th>
+                <th>{{#str}}playerhead, block_ludifica{{/str}}</th>
+                <th>{{#str}}pointshead, block_ludifica{{/str}}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{#topbycourse}}
+            <tr class="{{#current}}current-user{{/current}}">
+                <td class="numeric-cel">{{position}}</td>
+                <td>{{name}}</td>
+                <td class="numeric-cel">{{points}}</td>
+            </tr>
+        {{/topbycourse}}
+        </tbody>
+    </table>
+</div>
+{{/hastopbycourse}}
+
+{{#hastopbysite}}
+<div id="tab-topbysite" class="block_ludifica-tabcontent {{topbysitestate}}">
+    <table class="generaltable">
+        <thead>
+            <tr>
+                <th>{{#str}}positionhead, block_ludifica{{/str}}</th>
+                <th>{{#str}}playerhead, block_ludifica{{/str}}</th>
+                <th>{{#str}}pointshead, block_ludifica{{/str}}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{#topbysite}}
+            <tr class="{{#current}}current-user{{/current}}">
+                <td class="numeric-cel">{{position}}</td>
+                <td>{{name}}</td>
+                <td class="numeric-cel">{{points}}</td>
+            </tr>
+        {{/topbysite}}
+        </tbody>
+    </table>
+</div>
+{{/hastopbysite}}
+
+{{#haslastmonth}}
+<div id="tab-lastmonth" class="block_ludifica-tabcontent {{lastmonthstate}}">
+    <table class="generaltable">
+        <thead>
+            <tr>
+                <th>{{#str}}positionhead, block_ludifica{{/str}}</th>
+                <th>{{#str}}playerhead, block_ludifica{{/str}}</th>
+                <th>{{#str}}pointshead, block_ludifica{{/str}}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{#lastmonth}}
+            <tr class="{{#current}}current-user{{/current}}">
+                <td class="numeric-cel">{{position}}</td>
+                <td>{{name}}</td>
+                <td class="numeric-cel">{{points}}</td>
+            </tr>
+        {{/lastmonth}}
+        </tbody>
+    </table>
+</div>
+{{/haslastmonth}}

@@ -132,6 +132,7 @@ class tickets implements renderable, templatable {
             'tickets' => array_values($this->tickets),
             'baseurl' => $CFG->wwwroot,
             'canedit' => $hasmanage,
+            'storetabs' => \block_ludifica\controller::get_storetabs('tickets'),
             'sesskey' => sesskey()
         ];
 

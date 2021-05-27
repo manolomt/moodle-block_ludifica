@@ -70,9 +70,9 @@ class main implements renderable, templatable {
         global $CFG, $COURSE;
 
         $icons = array('profile' => 'address-card',
-                        'topbycourse' => 'sort-amount-up',
+                        'topbycourse' => 'sort-amount-desc',
                         'topbysite' => 'trophy',
-                        'lastmonth' => 'calendar-check',
+                        'lastmonth' => 'calendar-check-o',
                     );
 
         $showtabs = array();
@@ -101,18 +101,21 @@ class main implements renderable, templatable {
         }
 
         if (in_array('topbycourse', $this->tabs)) {
+            $defaultvariables['hastopbycourse'] = true;
             $defaultvariables['topbycourse'] = array_values(\block_ludifica\controller::get_topbycourse($COURSE->id));
             $defaultvariables['topbycoursestate'] = !$activetab ? 'active' : '';
             $activetab = true;
         }
 
         if (in_array('topbysite', $this->tabs)) {
+            $defaultvariables['hastopbysite'] = true;
             $defaultvariables['topbysite'] = array_values(\block_ludifica\controller::get_topbysite());
             $defaultvariables['topbysitestate'] = !$activetab ? 'active' : '';
             $activetab = true;
         }
 
         if (in_array('lastmonth', $this->tabs)) {
+            $defaultvariables['haslastmonth'] = true;
             $defaultvariables['lastmonth'] = array_values(\block_ludifica\controller::get_lastmonth($COURSE->id));
             $defaultvariables['lastmonthstate'] = !$activetab ? 'active' : '';
             $activetab = true;

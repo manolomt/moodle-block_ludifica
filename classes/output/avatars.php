@@ -100,6 +100,7 @@ class avatars implements renderable, templatable {
             'avatars' => array_values($this->avatars),
             'baseurl' => $CFG->wwwroot,
             'canedit' => $hasmanage,
+            'storetabs' => \block_ludifica\controller::get_storetabs('avatars'),
             'sesskey' => sesskey()
         ];
 

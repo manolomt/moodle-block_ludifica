@@ -216,7 +216,7 @@
 }
 
 .block_ludifica-tabcontent {
-    padding: 20px;
+    padding: 10px 0;
     display: none;
 }
 
@@ -225,3 +225,48 @@
 }
 
 /* End Tabs control */
+
+
+/* Store */
+.store-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.store-tabs > a {
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: none;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.store-tabs > .active {
+    cursor: default;
+}
+
+.store-tabs > .active,
+.store-tabs > :hover[data-ref] {
+    border-color: #aaa;
+    background-color: #ddd;
+    text-decoration: none;
+}
+
+/* End Store */
+
+/* Ranking tables */
+.block_ludifica-tabcontent .generaltable {
+    font-size: 12px;
+}
+
+.block_ludifica-tabcontent .numeric-cel {
+    text-align: right;
+}
+
+.block_ludifica-tabcontent .current-user {
+    background-color: bisque!important;
+}
+/* End Ranking tables */

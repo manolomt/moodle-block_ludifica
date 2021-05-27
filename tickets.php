@@ -79,8 +79,6 @@ if ($hasmanage && $delete && confirm_sesskey()) {
     }
 }
 
-echo $OUTPUT->heading(get_string('tickets', 'block_ludifica'));
-
 if (!empty($msg)) {
     $msg = get_string($msg, 'block_ludifica');
     echo $OUTPUT->notification($msg, 'notifysuccess');

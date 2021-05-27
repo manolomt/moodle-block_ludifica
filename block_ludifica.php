@@ -62,21 +62,26 @@ class block_ludifica extends block_base {
 
         $tabs = array();
 
-        // Profile tab is printed by default if not exists the configuration parameter.
-        if (!property_exists($this->config, 'tabprofile') || $this->config->tabprofile) {
+        if (isset($this->config) && is_object($this->config)) {
+            // Profile tab is printed by default if not exists the configuration parameter.
+            if (property_exists($this->config, 'tabprofile') && $this->config->tabprofile) {
+                $tabs[] = 'profile';
+            }
+
+            if ($this->page->course->id != SITEID && property_exists($this->config, 'tabtopbycourse') && $this->config->tabtopbycourse) {
+                $tabs[] = 'topbycourse';
+            }
+
+            if (property_exists($this->config, 'tabtopbysite') && $this->config->tabtopbysite) {
+                $tabs[] = 'topbysite';
+            }
+
+            // ToDo: The current DB structure not support points by date because all points are sum by type.
+            /*if ($this->page->course->id != SITEID && property_exists($this->config, 'tablastmonth') && $this->config->tablastmonth) {
+                $tabs[] = 'lastmonth';
+            }*/
+        } else {
             $tabs[] = 'profile';
-        }
-
-        if ($this->page->course->id != SITEID && property_exists($this->config, 'tabtopbycourse') && $this->config->tabtopbycourse) {
-            $tabs[] = 'topbycourse';
-        }
-
-        if (property_exists($this->config, 'tabtopbysite') && $this->config->tabtopbysite) {
-            $tabs[] = 'topbysite';
-        }
-
-        if ($this->page->course->id != SITEID && property_exists($this->config, 'tablastmonth') && $this->config->tablastmonth) {
-            $tabs[] = 'lastmonth';
         }
 
         $html = '';

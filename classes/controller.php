@@ -48,6 +48,11 @@ class controller {
      */
     const COINS_TYPE_BYPOINTS = 'bypoints';
 
+    /**
+     * var int Ranking users.
+     */
+    const LIMIT_RANKING = 10;
+
 
     private static $LEVELS = null;
 
@@ -380,18 +385,100 @@ class controller {
         return substr(implode($word), 0, $len);
     }
 
-    public static function get_topbycourse($courseid) {
+    public static function get_topbycourse($courseid, $includecurrent = true) {
+        global $DB;
+
+        $sql = "SELECT u.id, u.firstname AS name, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
+                " FROM {block_ludifica_userpoints} AS lu " .
+                " INNER JOIN {user} AS u ON u.id = lu.userid" .
+                " WHERE lu.courseid = :courseid" .
+                " GROUP BY u.id" .
+                " ORDER BY points DESC";
+        $records = $DB->get_records_sql($sql, array('courseid' => $courseid));
+
+        return self::get_toplist($records, $includecurrent);
+
+    }
+
+    public static function get_topbysite($includecurrent = true) {
+        global $DB;
+
         $list = array();
+
+        $sql = "SELECT u.id, u.firstname AS name, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
+                " FROM {block_ludifica_userpoints} AS lu " .
+                " INNER JOIN {user} AS u ON u.id = lu.userid" .
+                " GROUP BY u.id" .
+                " ORDER BY points DESC";
+        $records = $DB->get_records_sql($sql);
+
+        return self::get_toplist($records, $includecurrent);
+    }
+
+    public static function get_lastmonth($courseid, $includecurrent = true) {
+        // ToDo: The current DB structure not support points by date because all points are sum by type.
+        return array();
+    }
+
+    private static function get_toplist($records, $includecurrent = true) {
+        global $USER;
+
+        $list = array();
+
+        $k = 0;
+        $curentincluded = false;
+        foreach ($records as $record) {
+            $k++;
+
+            $record->position = $k;
+            $list[] = $record;
+
+            if ($record->id == $USER->id) {
+                $record->current = true;
+                $curentincluded = true;
+            }
+
+            if ($k >= self::LIMIT_RANKING) {
+                break;
+            }
+        }
+
+        if ($includecurrent && !$curentincluded) {
+            $k = 0;
+            foreach ($records as $record) {
+
+                $k++;
+                if ($record->id !== $USER->id) {
+                    continue;
+                }
+
+                $record->position = $k;
+                $record->current = true;
+                $list[] = $record;
+                break;
+            }
+        }
+
         return $list;
     }
 
-    public static function get_topbysite() {
-        $list = array();
-        return $list;
-    }
+    public static function get_storetabs($active) {
+        $tabs = array();
 
-    public static function get_lastmonth($courseid) {
-        $list = array();
-        return $list;
+        $avatars = new \stdClass();
+        $avatars->text = get_string('avatars', 'block_ludifica');
+        $avatars->title = $avatars->text;
+        $avatars->url = new \moodle_url('/blocks/ludifica/avatars.php');
+        $avatars->active = $active == 'avatars';
+        $tabs[] = $avatars;
+
+        $tickets = new \stdClass();
+        $tickets->text = get_string('tickets', 'block_ludifica');
+        $tickets->title = $tickets->text;
+        $tickets->url = new \moodle_url('/blocks/ludifica/tickets.php');
+        $tickets->active = $active == 'tickets';
+        $tabs[] = $tickets;
+
+        return $tabs;
     }
 }
