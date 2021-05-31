@@ -141,10 +141,11 @@ class controller {
         ];
 
         // Only get the newest.
-        $userpoints = $DB->get_record('block_ludifica_userpoints', $conditions);
+        $userpoints = $DB->get_records('block_ludifica_userpoints', $conditions, 'timecreated DESC', '*', 1, 1);
 
         $recurrentdays = 0;
-        if ($userpoints) {
+        if (count($userpoints) > 0) {
+            $userpoints = reset($userpoints);
             $userpoints->infodata = json_decode($userpoints->infodata);
 
             $todaytime = strtotime("today");

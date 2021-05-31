@@ -29,115 +29,117 @@
     }
 }}
 
-{{#hastabs}}
-    <div class="block_ludifica-tabs">
-    {{#tabs}}
-        <div data-ref="#tab-{{key}}" title="{{title}}" class="{{state}}">
-            <i class="fa fa-{{icon}}"></i>
+<div id="{{uniqueid}}" class="block_ludifica-content">
+    {{#hastabs}}
+        <div class="block_ludifica-tabs">
+        {{#tabs}}
+            <div data-ref="#{{uniqueid}} .tab-{{key}}" title="{{title}}" class="{{state}}">
+                <i class="fa fa-{{icon}}"></i>
+            </div>
+        {{/tabs}}
         </div>
-    {{/tabs}}
-    </div>
-{{/hastabs}}
+    {{/hastabs}}
 
-{{#player}}
-<div id="tab-profile" class="block_ludifica-tabcontent {{profilestate}}">
-    <div class="player_info">
-        <div class="avatar-box">
-            <img src="{{avatarurl}}" alt="{{fullname}}" /><br />
-            <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="btn btn-secondary">{{#str}} avatars, block_ludifica {{/str}}</a>
-        </div>
-        <div>
+    {{#player}}
+    <div class="tab-profile block_ludifica-tabcontent {{profilestate}}">
+        <div class="player_info">
+            <div class="avatar-box">
+                <img src="{{avatarurl}}" alt="{{fullname}}" /><br />
+                <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="btn btn-secondary">{{#str}} avatars, block_ludifica {{/str}}</a>
+            </div>
             <div>
-                <h2>{{fullname}}</h2>
-                <h3>
-                    <span>{{#str}} numpoints, block_ludifica, {{points}} {{/str}}</span>
-                    <span>{{#str}} numcoins, block_ludifica, {{coins}} {{/str}}</span>
-                    <span>{{#str}} labellevel, block_ludifica, {{#level}}{{name}}{{/level}} {{/str}}</span>
-                </h3>
-            </div>
-            <div class="tickets-box">
-                <h2> {{#str}} tickets, block_ludifica {{/str}} </h2>
                 <div>
-                {{#tickets}}
-                    <div class="oneticket">
-                        <img src="{{thumbnail}}" title="{{name}}" />
-                        <div class="count">{{count}}</div>
-                    </div>
-                {{/tickets}}
+                    <h2>{{fullname}}</h2>
+                    <h3>
+                        <span>{{#str}} numpoints, block_ludifica, {{points}} {{/str}}</span>
+                        <span>{{#str}} numcoins, block_ludifica, {{coins}} {{/str}}</span>
+                        <span>{{#str}} labellevel, block_ludifica, {{#level}}{{name}}{{/level}} {{/str}}</span>
+                    </h3>
                 </div>
-                <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="btn btn-secondary">{{#str}} tickets, block_ludifica {{/str}}</a>
+                <div class="tickets-box">
+                    <h2> {{#str}} tickets, block_ludifica {{/str}} </h2>
+                    <div>
+                    {{#tickets}}
+                        <div class="oneticket">
+                            <img src="{{thumbnail}}" title="{{name}}" />
+                            <div class="count">{{count}}</div>
+                        </div>
+                    {{/tickets}}
+                    </div>
+                    <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="btn btn-secondary">{{#str}} tickets, block_ludifica {{/str}}</a>
+                </div>
             </div>
+
         </div>
-
     </div>
-</div>
-{{/player}}
+    {{/player}}
 
-{{#hastopbycourse}}
-<div id="tab-topbycourse" class="block_ludifica-tabcontent {{topbycoursestate}}">
-    <table class="generaltable">
-        <thead>
-            <tr>
-                <th>{{#str}}positionhead, block_ludifica{{/str}}</th>
-                <th>{{#str}}playerhead, block_ludifica{{/str}}</th>
-                <th>{{#str}}pointshead, block_ludifica{{/str}}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {{#topbycourse}}
-            <tr class="{{#current}}current-user{{/current}}">
-                <td class="numeric-cel">{{position}}</td>
-                <td>{{name}}</td>
-                <td class="numeric-cel">{{points}}</td>
-            </tr>
-        {{/topbycourse}}
-        </tbody>
-    </table>
-</div>
-{{/hastopbycourse}}
+    {{#hastopbycourse}}
+    <div class="tab-topbycourse block_ludifica-tabcontent {{topbycoursestate}}">
+        <table class="generaltable">
+            <thead>
+                <tr>
+                    <th>{{#str}}positionhead, block_ludifica{{/str}}</th>
+                    <th>{{#str}}playerhead, block_ludifica{{/str}}</th>
+                    <th>{{#str}}pointshead, block_ludifica{{/str}}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#topbycourse}}
+                <tr class="{{#current}}current-user{{/current}}">
+                    <td class="numeric-cel">{{position}}</td>
+                    <td>{{name}}</td>
+                    <td class="numeric-cel">{{points}}</td>
+                </tr>
+            {{/topbycourse}}
+            </tbody>
+        </table>
+    </div>
+    {{/hastopbycourse}}
 
-{{#hastopbysite}}
-<div id="tab-topbysite" class="block_ludifica-tabcontent {{topbysitestate}}">
-    <table class="generaltable">
-        <thead>
-            <tr>
-                <th>{{#str}}positionhead, block_ludifica{{/str}}</th>
-                <th>{{#str}}playerhead, block_ludifica{{/str}}</th>
-                <th>{{#str}}pointshead, block_ludifica{{/str}}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {{#topbysite}}
-            <tr class="{{#current}}current-user{{/current}}">
-                <td class="numeric-cel">{{position}}</td>
-                <td>{{name}}</td>
-                <td class="numeric-cel">{{points}}</td>
-            </tr>
-        {{/topbysite}}
-        </tbody>
-    </table>
-</div>
-{{/hastopbysite}}
+    {{#hastopbysite}}
+    <div class="tab-topbysite block_ludifica-tabcontent {{topbysitestate}}">
+        <table class="generaltable">
+            <thead>
+                <tr>
+                    <th>{{#str}}positionhead, block_ludifica{{/str}}</th>
+                    <th>{{#str}}playerhead, block_ludifica{{/str}}</th>
+                    <th>{{#str}}pointshead, block_ludifica{{/str}}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#topbysite}}
+                <tr class="{{#current}}current-user{{/current}}">
+                    <td class="numeric-cel">{{position}}</td>
+                    <td>{{name}}</td>
+                    <td class="numeric-cel">{{points}}</td>
+                </tr>
+            {{/topbysite}}
+            </tbody>
+        </table>
+    </div>
+    {{/hastopbysite}}
 
-{{#haslastmonth}}
-<div id="tab-lastmonth" class="block_ludifica-tabcontent {{lastmonthstate}}">
-    <table class="generaltable">
-        <thead>
-            <tr>
-                <th>{{#str}}positionhead, block_ludifica{{/str}}</th>
-                <th>{{#str}}playerhead, block_ludifica{{/str}}</th>
-                <th>{{#str}}pointshead, block_ludifica{{/str}}</th>
-            </tr>
-        </thead>
-        <tbody>
-        {{#lastmonth}}
-            <tr class="{{#current}}current-user{{/current}}">
-                <td class="numeric-cel">{{position}}</td>
-                <td>{{name}}</td>
-                <td class="numeric-cel">{{points}}</td>
-            </tr>
-        {{/lastmonth}}
-        </tbody>
-    </table>
+    {{#haslastmonth}}
+    <div class="tab-lastmonth block_ludifica-tabcontent {{lastmonthstate}}">
+        <table class="generaltable">
+            <thead>
+                <tr>
+                    <th>{{#str}}positionhead, block_ludifica{{/str}}</th>
+                    <th>{{#str}}playerhead, block_ludifica{{/str}}</th>
+                    <th>{{#str}}pointshead, block_ludifica{{/str}}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{#lastmonth}}
+                <tr class="{{#current}}current-user{{/current}}">
+                    <td class="numeric-cel">{{position}}</td>
+                    <td>{{name}}</td>
+                    <td class="numeric-cel">{{points}}</td>
+                </tr>
+            {{/lastmonth}}
+            </tbody>
+        </table>
+    </div>
+    {{/haslastmonth}}
 </div>
-{{/haslastmonth}}
