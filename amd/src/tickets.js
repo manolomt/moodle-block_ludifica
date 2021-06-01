@@ -33,7 +33,7 @@ function($, Notification, Str, Ajax, Alertc, ModalFactory) {
         var $content = $('<div></div>');
         var $contactslist = $('<select id="block_ludifica_ticket_given_contact" class="form-control"></select>');
 
-        $content.append('<strong>' + s['giveticketmessage'] + '</strong>');
+        $content.append('<h4>' + s['giveticketmessage'] + '</h4>');
 
         contacts.forEach(contact => {
             $contactslist.append('<option value="' + contact.id + '">' + contact.name + '</option>');

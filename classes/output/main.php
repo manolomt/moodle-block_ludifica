@@ -72,7 +72,7 @@ class main implements renderable, templatable {
      * @return array Context variables for the template
      */
     public function export_for_template(renderer_base $output) {
-        global $CFG, $COURSE;
+        global $CFG, $COURSE, $USER, $OUTPUT;
 
         $icons = array('profile' => 'address-card',
                         'topbycourse' => 'sort-amount-desc',
@@ -103,6 +103,17 @@ class main implements renderable, templatable {
         ];
 
         if (in_array('profile', $this->tabs)) {
+
+            $nickname = $this->player->get_nickname();
+
+            $tmpl = new \core\output\inplace_editable('block_ludifica', 'nickname', $this->player->general->id,
+                has_capability('moodle/user:editownprofile', \context_system::instance()),
+                format_string($nickname), $nickname, get_string('editnickname', 'block_ludifica'),
+                get_string('newnickname', 'block_ludifica', format_string($nickname)));
+
+            $nickcontent = $OUTPUT->render($tmpl);
+
+            $defaultvariables['nickcontent'] = $nickcontent;
             $defaultvariables['player'] = $this->player->get_profile();
             $defaultvariables['tickets'] = array_values($this->player->get_tickets());
             $defaultvariables['profilestate'] = 'active';

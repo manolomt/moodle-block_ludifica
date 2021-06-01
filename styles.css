@@ -1,5 +1,6 @@
 .block_ludifica .player_info {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .block_ludifica .player_info h3 {
@@ -153,6 +154,11 @@
 .block_ludifica .avatar-box {
     text-align: center;
     min-width: 40%;
+    margin-top: 50px;
+}
+
+.block_ludifica .avatar-box.MD {
+    margin-top: 0;
 }
 
 .block_ludifica .avatar-box img {

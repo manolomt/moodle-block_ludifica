@@ -29,7 +29,7 @@
     }
 }}
 
-<div id="{{uniqueid}}" class="block_ludifica-content">
+<div id="{{uniqueid}}" class="block_ludifica-content" data-observe-resizes>
     {{#hastabs}}
         <div class="block_ludifica-tabs">
         {{#tabs}}
@@ -49,7 +49,7 @@
             </div>
             <div>
                 <div>
-                    <h2>{{fullname}}</h2>
+                    <h2>{{{nickcontent}}}</h2>
                     <h3>
                         <span>{{#str}} numpoints, block_ludifica, {{points}} {{/str}}</span>
                         <span>{{#str}} numcoins, block_ludifica, {{coins}} {{/str}}</span>

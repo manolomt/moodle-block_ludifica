@@ -60,6 +60,7 @@ class player {
             $general->points = 0;
             $general->coins = 0;
             $general->avatarid = self::DEFAULT_AVATAR;
+            $general->nickname = '';
             $general->timeupdated = time();
             $general->id = $DB->insert_record('block_ludifica_general', $general, true);
         }
@@ -116,6 +117,18 @@ class player {
         }
 
         return $response;
+    }
+
+    public function get_nickname() {
+        global $USER;
+
+        if(!empty($this->data->general->nickname)) {
+            $nickname = $this->data->general->nickname;
+        } else {
+            $nickname = fullname($USER);
+        }
+
+        return $nickname;
     }
 
     public function __get($name) {
