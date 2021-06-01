@@ -35,8 +35,8 @@ class block_ludifica_avatar_edit extends moodleform {
         // this contains the data of this form.
         $this->_data  = $this->_customdata['data'];
 
-        $editoroptions = array('maxfiles' => 0, 'maxbytes' => $CFG->maxbytes,
-                                    'trusttext' => false, 'noclean' => true);
+        $editoroptions = array('maxfiles' => 0, 'maxbytes' => 0, 'enable_filemanagement' => false,
+                                    'trusttext' => false, 'noclean' => false);
         $editorattributes = array ('rows'=> 5, 'cols'=>50);
         $filemanageroptions = $this->_customdata['filemanageroptions'];
 
@@ -50,9 +50,8 @@ class block_ludifica_avatar_edit extends moodleform {
         $mform->addElement('filemanager', 'attachments_filemanager', get_string('avatarbust', 'block_ludifica'),
                                 null, $filemanageroptions);
 
-        $mform->addElement('textarea', 'description', get_string('description'), 'cols="30" rows="5"');
+        $mform->addElement('editor', 'description', get_string('description'), $editorattributes, $editoroptions);
         $mform->addRule('description', get_string('missingfield', 'block_ludifica'), 'required', null, 'client');
-        $mform->setType('description', PARAM_TEXT);
 
         $types = \block_ludifica\avatar::get_types();
         $mform->addElement('select', 'type', get_string('avatartype', 'block_ludifica'), $types);
