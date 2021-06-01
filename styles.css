@@ -1,3 +1,9 @@
+.block_ludifica .card-title {
+    margin: 0;
+    padding: 10px 0 10px 15px;
+    display: inline-block !important;
+}
+
 .block_ludifica .player_info {
     display: flex;
     flex-wrap: wrap;
