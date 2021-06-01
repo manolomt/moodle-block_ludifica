@@ -44,7 +44,7 @@
     <div class="tab-profile block_ludifica-tabcontent {{profilestate}}">
         <div class="player_info">
             <div class="avatar-box">
-                <img src="{{avatarurl}}" alt="{{fullname}}" /><br />
+                <img src="{{avatarurl}}" alt="{{nickname}}" /><br />
                 <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="btn btn-secondary">{{#str}} avatars, block_ludifica {{/str}}</a>
             </div>
             <div>
@@ -65,6 +65,11 @@
                             <div class="count">{{count}}</div>
                         </div>
                     {{/tickets}}
+                    {{^tickets}}
+                        <p class="notavailableyet">
+                            {{#str}} notusertickets, block_ludifica {{/str}}
+                        </p>
+                    {{/tickets}}
                     </div>
                     <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="btn btn-secondary">{{#str}} tickets, block_ludifica {{/str}}</a>
                 </div>
@@ -76,6 +81,7 @@
 
     {{#hastopbycourse}}
     <div class="tab-topbycourse block_ludifica-tabcontent {{topbycoursestate}}">
+        {{#hasrowstopbycourse}}
         <table class="generaltable">
             <thead>
                 <tr>
@@ -88,17 +94,24 @@
             {{#topbycourse}}
                 <tr class="{{#current}}current-user{{/current}}">
                     <td class="numeric-cel">{{position}}</td>
-                    <td>{{name}}</td>
+                    <td>{{nickname}}</td>
                     <td class="numeric-cel">{{points}}</td>
                 </tr>
             {{/topbycourse}}
             </tbody>
         </table>
+        {{/hasrowstopbycourse}}
+        {{^hasrowstopbycourse}}
+            <p>
+                {{#str}} nottopyet, block_ludifica {{/str}}
+            </p>
+        {{/hasrowstopbycourse}}
     </div>
     {{/hastopbycourse}}
 
     {{#hastopbysite}}
     <div class="tab-topbysite block_ludifica-tabcontent {{topbysitestate}}">
+        {{#hasrowstopbysite}}
         <table class="generaltable">
             <thead>
                 <tr>
@@ -111,17 +124,24 @@
             {{#topbysite}}
                 <tr class="{{#current}}current-user{{/current}}">
                     <td class="numeric-cel">{{position}}</td>
-                    <td>{{name}}</td>
+                    <td>{{nickname}}</td>
                     <td class="numeric-cel">{{points}}</td>
                 </tr>
             {{/topbysite}}
             </tbody>
         </table>
+        {{/hasrowstopbysite}}
+        {{^hasrowstopbysite}}
+            <p>
+                {{#str}} nottopyet, block_ludifica {{/str}}
+            </p>
+        {{/hasrowstopbysite}}
     </div>
     {{/hastopbysite}}
 
     {{#haslastmonth}}
     <div class="tab-lastmonth block_ludifica-tabcontent {{lastmonthstate}}">
+        {{#hasrowslastmonth}}
         <table class="generaltable">
             <thead>
                 <tr>
@@ -134,12 +154,18 @@
             {{#lastmonth}}
                 <tr class="{{#current}}current-user{{/current}}">
                     <td class="numeric-cel">{{position}}</td>
-                    <td>{{name}}</td>
+                    <td>{{nickname}}</td>
                     <td class="numeric-cel">{{points}}</td>
                 </tr>
             {{/lastmonth}}
             </tbody>
         </table>
+        {{/hasrowslastmonth}}
+        {{^hasrowslastmonth}}
+            <p>
+                {{#str}} nottopyet, block_ludifica {{/str}}
+            </p>
+        {{/hasrowslastmonth}}
     </div>
     {{/haslastmonth}}
 </div>

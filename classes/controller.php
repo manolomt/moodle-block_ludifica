@@ -389,11 +389,11 @@ class controller {
     public static function get_topbycourse($courseid, $includecurrent = true) {
         global $DB;
 
-        $sql = "SELECT u.id, u.firstname AS name, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
+        $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
                 " FROM {block_ludifica_userpoints} AS lu " .
-                " INNER JOIN {user} AS u ON u.id = lu.userid" .
+                " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
                 " WHERE lu.courseid = :courseid" .
-                " GROUP BY u.id" .
+                " GROUP BY lu.userid" .
                 " ORDER BY points DESC";
         $records = $DB->get_records_sql($sql, array('courseid' => $courseid));
 
@@ -406,10 +406,10 @@ class controller {
 
         $list = array();
 
-        $sql = "SELECT u.id, u.firstname AS name, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
+        $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
                 " FROM {block_ludifica_userpoints} AS lu " .
-                " INNER JOIN {user} AS u ON u.id = lu.userid" .
-                " GROUP BY u.id" .
+                " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
+                " GROUP BY lu.userid" .
                 " ORDER BY points DESC";
         $records = $DB->get_records_sql($sql);
 
@@ -439,6 +439,15 @@ class controller {
                 $curentincluded = true;
             }
 
+            if (empty($record->nickname)) {
+                global $USER;
+                if ($record->id == $USER->id) {
+                    $record->nickname = fullname($USER);
+                } else {
+                    $record->nickname = get_string('nicknameunasined', 'block_ludifica', $record->id);
+                }
+            }
+
             if ($k >= self::LIMIT_RANKING) {
                 break;
             }
@@ -451,6 +460,11 @@ class controller {
                 $k++;
                 if ($record->id !== $USER->id) {
                     continue;
+                }
+
+                if (empty($record->nickname)) {
+                    global $USER;
+                    $record->nickname = fullname($USER);
                 }
 
                 $record->position = $k;

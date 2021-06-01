@@ -84,6 +84,7 @@ class player {
         $info->coins = $this->data->general->coins;
         $info->level = controller::calc_level($this->data->general->points);
         $info->avatar = $this->data->avatar;
+        $info->nickname = $this->get_nickname();
 
         if ($this->data->avatar) {
             $avatar = new avatar($this->data->avatar);

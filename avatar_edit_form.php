@@ -35,6 +35,14 @@ class block_ludifica_avatar_edit extends moodleform {
         // this contains the data of this form.
         $this->_data  = $this->_customdata['data'];
 
+        if (!$this->_data) {
+        } else {
+            $this->_data->description = array('text' => $this->_data->description);
+            if ($this->_data->description == 'null') {
+                $this->_data->description = '';
+            }
+        }
+
         $editoroptions = array('maxfiles' => 0, 'maxbytes' => 0, 'enable_filemanagement' => false,
                                     'trusttext' => false, 'noclean' => false);
         $editorattributes = array ('rows'=> 5, 'cols'=>50);

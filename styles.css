@@ -30,6 +30,15 @@
     border-top: 2px solid #ddd;
 }
 
+#block_ludifica-store .notavailableyet,
+#block_ludifica-tickets .notavailableyet,
+.block_ludifica .notavailableyet {
+    color: #fff;
+    font-size: 20px;
+    line-height: 22px;
+    text-align: center;
+}
+
 #tickets-list .oneticket {
     margin-bottom: 20px;
 }
@@ -160,6 +169,7 @@
 .block_ludifica .avatar-box {
     text-align: center;
     min-width: 40%;
+    width: 100%;
     margin-top: 50px;
 }
 

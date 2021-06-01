@@ -123,6 +123,7 @@ class main implements renderable, templatable {
         if (in_array('topbycourse', $this->tabs)) {
             $defaultvariables['hastopbycourse'] = true;
             $defaultvariables['topbycourse'] = array_values(\block_ludifica\controller::get_topbycourse($COURSE->id));
+            $defaultvariables['hasrowstopbycourse'] = count($defaultvariables['topbycourse']) > 0;
             $defaultvariables['topbycoursestate'] = !$activetab ? 'active' : '';
             $activetab = true;
         }
@@ -130,6 +131,7 @@ class main implements renderable, templatable {
         if (in_array('topbysite', $this->tabs)) {
             $defaultvariables['hastopbysite'] = true;
             $defaultvariables['topbysite'] = array_values(\block_ludifica\controller::get_topbysite());
+            $defaultvariables['hasrowstopbysite'] = count($defaultvariables['topbysite']) > 0;
             $defaultvariables['topbysitestate'] = !$activetab ? 'active' : '';
             $activetab = true;
         }
@@ -137,6 +139,7 @@ class main implements renderable, templatable {
         if (in_array('lastmonth', $this->tabs)) {
             $defaultvariables['haslastmonth'] = true;
             $defaultvariables['lastmonth'] = array_values(\block_ludifica\controller::get_lastmonth($COURSE->id));
+            $defaultvariables['hasrowslastmonth'] = count($defaultvariables['lastmonth']) > 0;
             $defaultvariables['lastmonthstate'] = !$activetab ? 'active' : '';
             $activetab = true;
         }
