@@ -128,8 +128,8 @@ class avatar {
      * List the available avatar types.
      */
     public static function get_types() {
-        return array(self::$DEFAULT_TYPE => get_string('avatartype_normal', 'block_ludifica'),
-                    'user' => get_string('avatartype_user', 'block_ludifica'));
+        return array(self::$DEFAULT_TYPE => get_string('avatartype_normal', 'block_ludifica'));
+        //, 'user' => get_string('avatartype_user', 'block_ludifica'));
     }
 
     public function __get($name) {
