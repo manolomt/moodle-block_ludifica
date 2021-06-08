@@ -128,12 +128,17 @@ class tickets implements renderable, templatable {
             $ticket->cangive = $ticket->userticketscount > 0 && $uticketavaile > 0;
         }
 
+        $uniqueid = \block_ludifica\controller::get_uniqueid();
+
         $defaultvariables = [
+            'uniqueid' => $uniqueid,
             'tickets' => array_values($this->tickets),
             'baseurl' => $CFG->wwwroot,
             'canedit' => $hasmanage,
             'storetabs' => \block_ludifica\controller::get_storetabs('tickets'),
-            'sesskey' => sesskey()
+            'sesskey' => sesskey(),
+            'player' => $player->get_profile()
+
         ];
 
         return $defaultvariables;

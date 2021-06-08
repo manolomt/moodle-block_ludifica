@@ -87,7 +87,7 @@ if ($editform->is_cancelled()) {
         $event = \block_ludifica\event\ticket_updated::create(array(
             'objectid' => $ticket->id,
             'context' => $syscontext,
-v        ));
+        ));
         $event->trigger();
     } else {
         $id = $DB->insert_record('block_ludifica_tickets', $ticket, true);

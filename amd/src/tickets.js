@@ -21,8 +21,20 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/notification', 'core/str', 'core/ajax', 'block_ludifica/alertc', 'core/modal_factory'],
-function($, Notification, Str, Ajax, Alertc, ModalFactory) {
+define(['jquery',
+        'core/notification',
+        'core/str',
+        'core/ajax',
+        'block_ludifica/alertc',
+        'block_ludifica/player',
+        'core/modal_factory'],
+function($,
+        Notification,
+        Str,
+        Ajax,
+        Alertc,
+        Player,
+        ModalFactory) {
 
     var wwwroot = M.cfg.wwwroot;
     var s = [];
@@ -181,6 +193,7 @@ function($, Notification, Str, Ajax, Alertc, ModalFactory) {
                         if (data) {
                             Alertc.success(s['bought']);
                             update_ticketdata(ticketid);
+                            Player.reloadStats();
                         } else {
                             Alertc.error(s['notbuy']);
                         }

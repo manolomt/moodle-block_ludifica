@@ -49,11 +49,6 @@ class main implements renderable, templatable {
     private $tabs;
 
     /**
-     * var int Instances includes in page request.
-     */
-    private static $instancescounter = 0;
-
-    /**
      * Constructor.
      *
      * @param \block_ludifica\player $player The player user information.
@@ -92,8 +87,7 @@ class main implements renderable, templatable {
 
         $activetab = false;
 
-        $uniqueid = 'block_ludifica_' . self::$instancescounter;
-        self::$instancescounter++;
+        $uniqueid = \block_ludifica\controller::get_uniqueid();
 
         $defaultvariables = [
             'uniqueid' => $uniqueid,

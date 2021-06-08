@@ -95,6 +95,7 @@ $string['missingfield'] = 'This field is required';
 $string['newblocktitle'] = 'Gamification';
 $string['newnickname'] = 'new value to {$a}';
 $string['newticket'] = 'New ticket';
+$string['nicknameexists'] = 'The alias is already in use by another user, please choose another alias.';
 $string['nicknameunasined'] = 'Player {$a}';
 $string['noavatars'] = 'Avatars not available yet';
 $string['notavailable'] = 'No available to buy.';

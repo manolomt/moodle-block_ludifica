@@ -149,6 +149,9 @@ class external extends \external_api {
             $data->timeused = null;
             $DB->insert_record('block_ludifica_usertickets', $data);
 
+            $DB->update_record('block_ludifica_general', array('id' => $player->general->id,
+                                                                'coins' => $player->general->coins - $ticket->cost));
+
             return true;
         }
 
@@ -234,6 +237,9 @@ class external extends \external_api {
             $data->timecreated = time();
             $DB->insert_record('block_ludifica_useravatars', $data);
 
+            $DB->update_record('block_ludifica_general', array('id' => $player->general->id,
+                                                                'coins' => $player->general->coins - $avatar->cost));
+
             return true;
         }
 
@@ -289,6 +295,56 @@ class external extends \external_api {
         return new \external_value(PARAM_BOOL, 'True if avatar was assigned to user');
     }
 
+
+    /**
+     * To validade input parameters
+     * @return \external_function_parameters
+     */
+    public static function get_profile_parameters() {
+        return new \external_function_parameters(
+            array()
+        );
+    }
+
+    public static function get_profile() {
+        global $DB, $USER;
+
+        if (!isloggedin() || isguestuser()) {
+            return null;
+        }
+
+        $player = new \block_ludifica\player($USER->id);
+
+        $profile = $player->get_profile();
+
+        unset($profile->avatar);
+
+        return $profile;
+    }
+
+    /**
+     * Validate the return value
+     * @return \external_single_structure
+     */
+    public static function get_profile_returns() {
+        return new \external_single_structure(
+            array(
+                'fullname' => new \external_value(PARAM_TEXT, 'Player fullname'),
+                'points' => new \external_value(PARAM_INT, 'Current points'),
+                'coins' => new \external_value(PARAM_INT, 'Current coins'),
+                'level' => new \external_single_structure(
+                    array(
+                        'name' => new \external_value(PARAM_TEXT, 'Level name'),
+                        'maxpoints' => new \external_value(PARAM_INT, 'Level max points'),
+                        'index' => new \external_value(PARAM_INT, 'Level position')
+                    ),
+                    'The user level information'),
+                'nickname' => new \external_value(PARAM_TEXT, 'Player nickname'),
+                'avatarurl' => new \external_value(PARAM_TEXT, 'Player avatar URL')
+            ),
+            'General current player info', VALUE_DEFAULT, null
+        );
+    }
 
 
 }

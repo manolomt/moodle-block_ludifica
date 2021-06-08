@@ -96,12 +96,16 @@ class avatars implements renderable, templatable {
             $avatar->uri = $avatarcore->get_busturi();
         }
 
+        $uniqueid = \block_ludifica\controller::get_uniqueid();
+
         $defaultvariables = [
+            'uniqueid' => $uniqueid,
             'avatars' => array_values($this->avatars),
             'baseurl' => $CFG->wwwroot,
             'canedit' => $hasmanage,
             'storetabs' => \block_ludifica\controller::get_storetabs('avatars'),
-            'sesskey' => sesskey()
+            'sesskey' => sesskey(),
+            'player' => $player->get_profile()
         ];
 
         return $defaultvariables;

@@ -21,8 +21,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/modal_factory'],
-function($, ModalFactory) {
+define(['jquery', 'core/modal_factory', 'block_ludifica/alertc'],
+function($, ModalFactory, Alertc) {
 
     var wwwroot = M.cfg.wwwroot;
 
@@ -120,6 +120,18 @@ function($, ModalFactory) {
 
             });
 
+        });
+
+        $('body').on('updatefailed', '[data-inplaceeditable]', function(e) {
+            var exception = e.exception; // The exception object returned by the callback.
+            e.preventDefault(); // This will prevent default error dialogue.
+
+            if (exception.errorcode == "nicknameexists") {
+                Alertc.error(exception.message);
+
+                // Cleared the error code because the event is twice called.
+                exception.errorcode = null;
+            }
         });
 
         resizeobserver();

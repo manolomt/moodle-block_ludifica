@@ -32,8 +32,8 @@ $string['ludifica:manage'] = 'Manage Ludifica block settings';
 
 $string['privacy:metadata'] = 'El bloque de Ludifica no almacena datos personales de los usuarios.';
 
-$string['available'] = 'Disponible';
-$string['availabledate'] = 'Disponible hasta';
+$string['available'] = 'Total disponible';
+$string['availabledate'] = 'Hasta';
 $string['avatar'] = 'Avatar';
 $string['avatars'] = 'Avatares';
 $string['avatarbust'] = 'Busto';
@@ -95,6 +95,7 @@ $string['missingfield'] = 'El campo es requerido';
 $string['newblocktitle'] = 'Ludifica';
 $string['newnickname'] = 'Nuevo valor para {$a}';
 $string['newticket'] = 'Nuevo beneficio';
+$string['nicknameexists'] = 'El alias ya está siendo usado por otro usuario, por favor elija otro alias.';
 $string['nicknameunasined'] = 'Jugador {$a}';
 $string['noavatars'] = 'Aún no hay avatares disponibles.';
 $string['notavailable'] = 'No disponible para comprar.';
@@ -144,7 +145,7 @@ $string['ticketcode_help'] = 'Si está vacío el sistema asigna un código aleat
 $string['ticketavailabledate'] = 'Fecha disponible';
 $string['ticketavailable'] = 'Cantidad disponible';
 $string['ticketnotavailable'] = 'The beneficio no está disponible ya, quizá fue usado en otra sesión.';
-$string['ticketbyuser'] = 'Cantidad por usuario';
+$string['ticketbyuser'] = 'Cantidad máxima por usuario';
 $string['ticketsvalidate'] = 'Validar beneficio';
 $string['ticketused'] = 'Beneficio usado';
 $string['thumbnail'] = 'Miniatura';

@@ -84,8 +84,15 @@ if (!empty($msg)) {
     echo $OUTPUT->notification($msg, 'notifysuccess');
 }
 
-$tickets = $DB->get_records('block_ludifica_tickets', null, $sort . ' ASC', '*', $spage * $bypage, $bypage);
-$ticketscount = $DB->count_records('block_ludifica_tickets');
+if ($hasmanage) {
+    $tickets = $DB->get_records('block_ludifica_tickets', null, $sort . ' ASC', '*', $spage * $bypage, $bypage);
+    $ticketscount = $DB->count_records('block_ludifica_tickets');
+} else {
+    $select = "availabledate >= :availabledate AND available > 0 AND enabled = 1";
+    $params = array('availabledate' => time());
+    $tickets = $DB->get_records_select('block_ludifica_tickets', $select, $params, $sort . ' ASC', '*', $spage * $bypage, $bypage);
+    $ticketscount = $DB->count_records_select('block_ludifica_tickets', $select, $params);
+}
 
 
 $pagingbar = new paging_bar($ticketscount, $spage, $bypage, "/blocks/ludifica/index.php?q={$query}&amp;sort={$sort}&amp;");

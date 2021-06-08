@@ -46,7 +46,15 @@ function block_ludifica_inplace_editable($itemtype, $itemid, $newvalue) {
     if ($itemtype === 'nickname') {
         global $DB, $USER, $CFG;
 
+        $newvalue = trim($newvalue);
+
         \external_api::validate_context(context_system::instance());
+
+        $exists = $DB->get_record('block_ludifica_general', array('nickname' => $newvalue));
+
+        if ($exists && $USER->id != $exists->userid) {
+            print_error('nicknameexists', 'block_ludifica');
+        }
 
         $record = $DB->get_record('block_ludifica_general', array('id' => $itemid), '*', MUST_EXIST);
 

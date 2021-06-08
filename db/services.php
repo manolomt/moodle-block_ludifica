@@ -69,6 +69,15 @@ $functions = array(
         'ajax' => true,
         'loginrequired' => true
     ),
+    'block_ludifica_get_profile' => array(
+        'classname' => '\block_ludifica\external',
+        'methodname' => 'get_profile',
+        'classpath' => 'blocks/ludifica/classes/externallib.php',
+        'description' => 'Get the current user profile',
+        'type' => 'read',
+        'ajax' => true,
+        'loginrequired' => true
+    ),
 /*
     'block_ludifica_accessrevoke' => array(
         'classname' => '\block_ludifica\external',
@@ -86,7 +95,7 @@ $functions = array(
 $services = array(
         'Ludifica webservices' => array(
                 'functions' => array ('block_ludifica_get_ticket', 'block_ludifica_buy_ticket', 'block_ludifica_give_ticket',
-                                        'block_ludifica_buy_avatar'),
+                                        'block_ludifica_buy_avatar', 'block_ludifica_get_profile'),
                 'restrictedusers' => 0, // if 1, the administrator must manually select which user can use this service.
                 // (Administration > Plugins > Web services > Manage services > Authorised users)
                 'enabled' => 0, // if 0, then token linked to this service won't work

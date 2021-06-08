@@ -53,6 +53,11 @@ class controller {
      */
     const LIMIT_RANKING = 10;
 
+    /**
+     * var int Instances includes in page request.
+     */
+    private static $instancescounter = 0;
+
 
     private static $LEVELS = null;
 
@@ -495,5 +500,12 @@ class controller {
         $tabs[] = $tickets;
 
         return $tabs;
+    }
+
+    public static function get_uniqueid() {
+        $uniqueid = 'block_ludifica_' . self::$instancescounter;
+        self::$instancescounter++;
+
+        return $uniqueid;
     }
 }

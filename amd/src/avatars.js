@@ -21,8 +21,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/notification', 'core/str', 'core/ajax', 'block_ludifica/alertc', 'core/modal_factory'],
-function($, Notification, Str, Ajax, Alertc, ModalFactory) {
+define(['jquery', 'core/notification', 'core/str', 'core/ajax', 'block_ludifica/alertc', 'block_ludifica/player'],
+function($, Notification, Str, Ajax, Alertc, Player) {
 
     var wwwroot = M.cfg.wwwroot;
     var s = [];
@@ -82,6 +82,7 @@ function($, Notification, Str, Ajax, Alertc, ModalFactory) {
                             var $avatarbox = $('#avatar-' + avatarid);
                             $avatarbox.removeClass('usernothas');
                             $avatarbox.addClass('userhas');
+                            Player.reloadStats();
                         } else {
                             Alertc.error(s['notbuy']);
                         }
