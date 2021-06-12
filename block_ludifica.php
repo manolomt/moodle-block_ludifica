@@ -95,13 +95,24 @@ class block_ludifica extends block_base {
             $html = '';
         } else {
 
-            $info = new \block_ludifica\player();
+            $info = null;
+            if ($this->page->pagetype == 'user-profile') {
+                $userid = optional_param('id', 0, PARAM_INT);
+                if ($userid) {
+                    $info = new \block_ludifica\player($userid);
+                }
+            } else {
+                $info = new \block_ludifica\player();
+            }
 
-            // Load templates to display the block content.
-            $renderable = new \block_ludifica\output\main($tabs, $info);
-            $renderer = $this->page->get_renderer('block_ludifica');
-            $html .= $renderer->render($renderable);
-            $this->page->requires->js_call_amd('block_ludifica/main', 'init');
+
+            if ($info) {
+                // Load templates to display the block content.
+                $renderable = new \block_ludifica\output\main($tabs, $info);
+                $renderer = $this->page->get_renderer('block_ludifica');
+                $html .= $renderer->render($renderable);
+                $this->page->requires->js_call_amd('block_ludifica/main', 'init');
+            }
 
         }
 

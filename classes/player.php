@@ -86,6 +86,13 @@ class player {
         $info->avatar = $this->data->avatar;
         $info->nickname = $this->get_nickname();
 
+        if (!empty($this->data->description)) {
+            $usercontext = \context_user::instance($this->data->id);
+            $info->description = file_rewrite_pluginfile_urls($this->data->description, 'pluginfile.php', $usercontext->id,
+                                                                'user', 'profile', null);
+//            $info->description = format_text($this->data->description, $this->data->descriptionformat);
+        }
+
         if ($this->data->avatar) {
             $avatar = new avatar($this->data->avatar);
             $info->avatarurl = $avatar->get_uri($info->level->index);
@@ -97,9 +104,9 @@ class player {
     }
 
     public function get_tickets() {
-        global $OUTPUT, $DB, $USER;
+        global $OUTPUT, $DB;
 
-        $usertickets = $DB->get_records('block_ludifica_usertickets', array('userid' => $USER->id));
+        $usertickets = $DB->get_records('block_ludifica_usertickets', array('userid' => $this->data->id));
 
         $response = array();
         foreach ($usertickets as $one) {
@@ -121,12 +128,11 @@ class player {
     }
 
     public function get_nickname() {
-        global $USER;
 
         if(!empty($this->data->general->nickname)) {
             $nickname = $this->data->general->nickname;
         } else {
-            $nickname = fullname($USER);
+            $nickname = fullname($this->data);
         }
 
         return $nickname;

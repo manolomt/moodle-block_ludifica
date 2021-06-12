@@ -99,18 +99,24 @@ class main implements renderable, templatable {
         if (in_array('profile', $this->tabs)) {
 
             $nickname = $this->player->get_nickname();
+            $ownprofile = $this->player->general->userid == $USER->id;
 
-            $tmpl = new \core\output\inplace_editable('block_ludifica', 'nickname', $this->player->general->id,
-                has_capability('moodle/user:editownprofile', \context_system::instance()),
-                format_string($nickname), $nickname, get_string('editnickname', 'block_ludifica'),
-                get_string('newnickname', 'block_ludifica', format_string($nickname)));
+            if ($ownprofile) {
+                $tmpl = new \core\output\inplace_editable('block_ludifica', 'nickname', $this->player->general->id,
+                    has_capability('moodle/user:editownprofile', \context_system::instance()),
+                    format_string($nickname), $nickname, get_string('editnickname', 'block_ludifica'),
+                    get_string('newnickname', 'block_ludifica', format_string($nickname)));
+                    $nickcontent = $OUTPUT->render($tmpl);
+                    $defaultvariables['tickets'] = array_values($this->player->get_tickets());
+                } else {
+                $nickcontent = $nickname;
+            }
 
-            $nickcontent = $OUTPUT->render($tmpl);
 
             $defaultvariables['nickcontent'] = $nickcontent;
             $defaultvariables['player'] = $this->player->get_profile();
-            $defaultvariables['tickets'] = array_values($this->player->get_tickets());
             $defaultvariables['profilestate'] = 'active';
+            $defaultvariables['ownprofile'] = $ownprofile;
             $activetab = true;
         }
 
