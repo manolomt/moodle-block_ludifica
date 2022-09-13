@@ -43,6 +43,13 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configselect($name, $title, $help, '', $fields);
     $generalsettings->add($setting);
 
+    // Create user points.
+    $name = 'block_ludifica/pointsbynewuser';
+    $title = get_string('pointsbynewuser', 'block_ludifica');
+    $help = get_string('pointsbynewuser_help', 'block_ludifica');
+    $setting = new admin_setting_configtext($name, $title, $help, 0, PARAM_INT);
+    $generalsettings->add($setting);
+    
     // Complete course points.
     $name = 'block_ludifica/pointsbyendcourse';
     $title = get_string('pointsbyendcourse', 'block_ludifica');
