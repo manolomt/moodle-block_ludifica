@@ -32,6 +32,23 @@ defined('MOODLE_INTERNAL') || die();
  */
 function xmldb_block_ludifica_upgrade($oldversion) {
     global $CFG, $DB;
+    
+    $dbman = $DB->get_manager();
+
+    if ($oldversion < 2022051202) {
+
+        // Define field id to be added to block_ludifica_userpoints.
+        $table = new xmldb_table('block_ludifica_userpoints');
+        $field = new xmldb_field('objectid', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'courseid');
+
+        // Conditionally launch add field id.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Ludifica savepoint reached.
+        upgrade_block_savepoint(true, 2022051202, 'ludifica');
+    }
 
     return true;
 }
