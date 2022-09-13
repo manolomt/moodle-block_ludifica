@@ -217,6 +217,43 @@ class controller {
     }
 
     /**
+     * Add points to a new user.
+     */
+    public static function points_usercreated($userid) {
+        global $DB;
+
+         $points = get_config('block_ludifica', 'pointsbynewuser');
+
+         // Save specific course points.
+         $infodata = new \stdClass();
+         $infodata->userid = $userid;
+
+         $userpoints = new \stdClass();
+         $userpoints->courseid = SITEID;
+         $userpoints->userid = $userid;
+         $userpoints->objectid = NULL;
+         $userpoints->type = controller::POINTS_TYPE_USERCREATED;
+         $userpoints->points = $points;
+         $userpoints->timecreated = time();
+         $userpoints->infodata = json_encode($infodata);
+
+         $userpoints->id = $DB->insert_record('block_ludifica_userpoints', $userpoints, true);
+         $userpoints->infodata = $infodata;
+
+         $player = new player($userid);
+         $totalpoints = $points + $player->general->points;
+
+         // We need put coins before points because current points are used to calc the coins earned.
+         self::coinsbypoints($userid, SITEID, $points);
+
+         // Save the global/total points.
+         $DB->update_record('block_ludifica_general', ['id' => $player->general->id,
+                                                       'points' => $totalpoints,
+                                                       'timeupdated' => time()]);
+         return true;
+    }
+    
+    /**
      * Add coins by new points.
      */
     public static function coinsbypoints($userid, $courseid, $newpoints) {
