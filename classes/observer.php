@@ -58,5 +58,16 @@ class observer {
         controller::points_recurrentlogin($event->userid);
 
     }
+    
+    /**
+     * Calculate points when a new user is created.
+     *
+     * @param \core\event\base $event
+     */
+    public static function user_created(\core\event\base $event) {
+
+        controller::points_usercreated($event->relateduserid);
+
+    }
 
 }
