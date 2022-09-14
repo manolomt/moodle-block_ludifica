@@ -109,9 +109,9 @@ class tickets implements renderable, templatable {
             $ticket->enabled = $ticket->enabled && $compliance;
 
             if (!$ticket->enabled) {
-                $ticket->notenabledtext = !$compliance ?
+                $ticket->notenabledtext = (!$compliance ?
                                                 get_string('notcompliance', 'block_ludifica') :
-                                                $ticket->available <= 0 ?
+                                                $ticket->available <= 0) ?
                                                     get_string('notavailable', 'block_ludifica') :
                                                     get_string('notavailabledate', 'block_ludifica');
             } else {
