@@ -47,7 +47,12 @@ class controller {
      * var string Points by new user.
      */
     const POINTS_TYPE_USERCREATED = 'usercreated';
-    
+
+    /**
+     * var string Points when a course is completed by a user.
+     */
+    const POINTS_TYPE_MODULECOMPLETED = 'modulecompleted';
+
     /**
      * var string Points by recurrent login.
      */
