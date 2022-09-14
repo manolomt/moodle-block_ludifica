@@ -441,10 +441,10 @@ class controller {
        $list = array();
 
        if(!$is_workplace) {
-
           $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
                  " FROM {block_ludifica_userpoints} AS lu " .
                  " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
+                 " WHERE lu.courseid = :courseid" .
                  " GROUP BY lu.userid" .
                  " ORDER BY points DESC";
                  " GROUP BY lu.userid, g.nickname" .
@@ -457,18 +457,18 @@ class controller {
                     " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
                     " LEFT JOIN {tool_tenant_user} AS tu ON tu.userid = lu.userid" .
                     " LEFT JOIN {tool_tenant} AS t ON t.id = tu.tenantid AND t.archived = 0" .
-                    " WHERE t.id = $user_tenant" .
+                    " WHERE t.id = $user_tenant AND lu.courseid = :courseid" .
                     " GROUP BY lu.userid, g.nickname" .
                     " ORDER BY points DESC";
        }
 
-        $records = $DB->get_records_sql($sql);
+        $records = $DB->get_records_sql($sql, array('courseid' => $courseid));
 
         return self::get_toplist($records, $includecurrent);
     }
 
     public static function get_topbysite($includecurrent = true) {
-        global $DB;
+        global $DB, $CFG, $USER;
 
         $list = array();
 
