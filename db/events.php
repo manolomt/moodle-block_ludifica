@@ -37,5 +37,9 @@ $observers = array(
     array(
          'eventname'   => '\core\event\user_created',
          'callback'    => 'block_ludifica\observer::user_created'
-   )
+    ),
+    array(
+         'eventname'   => 'core\event\course_module_completion_updated',
+         'callback'    => 'block_ludifica\observer::course_module_completion_updated'
+    )
 );

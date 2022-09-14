@@ -70,4 +70,16 @@ class observer {
 
     }
 
+    public static function course_module_completion_updated(\core\event\course_module_completion_updated $event) {
+
+           global $DB;
+
+           $eventdata = $event->get_record_snapshot('course_modules_completion', $event->objectid);
+
+           $context = \context_course::instance($event->courseid);
+
+           if ($eventdata->completionstate == COMPLETION_COMPLETE || $eventdata->completionstate == COMPLETION_COMPLETE_PASS) {
+               controller::points_completemodule($event->userid, $event->relateduserid, $event->courseid, $event->objectid);
+           }
+    }
 }

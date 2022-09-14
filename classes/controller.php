@@ -262,7 +262,94 @@ class controller {
                                                        'timeupdated' => time()]);
          return true;
     }
-    
+
+    /**
+     * Add points when a user completes a course module.
+     */
+    public static function points_completemodule($userid, $relateduserid, $courseid, $objectid = null) {
+           global $DB;
+
+           $conditions = [
+                       'userid' => $userid,
+                       'courseid' => $courseid,
+                       'objectid' => $objectid,
+                       'type' => controller::POINTS_TYPE_MODULECOMPLETED
+           ];
+
+           $record = $DB->get_record('block_ludifica_userpoints', $conditions);
+
+           // If exists not add more points.
+           if ($record)
+               return false;
+
+           if($userid != $relateduserid)
+               return false;
+
+           $pointsbycoursemodule = get_config('block_ludifica', 'pointsbyendcoursemodule');
+           $allmodules = get_config('block_ludifica', 'pointsbyendcoursemodule_all');
+
+           $configdata = $DB->get_field('block_instances', 'configdata', array('blockname' => 'ludifica', 'parentcontextid' => 474));
+
+           $points = -1;
+
+           if($allmodules == 0) {
+
+              $context = \context_course::instance($courseid);
+              $contextid = (int)$context->id;
+              $coursemoduleid = $DB->get_field('course_modules_completion', 'coursemoduleid', array('id' => $objectid));
+
+              $configdata = $DB->get_field('block_instances', 'configdata', array('blockname' => 'ludifica', 'parentcontextid' => $contextid));
+
+              if ($configdata = $DB->get_field('block_instances', 'configdata', array('blockname' => 'ludifica', 'parentcontextid' => $context->id))) {
+
+                  $config = unserialize(base64_decode($configdata));
+
+                          if (isset($config->{"points_module_".$coursemoduleid}) AND $config->{"points_module_".$coursemoduleid} > 0) {
+                              $points = $config->{"points_module_".$coursemoduleid};
+                          }
+              }
+            }
+            else {
+                $points = $pointsbycoursemodule;
+            }
+
+            $record_debug = new \stdClass();
+            $record_debug->name = 'pointsbymodule';
+            $record_debug->value = $points;
+            $DB->insert_record('debug', $record_debug);
+
+            if($points != -1) {
+               // Save specific course points.
+               $infodata = new \stdClass();
+               $infodata->moduleid = $objectid;
+
+               $userpoints = new \stdClass();
+               $userpoints->courseid = $courseid;
+               $userpoints->userid = $userid;
+               $userpoints->objectid = $objectid;
+               $userpoints->type = controller::POINTS_TYPE_MODULECOMPLETED;
+               $userpoints->points = $points;
+               $userpoints->timecreated = time();
+               $userpoints->infodata = json_encode($infodata);
+
+               $userpoints->id = $DB->insert_record('block_ludifica_userpoints', $userpoints, true);
+               $userpoints->infodata = $infodata;
+
+               $player = new player($userid);
+               $totalpoints = $points + $player->general->points;
+
+               // We need put coins before points because current points are used to calc the coins earned.
+               self::coinsbypoints($userid, SITEID, $points);
+
+               // Save the global/total points.
+               $DB->update_record('block_ludifica_general', ['id' => $player->general->id,
+                                                             'points' => $totalpoints,
+                                                             'timeupdated' => time()]);
+           }
+
+           return true;
+    }
+
     /**
      * Add coins by new points.
      */
@@ -439,6 +526,7 @@ class controller {
     }
 
     public static function get_topbycourse($courseid, $includecurrent = true) {
+    
        global $DB, $CFG, $USER;
 
        $is_workplace = (isset($CFG->workplaceproductionstate)) ? TRUE : FALSE;
@@ -446,6 +534,39 @@ class controller {
        $list = array();
 
        if(!$is_workplace) {
+          $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
+                 " FROM {block_ludifica_userpoints} AS lu " .
+                 " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
+                 " WHERE lu.courseid = :courseid" .
+                 " GROUP BY lu.userid" .
+                 " ORDER BY points DESC";
+                 " GROUP BY lu.userid, g.nickname" .
+                 " ORDER BY points DESC, g.nickname ASC";
+       }
+       else {
+             $user_tenant = \tool_tenant\tenancy::get_tenant_id($USER->id);
+             $sql = " SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
+                    " FROM {block_ludifica_userpoints} AS lu " .
+                    " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
+                    " LEFT JOIN {tool_tenant_user} AS tu ON tu.userid = lu.userid" .
+                    " LEFT JOIN {tool_tenant} AS t ON t.id = tu.tenantid AND t.archived = 0" .
+                    " WHERE t.id = $user_tenant AND lu.courseid = :courseid" .
+                    " GROUP BY lu.userid, g.nickname" .
+                    " ORDER BY points DESC";
+       }
+
+        $records = $DB->get_records_sql($sql, array('courseid' => $courseid));
+
+        return self::get_toplist($records, $includecurrent); 
+    }
+
+    public static function get_topbysite($includecurrent = true) {
+        global $DB, $CFG, $USER;
+
+        $is_workplace = (isset($CFG->workplaceproductionstate)) ? TRUE : FALSE;
+
+        $list = array();
+        if(!$is_workplace) {
 
           $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
                  " FROM {block_ludifica_userpoints} AS lu " .
@@ -467,21 +588,6 @@ class controller {
                     " ORDER BY points DESC";
        }
 
-        $records = $DB->get_records_sql($sql);
-
-        return self::get_toplist($records, $includecurrent);
-    }
-
-    public static function get_topbysite($includecurrent = true) {
-        global $DB;
-
-        $list = array();
-
-        $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
-                " FROM {block_ludifica_userpoints} AS lu " .
-                " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
-                " GROUP BY lu.userid" .
-                " ORDER BY points DESC";
         $records = $DB->get_records_sql($sql);
 
         return self::get_toplist($records, $includecurrent);
