@@ -44,6 +44,11 @@ class controller {
     const POINTS_TYPE_RECURRENTLOGIN = 'recurrentlogin';
 
     /**
+     * var string Points by new user.
+     */
+    const POINTS_TYPE_USERCREATED = 'usercreated';
+    
+    /**
      * var string Points by recurrent login.
      */
     const COINS_TYPE_BYPOINTS = 'bypoints';
