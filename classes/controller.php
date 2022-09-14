@@ -470,13 +470,31 @@ class controller {
     public static function get_topbysite($includecurrent = true) {
         global $DB, $CFG, $USER;
 
-        $list = array();
+        $is_workplace = (isset($CFG->workplaceproductionstate)) ? TRUE : FALSE;
 
-        $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
-                " FROM {block_ludifica_userpoints} AS lu " .
-                " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
-                " GROUP BY lu.userid" .
-                " ORDER BY points DESC";
+        $list = array();
+        if(!$is_workplace) {
+
+          $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
+                 " FROM {block_ludifica_userpoints} AS lu " .
+                 " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
+                 " GROUP BY lu.userid" .
+                 " ORDER BY points DESC";
+                 " GROUP BY lu.userid, g.nickname" .
+                 " ORDER BY points DESC, g.nickname ASC";
+       }
+       else {
+             $user_tenant = \tool_tenant\tenancy::get_tenant_id($USER->id);
+             $sql = " SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
+                    " FROM {block_ludifica_userpoints} AS lu " .
+                    " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
+                    " LEFT JOIN {tool_tenant_user} AS tu ON tu.userid = lu.userid" .
+                    " LEFT JOIN {tool_tenant} AS t ON t.id = tu.tenantid AND t.archived = 0" .
+                    " WHERE t.id = $user_tenant" .
+                    " GROUP BY lu.userid, g.nickname" .
+                    " ORDER BY points DESC";
+       }
+
         $records = $DB->get_records_sql($sql);
 
         return self::get_toplist($records, $includecurrent);
