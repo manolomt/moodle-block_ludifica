@@ -37,11 +37,14 @@ if ($ADMIN->fulltree) {
 
     // Duration field.
     $fields = $DB->get_records_menu('customfield_field', null, 'name', 'id, name');
-    $name = 'block_ludifica/duration';
-    $title = get_string('durationfield', 'block_ludifica');
-    $help = get_string('durationfield_help', 'block_ludifica');
-    $setting = new admin_setting_configselect($name, $title, $help, '', $fields);
-    $generalsettings->add($setting);
+
+    if (is_array($fields) && count($fields) > 0) {
+        $name = 'block_ludifica/duration';
+        $title = get_string('durationfield', 'block_ludifica');
+        $help = get_string('durationfield_help', 'block_ludifica');
+        $setting = new admin_setting_configselect($name, $title, $help, '', $fields);
+        $generalsettings->add($setting);
+    }
 
     // Complete course points.
     $name = 'block_ludifica/pointsbyendcourse';
