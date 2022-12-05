@@ -111,9 +111,9 @@ class tickets implements renderable, templatable {
             if (!$ticket->enabled) {
                 $ticket->notenabledtext = !$compliance ?
                                                 get_string('notcompliance', 'block_ludifica') :
-                                                $ticket->available <= 0 ?
+                                                ($ticket->available <= 0 ?
                                                     get_string('notavailable', 'block_ludifica') :
-                                                    get_string('notavailabledate', 'block_ludifica');
+                                                    get_string('notavailabledate', 'block_ludifica'));
             } else {
                 if ($ticket->userticketscount >= $ticket->byuser) {
                     $ticket->notenabledtext = get_string('maxtickets', 'block_ludifica');
@@ -137,8 +137,8 @@ class tickets implements renderable, templatable {
             'canedit' => $hasmanage,
             'storetabs' => \block_ludifica\controller::get_storetabs('tickets'),
             'sesskey' => sesskey(),
-            'player' => $player->get_profile()
-
+            'player' => $player->get_profile(),
+            'layouttickets' => true
         ];
 
         return $defaultvariables;

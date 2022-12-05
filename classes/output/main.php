@@ -93,7 +93,8 @@ class main implements renderable, templatable {
             'uniqueid' => $uniqueid,
             'hastabs' => count($this->tabs) > 1,
             'tabs' => $showtabs,
-            'baseurl' => $CFG->wwwroot
+            'baseurl' => $CFG->wwwroot,
+            'layoutgeneral' => true
         ];
 
         if (in_array('profile', $this->tabs)) {
