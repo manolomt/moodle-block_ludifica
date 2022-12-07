@@ -292,3 +292,11 @@
     background-color: bisque!important;
 }
 /* End Ranking tables */
+
+/* Contextual help */
+.ludifica_help {
+    background: none;
+    border: none;
+    color: #0f6cbf;
+}
+/* End contextual help */
