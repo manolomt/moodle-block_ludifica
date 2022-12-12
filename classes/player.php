@@ -36,6 +36,36 @@ class player {
     const DEFAULT_AVATAR = null;
 
     /**
+     * var string Points when a course is completed by a user.
+     */
+    const POINTS_TYPE_COURSECOMPLETED = 'coursecompleted';
+
+    /**
+     * var string Points when login a minimum numbers of days.
+     */
+    const POINTS_TYPE_RECURRENTLOGINBASIC = 'recurrentloginbasic';
+
+    /**
+     * var string Points by recurrent login after basic.
+     */
+    const POINTS_TYPE_RECURRENTLOGIN = 'recurrentlogin';
+
+     /**
+     * var string Points by new user.
+     */
+    const POINTS_TYPE_USERCREATED = 'usercreated';
+
+    /**
+     * var string Points by recurrent login.
+     */
+    const COINS_TYPE_BYPOINTS = 'bypoints';
+
+    /**
+     * var int Ranking users.
+     */
+    const LIMIT_RANKING = 10;
+
+    /**
      * var \stdClass Info about the player.
      */
     private $data;
@@ -90,7 +120,7 @@ class player {
             $usercontext = \context_user::instance($this->data->id);
             $info->description = file_rewrite_pluginfile_urls($this->data->description, 'pluginfile.php', $usercontext->id,
                                                                 'user', 'profile', null);
-//            $info->description = format_text($this->data->description, $this->data->descriptionformat);
+            //$info->description = format_text($this->data->description, $this->data->descriptionformat);
         }
 
         if ($this->data->avatar) {
@@ -136,6 +166,77 @@ class player {
         }
 
         return $nickname;
+    }
+
+    public function add_points(int $newpoints, int $courseid, string $type, object $infodata = null) {
+        global $DB;
+
+        $totalpoints = $newpoints + $this->data->general->points;
+        $timeaction = time();
+
+        // Save the global/total points.
+        $DB->update_record('block_ludifica_general', ['id' => $this->data->general->id,
+                                                       'points' => $totalpoints,
+                                                       'timeupdated' => $timeaction]);
+
+        // Coins earned with new points.
+        $this->coinsbypoints($courseid, $newpoints);
+
+        $data = new \stdClass();
+        $data->courseid = $courseid;
+        $data->userid = $this->data->id;
+        $data->type = $type;
+        $data->points = $newpoints;
+        $data->infodata = json_encode($infodata);
+        $data->timecreated = $timeaction;
+
+        $DB->insert_record('block_ludifica_userpoints', $data);
+    }
+
+    /**
+     * Add coins by new points.
+     */
+    public function coinsbypoints($courseid, $newpoints) {
+        global $DB;
+
+        $coinsbypoints = intval(get_config('block_ludifica', 'coinsbypoints'));
+        $pointstocoins = intval(get_config('block_ludifica', 'pointstocoins'));
+
+        if (empty($coinsbypoints) || empty($pointstocoins)) {
+            return false;
+        }
+
+        $factorpoints = $newpoints + ($this->data->general->points % $pointstocoins);
+
+        $newcoins = floor($factorpoints / $pointstocoins);
+
+        // Not new coins by points yet.
+        if ($newcoins == 0) {
+            return false;
+        }
+
+        $totalcoins = $newcoins + $this->data->general->coins;
+
+        // Save the global/total points.
+        $DB->update_record('block_ludifica_general', ['id' => $this->data->general->id,
+                                                        'coins' => $totalcoins,
+                                                        'timeupdated' => time()]);
+
+
+        $infodata = new \stdClass();
+        $infodata->points = $newpoints;
+        $infodata->factor = $factorpoints - $newpoints;
+
+        $data = new \stdClass();
+        $data->courseid = $courseid;
+        $data->userid = $this->data->id;
+        $data->type = self::COINS_TYPE_BYPOINTS;
+        $data->coins = $newcoins;
+        $data->infodata = json_encode($infodata);
+        $data->timecreated = time();
+        $DB->insert_record('block_ludifica_usercoins', $data);
+
+        return true;
     }
 
     public function __get($name) {

@@ -25,13 +25,17 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$observers = array(
-    array(
-            'eventname'   => '\core\event\course_completed',
-            'callback'    => 'block_ludifica\observer::course_completed'
-    ),
-    array(
+$observers = [
+    [
+        'eventname'   => '\core\event\course_completed',
+        'callback'    => 'block_ludifica\observer::course_completed'
+    ],
+    [
         'eventname'   => '\core\event\user_loggedin',
         'callback'    => 'block_ludifica\observer::user_loggedin'
-    )
-);
+    ],
+    [
+         'eventname'   => '\core\event\user_created',
+         'callback'    => 'block_ludifica\observer::user_created'
+    ]
+];

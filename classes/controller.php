@@ -34,26 +34,6 @@ defined('MOODLE_INTERNAL') || die();
 class controller {
 
     /**
-     * var string Points when a course is completed by a user.
-     */
-    const POINTS_TYPE_COURSECOMPLETED = 'coursecompleted';
-
-    /**
-     * var string Points by recurrent login.
-     */
-    const POINTS_TYPE_RECURRENTLOGIN = 'recurrentlogin';
-
-    /**
-     * var string Points by recurrent login.
-     */
-    const COINS_TYPE_BYPOINTS = 'bypoints';
-
-    /**
-     * var int Ranking users.
-     */
-    const LIMIT_RANKING = 10;
-
-    /**
      * var int Instances includes in page request.
      */
     private static $instancescounter = 0;
@@ -70,7 +50,7 @@ class controller {
         $conditions = [
             'userid' => $userid,
             'courseid' => $courseid,
-            'type' => controller::POINTS_TYPE_COURSECOMPLETED
+            'type' => player::POINTS_TYPE_COURSECOMPLETED
         ];
 
         $record = $DB->get_record('block_ludifica_userpoints', $conditions);
@@ -81,44 +61,34 @@ class controller {
         }
 
         $coursedurationfield = get_config('block_ludifica', 'duration');
-        $pointsbycourse = get_config('block_ludifica', 'pointsbyendcourse');
+        $pointsbycourse = intval(get_config('block_ludifica', 'pointsbyendcourse'));
 
-        if (empty($coursedurationfield) || empty($pointsbycourse)) {
+        if (empty($pointsbycourse)) {
             return false;
         }
 
-        $duration = $DB->get_field('customfield_data', 'value', ['fieldid' => $coursedurationfield, 'instanceid' => $courseid]);
+        // Default course term is 1.
+        $duration = 1;
 
-        if (empty($duration)) {
-            return false;
+        // Check if duration is defined and configured.
+        if (!empty($coursedurationfield)) {
+            $courseduration = $DB->get_field('customfield_data', 'value', ['fieldid' => $coursedurationfield,
+                                                                            'instanceid' => $courseid]);
+            $courseduration = intval($duration);
+
+            if (!empty($courseduration)) {
+                $duration = $courseduration;
+            }
         }
 
         $pointsbycomplete = $pointsbycourse * $duration;
-
-        $player = new player($userid);
-        $totalpoints = $pointsbycomplete + $player->general->points;
-
-        // We need put coins before points because current points are used to calc the coins earned.
-        self::coinsbypoints($userid, $courseid, $pointsbycomplete);
-
-        // Save the global/total points.
-        $DB->update_record('block_ludifica_general', ['id' => $player->general->id,
-                                                       'points' => $totalpoints,
-                                                       'timeupdated' => time()]);
 
         // Save specific course points.
         $infodata = new \stdClass();
         $infodata->completionid = $completionid;
 
-        $data = new \stdClass();
-        $data->courseid = $courseid;
-        $data->userid = $userid;
-        $data->type = self::POINTS_TYPE_COURSECOMPLETED;
-        $data->points = $pointsbycomplete;
-        $data->infodata = json_encode($infodata);
-        $data->timecreated = time();
-
-        $DB->insert_record('block_ludifica_userpoints', $data);
+        $player = new player($userid);
+        $player->add_points($pointsbycomplete, $courseid, player::POINTS_TYPE_COURSECOMPLETED, $infodata);
 
         return true;
     }
@@ -134,7 +104,7 @@ class controller {
             return;
         }
 
-        $conflogindays = get_config('block_ludifica', 'recurrentlogindays');
+        $conflogindays = intval(get_config('block_ludifica', 'recurrentlogindays'));
 
         if (empty($conflogindays)) {
             return false;
@@ -142,13 +112,14 @@ class controller {
 
         $conditions = [
             'userid' => $userid,
-            'type' => controller::POINTS_TYPE_RECURRENTLOGIN
+            'type' => player::POINTS_TYPE_RECURRENTLOGIN
         ];
 
         // Only get the newest.
-        $userpoints = $DB->get_records('block_ludifica_userpoints', $conditions, 'timecreated DESC', '*', 1, 1);
+        $userpoints = $DB->get_records('block_ludifica_userpoints', $conditions, 'timecreated DESC', '*', 0, 1);
 
         $recurrentdays = 0;
+        $step = 0;
         if (count($userpoints) > 0) {
             $userpoints = reset($userpoints);
             $userpoints->infodata = json_decode($userpoints->infodata);
@@ -162,20 +133,30 @@ class controller {
                     return false;
                 }
 
-                // Restart counter if not logged in in the last day.
+                // Restart counter if not logged in the last day.
                 $recurrentdays = strtotime($userpoints->infodata->lastday) + (24 * 60 * 60) >= strtotime("today") ?
                                     $userpoints->infodata->days : 0;
+
+                $step = $userpoints->infodata->steps;
             }
+
+            // Only create a new record if a new days counter is required (lost consecutive days).
+            $newcounter = $recurrentdays == 0 && $userpoints->points > 0;
         } else {
+            // Not userpoints record found.
+            $newcounter = true;
+        }
+
+        if ($newcounter) {
             $infodata = new \stdClass();
             $infodata->lastday = date('Y-m-d');
             $infodata->days = 0;
-            $infodata->steps = 0;
+            $infodata->steps = $step;
 
             $userpoints = new \stdClass();
             $userpoints->courseid = SITEID;
             $userpoints->userid = $userid;
-            $userpoints->type = controller::POINTS_TYPE_RECURRENTLOGIN;
+            $userpoints->type = player::POINTS_TYPE_RECURRENTLOGIN;
             $userpoints->points = 0;
             $userpoints->timecreated = time();
             $userpoints->infodata = json_encode($infodata);
@@ -185,75 +166,63 @@ class controller {
         }
 
         $points = 0;
-        // Not the minimum required days yet.
-        if ($conflogindays <= $recurrentdays + 1) {
-            if ($conflogindays == $recurrentdays + 1) {
-                $points = get_config('block_ludifica', 'pointsbyrecurrentlogin1');
-                $userpoints->infodata->steps++;
-            } else {
-                $points = get_config('block_ludifica', 'pointsbyrecurrentlogin2');
-            }
-
-            $player = new player($userid);
-            $totalpoints = $points + $player->general->points;
-
-            // We need put coins before points because current points are used to calc the coins earned.
-            self::coinsbypoints($userid, SITEID, $points);
-
-            // Save the global/total points.
-            $DB->update_record('block_ludifica_general', ['id' => $player->general->id,
-                                                           'points' => $totalpoints,
-                                                           'timeupdated' => time()]);
-
-        }
 
         $userpoints->infodata->lastday = date('Y-m-d');
         $userpoints->infodata->days = $recurrentdays + 1;
+        $updateuserpoints = false;
 
-        $DB->update_record('block_ludifica_userpoints', ['id' => $userpoints->id,
-                                                        'points' => $userpoints->points + $points,
-                                                        'infodata' => json_encode($userpoints->infodata)]);
+        // The minimum required days.
+        if ($conflogindays <= $recurrentdays + 1) {
+
+            $player = new player($userid);
+
+            // Points when login a minimum numbers of days.
+            if ($conflogindays == $recurrentdays + 1) {
+
+                $points = intval(get_config('block_ludifica', 'pointsbyrecurrentlogin1'));
+                $userpoints->infodata->steps++;
+
+                // Save specific points.
+                $infodata = new \stdClass();
+                $infodata->days = $recurrentdays + 1;
+                $infodata->step = $userpoints->infodata->steps;
+
+                $player->add_points($points, SITEID, player::POINTS_TYPE_RECURRENTLOGINBASIC, $infodata);
+                $updateuserpoints = true;
+            } else {
+                // Points after the minimum login days recurrently.
+                $points = intval(get_config('block_ludifica', 'pointsbyrecurrentlogin2'));
+
+                $player->add_points($points, SITEID, player::POINTS_TYPE_RECURRENTLOGIN, $userpoints->infodata);
+            }
+        } else {
+            $updateuserpoints = true;
+        }
+
+        // Update the current info data of userpoints because not points was assigned for this concept.
+        if ($updateuserpoints) {
+            $DB->update_record('block_ludifica_userpoints', ['id' => $userpoints->id,
+                                                            'infodata' => json_encode($userpoints->infodata)]);
+        }
+
         return true;
     }
 
     /**
-     * Add coins by new points.
+     * Add points to a new user.
      */
-    public static function coinsbypoints($userid, $courseid, $newpoints) {
+    public static function points_usercreated($userid) {
         global $DB;
 
-        $coinsbypoints = get_config('block_ludifica', 'coinsbypoints');
-        $pointstocoins = get_config('block_ludifica', 'pointstocoins');
+        $points = trim(get_config('block_ludifica', 'pointsbynewuser'));
 
-        if (empty($coinsbypoints) || empty($pointstocoins)) {
-            return false;
+        // Not points for this concept.
+        if (empty($points)) {
+         return true;
         }
 
         $player = new player($userid);
-
-        $newpoints += $player->general->points % $pointstocoins;
-
-        $newcoins = floor($newpoints / $pointstocoins);
-
-        $totalcoins = $newcoins + $player->general->coins;
-
-        // Save the global/total points.
-        $DB->update_record('block_ludifica_general', ['id' => $player->general->id,
-                                                        'coins' => $totalcoins,
-                                                        'timeupdated' => time()]);
-
-
-        $infodata = new \stdClass();
-        $infodata->points = $newpoints;
-
-        $data = new \stdClass();
-        $data->courseid = $courseid;
-        $data->userid = $userid;
-        $data->type = self::COINS_TYPE_BYPOINTS;
-        $data->coins = $newcoins;
-        $data->infodata = json_encode($infodata);
-        $data->timecreated = time();
-        $DB->insert_record('block_ludifica_usercoins', $data);
+        $player->add_points($points, SITEID, player::POINTS_TYPE_USERCREATED);
 
         return true;
     }
@@ -453,7 +422,7 @@ class controller {
                 }
             }
 
-            if ($k >= self::LIMIT_RANKING) {
+            if ($k >= player::LIMIT_RANKING) {
                 break;
             }
         }
