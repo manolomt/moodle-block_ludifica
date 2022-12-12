@@ -29,28 +29,38 @@ $generalsettings = new admin_settingpage('block_ludifica', get_string('generalse
 
 if ($ADMIN->fulltree) {
 
-    // // Course fields.
-    // $name = 'block_ludifica/settingsheaderfields';
-    // $heading = get_string('settingsheaderfields', 'block_ludifica');
-    // $setting = new admin_setting_heading($name, $heading, '');
-    // $generalsettings->add($setting);
+    // Course points section.
+    $name = 'block_ludifica/settingsheaderpointscourse';
+    $heading = get_string('settingsheaderpointscourse', 'block_ludifica');
+    $setting = new admin_setting_heading($name, $heading, '');
+    $generalsettings->add($setting);
 
     // Duration field.
-    $fields = $DB->get_records_menu('customfield_field', null, 'name', 'id, name');
+    $fields = [0 => ''];
+
+    $customfields = $DB->get_records_menu('customfield_field', null, 'name', 'id, name');
 
     if (is_array($fields) && count($fields) > 0) {
-        $name = 'block_ludifica/duration';
-        $title = get_string('durationfield', 'block_ludifica');
-        $help = get_string('durationfield_help', 'block_ludifica');
-        $setting = new admin_setting_configselect($name, $title, $help, '', $fields);
-        $generalsettings->add($setting);
+        $fields = array_merge($fields, $customfields);
     }
+
+    $name = 'block_ludifica/duration';
+    $title = get_string('durationfield', 'block_ludifica');
+    $help = get_string('durationfield_help', 'block_ludifica');
+    $setting = new admin_setting_configselect($name, $title, $help, '', $fields);
+    $generalsettings->add($setting);
 
     // Complete course points.
     $name = 'block_ludifica/pointsbyendcourse';
     $title = get_string('pointsbyendcourse', 'block_ludifica');
     $help = get_string('pointsbyendcourse_help', 'block_ludifica');
     $setting = new admin_setting_configtext($name, $title, $help, 0, PARAM_INT);
+    $generalsettings->add($setting);
+
+    // Login points.
+    $name = 'block_ludifica/settingsheaderpointslogin';
+    $heading = get_string('settingsheaderpointslogin', 'block_ludifica');
+    $setting = new admin_setting_heading($name, $heading, '');
     $generalsettings->add($setting);
 
     // Recurrent login days.
@@ -74,6 +84,25 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtext($name, $title, $help, 0, PARAM_INT);
     $generalsettings->add($setting);
 
+    // Other points.
+    $name = 'block_ludifica/settingsheaderpointsother';
+    $heading = get_string('settingsheaderpointsother', 'block_ludifica');
+    $setting = new admin_setting_heading($name, $heading, '');
+    $generalsettings->add($setting);
+
+    // Create user points.
+    $name = 'block_ludifica/pointsbynewuser';
+    $title = get_string('pointsbynewuser', 'block_ludifica');
+    $help = get_string('pointsbynewuser_help', 'block_ludifica');
+    $setting = new admin_setting_configtext($name, $title, $help, 0, PARAM_INT);
+    $generalsettings->add($setting);
+
+    // Coins section.
+    $name = 'block_ludifica/settingsheadercoins';
+    $heading = get_string('settingsheadercoins', 'block_ludifica');
+    $setting = new admin_setting_heading($name, $heading, '');
+    $generalsettings->add($setting);
+
     // Coins by points.
     $name = 'block_ludifica/coinsbypoints';
     $title = get_string('coinsbypoints', 'block_ludifica');
@@ -86,6 +115,12 @@ if ($ADMIN->fulltree) {
     $title = get_string('pointstocoins', 'block_ludifica');
     $help = get_string('pointstocoins_help', 'block_ludifica');
     $setting = new admin_setting_configtext($name, $title, $help, 0, PARAM_INT);
+    $generalsettings->add($setting);
+
+    // Levels section.
+    $name = 'block_ludifica/settingsheaderlevels';
+    $heading = get_string('settingsheaderlevels', 'block_ludifica');
+    $setting = new admin_setting_heading($name, $heading, '');
     $generalsettings->add($setting);
 
     // Levels.
