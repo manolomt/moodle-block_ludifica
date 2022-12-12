@@ -44,12 +44,16 @@
     <div class="tab-profile block_ludifica-tabcontent {{profilestate}}">
         <div class="player_info">
             <div class="avatar-box">
+                <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}level_help, block_ludifica{{/str}}"></button>
                 <img src="{{avatarurl}}" alt="{{nickname}}" /><br />
                 <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="btn btn-secondary">{{#str}} avatars, block_ludifica {{/str}}</a>
             </div>
             <div>
                 <div>
-                    <h2>{{{nickcontent}}}</h2>
+                    <h2>
+                        {{{nickcontent}}}
+                        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}name_help, block_ludifica{{/str}}"></button>
+                    </h2>
 
                     {{>block_ludifica/playerstats}}
 
@@ -80,6 +84,7 @@
     {{#hastopbycourse}}
     <div class="tab-topbycourse block_ludifica-tabcontent {{topbycoursestate}}">
         {{#hasrowstopbycourse}}
+        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}course-ranking_help, block_ludifica{{/str}}"></button>
         <table class="generaltable">
             <thead>
                 <tr>
@@ -134,12 +139,14 @@
                 {{#str}} nottopyet, block_ludifica {{/str}}
             </p>
         {{/hasrowstopbysite}}
+        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}site-ranking_help, block_ludifica{{/str}}"></button>
     </div>
     {{/hastopbysite}}
 
     {{#haslastmonth}}
     <div class="tab-lastmonth block_ludifica-tabcontent {{lastmonthstate}}">
         {{#hasrowslastmonth}}
+        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}site-ranking_help, block_ludifica{{/str}}"></button>
         <table class="generaltable">
             <thead>
                 <tr>
