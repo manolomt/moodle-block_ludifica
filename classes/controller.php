@@ -101,7 +101,7 @@ class controller {
 
         if (isguestuser()) {
             // No points to guest user.
-            return;
+            return false;
         }
 
         $conflogindays = intval(get_config('block_ludifica', 'recurrentlogindays'));
@@ -212,13 +212,11 @@ class controller {
      * Add points to a new user.
      */
     public static function points_usercreated($userid) {
-        global $DB;
-
-        $points = trim(get_config('block_ludifica', 'pointsbynewuser'));
+        $points = intval(get_config('block_ludifica', 'pointsbynewuser'));
 
         // Not points for this concept.
         if (empty($points)) {
-         return true;
+            return false;
         }
 
         $player = new player($userid);
