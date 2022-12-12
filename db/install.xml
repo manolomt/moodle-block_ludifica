@@ -87,44 +87,6 @@
         <INDEX NAME="timecreated" UNIQUE="false" FIELDS="timecreated"/>
       </INDEXES>
     </TABLE>
-    <!-- Not used because we use the stash block.-->
-    <!--TABLE NAME="block_ludifica_cards" COMMENT="Access cards">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="name" TYPE="char" LENGTH="127" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="description" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="type" TYPE="char" LENGTH="31" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="code" TYPE="char" LENGTH="31" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="infodata" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="enabled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false"/>
-        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
-      <INDEXES>
-        <INDEX NAME="code" UNIQUE="true" FIELDS="code"/>
-        <INDEX NAME="timecreated" UNIQUE="false" FIELDS="timecreated"/>
-      </INDEXES>
-    </TABLE>
-    <TABLE NAME="block_ludifica_usercards" COMMENT="User access cards">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="cardid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="infodata" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="timeused" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="null if not used yet"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
-      <INDEXES>
-        <INDEX NAME="usercard" UNIQUE="false" FIELDS="userid, cardid"/>
-        <INDEX NAME="timecreated" UNIQUE="false" FIELDS="timecreated"/>
-        <INDEX NAME="timeused" UNIQUE="false" FIELDS="timeused"/>
-      </INDEXES>
-    </TABLE-->
     <TABLE NAME="block_ludifica_tickets" COMMENT="Game ticket">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>

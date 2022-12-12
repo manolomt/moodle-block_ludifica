@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
  * Strings for component 'block_ludifica', language 'en'
  *
@@ -25,7 +24,7 @@
 
 $string['pluginname'] = 'Ludifica';
 
-//Capabilities
+// Capabilities.
 $string['ludifica:addinstance'] = 'Add a new Ludifica block';
 $string['ludifica:myaddinstance'] = 'Add a new Ludifica block to Dashboard';
 $string['ludifica:manage'] = 'Manage Ludifica block settings';

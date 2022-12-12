@@ -2,7 +2,7 @@ BLOCK Ludifica
 ============================
 A block to implement a gamification strategy in site level.
 
-Package tested in: moodle 3.8+ - 3.11+
+Package tested in: 3.11+
 
 QUICK INSTALL
 ==============

@@ -29,6 +29,12 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_ludifica_edit_form extends block_edit_form {
+
+    /**
+     * Block edition form.
+     *
+     * @param object $mform Parent form.
+     */
     protected function specific_definition($mform) {
         global $CFG;
 
@@ -44,6 +50,6 @@ class block_ludifica_edit_form extends block_edit_form {
 
         $mform->addElement('checkbox', 'config_tabtopbysite', get_string('tabtopbysite', 'block_ludifica'));
 
-        //$mform->addElement('checkbox', 'config_tablastmonth', get_string('tablastmonth', 'block_ludifica'));
+        $mform->addElement('checkbox', 'config_tablastmonth', get_string('tablastmonth', 'block_ludifica'));
     }
 }

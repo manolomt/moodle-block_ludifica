@@ -22,8 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace block_ludifica;
-defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Player info.
@@ -72,6 +70,8 @@ class player {
 
     /**
      * Class constructor.
+     *
+     * @param int $userid Specific id to load a user. Current logued user is loaded by default.
      */
     public function __construct($userid = null) {
         global $USER, $DB;
@@ -105,6 +105,11 @@ class player {
         }
     }
 
+    /**
+     * Get the player profile.
+     *
+     * @return object Profile.
+     */
     public function get_profile() {
         global $OUTPUT;
 
@@ -133,6 +138,11 @@ class player {
         return $info;
     }
 
+    /**
+     * Get the player tickets.
+     *
+     * @return array Tickets list.
+     */
     public function get_tickets() {
         global $OUTPUT, $DB;
 
@@ -157,6 +167,11 @@ class player {
         return $response;
     }
 
+    /**
+     * Get the player displayed nickname.
+     *
+     * @return string
+     */
     public function get_nickname() {
 
         if(!empty($this->data->general->nickname)) {
@@ -168,6 +183,14 @@ class player {
         return $nickname;
     }
 
+    /**
+     * Sum points to the players.
+     *
+     * @param int $newpoints
+     * @param int $courseid
+     * @param string $type Points type
+     * @param object $infodata Information depend of points type
+     */
     public function add_points(int $newpoints, int $courseid, string $type, object $infodata = null) {
         global $DB;
 
@@ -195,8 +218,12 @@ class player {
 
     /**
      * Add coins by new points.
+     *
+     * @param int $courseid
+     * @param int $newpoints
+     * @return bool True if successful, false in other case.
      */
-    public function coinsbypoints($courseid, $newpoints) {
+    public function coinsbypoints(int $courseid, int $newpoints) {
         global $DB;
 
         $coinsbypoints = intval(get_config('block_ludifica', 'coinsbypoints'));
@@ -239,6 +266,12 @@ class player {
         return true;
     }
 
+    /**
+     * Magic get function.
+     *
+     * @param string Property name.
+     * @return mixed Name property value.
+     */
     public function __get($name) {
         if (property_exists($this, $name)){
             return $this->$name;
@@ -251,6 +284,12 @@ class player {
         }
     }
 
+    /**
+     * Magic ser function.
+     *
+     * @param string $name Property name.
+     * @param mixed $value Property new value.
+     */
     public function __set($name, $value) {
         if (property_exists($this, $name)){
             $this->$name = $value;

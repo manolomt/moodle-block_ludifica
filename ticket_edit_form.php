@@ -32,7 +32,7 @@ class block_ludifica_ticket_edit extends moodleform {
 
         $mform = $this->_form;
 
-        // this contains the data of this form.
+        // This contains the data of this form.
         $this->_data  = $this->_customdata['data'];
 
         if (!$this->_data) {
@@ -49,7 +49,6 @@ class block_ludifica_ticket_edit extends moodleform {
         $editorattributes = array ('rows'=> 5, 'cols'=>50);
         $filemanageroptions = $this->_customdata['filemanageroptions'];
 
-        //Select a course
         $mform->addElement('header', 'general', get_string('general'));
 
         $mform->addElement('text', 'name', get_string('name'), 'maxlength="127" size="30"');
@@ -95,7 +94,7 @@ class block_ludifica_ticket_edit extends moodleform {
 
         $this->add_action_buttons();
 
-        // Finally set the current form data
+        // Finally set the current form data.
         $this->set_data($this->_data);
     }
 

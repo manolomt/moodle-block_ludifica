@@ -25,11 +25,7 @@
 
 namespace block_ludifica;
 
-defined('MOODLE_INTERNAL') || die();
-
 require_once($CFG->libdir . '/externallib.php');
-//require_once($CFG->dirroot . '/blocks/ludifica/locallib.php');
-
 
 /**
  * External WS lib.
@@ -51,6 +47,12 @@ class external extends \external_api {
         );
     }
 
+    /**
+     * Return a ticket information.
+     *
+     * @param int $id Ticket id.
+     * @return object Ticket information.
+     */
     public static function get_ticket($id) {
         global $DB, $USER;
 
@@ -119,6 +121,12 @@ class external extends \external_api {
         );
     }
 
+    /**
+     * Buy a ticket.
+     *
+     * @param int $id Ticket id.
+     * @return bool True if successful, false in other case.
+     */
     public static function buy_ticket($id) {
         global $DB, $USER;
 
@@ -166,7 +174,6 @@ class external extends \external_api {
         return new \external_value(PARAM_BOOL, 'True if ticket was bought');
     }
 
-
     /**
      * To validade input parameters
      * @return \external_function_parameters
@@ -180,6 +187,13 @@ class external extends \external_api {
         );
     }
 
+    /**
+     * Give a ticket.
+     *
+     * @param int $id Ticket id.
+     * @param int $contactid Target user id.
+     * @return bool True if successful, false in other case.
+     */
     public static function give_ticket($ticketid, $contactid) {
         global $DB, $USER;
 
@@ -219,6 +233,12 @@ class external extends \external_api {
         );
     }
 
+    /**
+     * Buy an avatar.
+     *
+     * @param int $id Avatar id.
+     * @return bool True if successful, false in other case.
+     */
     public static function buy_avatar($id) {
         global $DB, $USER;
 
@@ -254,7 +274,6 @@ class external extends \external_api {
         return new \external_value(PARAM_BOOL, 'True if avatar was bought');
     }
 
-
     /**
      * To validade input parameters
      * @return \external_function_parameters
@@ -267,6 +286,12 @@ class external extends \external_api {
         );
     }
 
+    /**
+     * Use an avatar as current user image.
+     *
+     * @param int $id Avatar id.
+     * @return bool True if successful, false in other case.
+     */
     public static function use_avatar($id) {
         global $DB, $USER;
 
@@ -295,7 +320,6 @@ class external extends \external_api {
         return new \external_value(PARAM_BOOL, 'True if avatar was assigned to user');
     }
 
-
     /**
      * To validade input parameters
      * @return \external_function_parameters
@@ -306,6 +330,11 @@ class external extends \external_api {
         );
     }
 
+    /**
+     * Get the current player profile.
+     *
+     * @return object Current player profile.
+     */
     public static function get_profile() {
         global $DB, $USER;
 
@@ -345,6 +374,5 @@ class external extends \external_api {
             'General current player info', VALUE_DEFAULT, null
         );
     }
-
 
 }

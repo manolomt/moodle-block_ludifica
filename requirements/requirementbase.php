@@ -45,6 +45,8 @@ class requirementbase {
 
     /**
      * Class constructor.
+     *
+     * @param object|array $options Requeriment properties.
      */
     public function __construct($options = null) {
 
@@ -63,6 +65,9 @@ class requirementbase {
 
     /**
      * It define if a player compliance the requirement.
+     *
+     * @param object $player
+     * @return bool True in compliance, false in other case.
      */
     public function compliance(\block_ludifica\player $player) {
         return true;
@@ -70,9 +75,10 @@ class requirementbase {
 
     /**
      * Compliance text to user.
+     *
+     * @return string Compliance caption.
      */
     public function caption() {
         return '';
     }
-
 }

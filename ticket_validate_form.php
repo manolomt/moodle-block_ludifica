@@ -32,10 +32,9 @@ class block_ludifica_ticket_validate extends moodleform {
 
         $mform = $this->_form;
 
-        // this contains the data of this form.
+        // This contains the data of this form.
         $this->_data  = $this->_customdata['data'];
 
-        //Select a course
         $mform->addElement('header', 'general', get_string('searchticket', 'block_ludifica'));
 
         $mform->addElement('text', 'username', get_string('username'));
@@ -47,9 +46,8 @@ class block_ludifica_ticket_validate extends moodleform {
         $mform->setType('usercode', PARAM_TEXT);
 
         $mform->addElement('submit', 'search', get_string('searchticket', 'block_ludifica'));
-//        $this->add_action_buttons();
 
-        // Finally set the current form data
+        // Finally set the current form data.
         $this->set_data($this->_data);
     }
 

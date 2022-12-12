@@ -44,7 +44,7 @@ if (!in_array($sort, $sortavailable)) {
 
 echo $OUTPUT->header();
 
-// Delete a ticket, after confirmation
+// Delete a ticket, after confirmation.
 if ($hasmanage && $delete && confirm_sesskey()) {
     $ticket = $DB->get_record('block_ludifica_tickets', array('id' => $delete), '*', MUST_EXIST);
 
@@ -93,7 +93,6 @@ if ($hasmanage) {
     $tickets = $DB->get_records_select('block_ludifica_tickets', $select, $params, $sort . ' ASC', '*', $spage * $bypage, $bypage);
     $ticketscount = $DB->count_records_select('block_ludifica_tickets', $select, $params);
 }
-
 
 $pagingbar = new paging_bar($ticketscount, $spage, $bypage, "/blocks/ludifica/index.php?q={$query}&amp;sort={$sort}&amp;");
 $pagingbar->pagevar = 'spage';

@@ -21,9 +21,18 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
-function block_ludifica_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options=array()) {
+/**
+ * Implement plugin file controller.
+ *
+ * @param object $course Not used yet.
+ * @param object $cm Course module, not used yet.
+ * @param object $context Context information.
+ * @param string $filearea
+ * @param array $args
+ * @param boolean $forcedownload
+ * @param array $options
+ */
+function block_ludifica_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     global $USER;
 
     require_login();
@@ -42,6 +51,15 @@ function block_ludifica_pluginfile($course, $cm, $context, $filearea, $args, $fo
     send_stored_file($file, 0, 0, false, $options);
 }
 
+/**
+ *
+ * Implement inplace editable control for the block.
+ *
+ * @param string $itemtype
+ * @param int $itemid
+ * @param string $newvalue
+ * @return \core\output\inplace_editable Inplace control.
+ */
 function block_ludifica_inplace_editable($itemtype, $itemid, $newvalue) {
     if ($itemtype === 'nickname') {
         global $DB, $USER, $CFG;
@@ -73,7 +91,7 @@ function block_ludifica_inplace_editable($itemtype, $itemid, $newvalue) {
 
         $newvalue = empty($newvalue) ? fullname($USER) : $newvalue;
 
-        // Prepare the element for the output:
+        // Prepare the element for the output.
         return new \core\output\inplace_editable('block_ludifica', 'nickname', $itemid, true,
             format_string($newvalue), $newvalue, get_string('edit'),
             get_string('newnickname', 'block_ludifica', format_string($newvalue)));

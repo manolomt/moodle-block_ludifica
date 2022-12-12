@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -78,18 +77,6 @@ $functions = array(
         'ajax' => true,
         'loginrequired' => true
     ),
-/*
-    'block_ludifica_accessrevoke' => array(
-        'classname' => '\block_ludifica\external',
-        'methodname' => 'access_revoke',
-        'classpath' => 'blocks/ludifica/externallib.php',
-        'description' => 'Revoke resource users access',
-        'type' => 'write',
-        'ajax' => true,
-        'loginrequired' => true,
-        'capabilities' => 'block/ludifica:write'
-    ),
-*/
 );
 
 $services = array(

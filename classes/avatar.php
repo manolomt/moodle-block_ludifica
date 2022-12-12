@@ -22,8 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace block_ludifica;
-defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Avatar info.
@@ -42,6 +40,8 @@ class avatar {
 
     /**
      * Class constructor.
+     *
+     *  @param object $avatar.
      */
     public function __construct($avatar = null) {
         global $USER, $DB;
@@ -62,6 +62,12 @@ class avatar {
         }
     }
 
+    /**
+     * Build the Avatar image URI.
+     *
+     * @param int $level Player level.
+     * @return string Avatar URI.
+     */
     public function get_uri($level = null) {
 
         if (empty($this->data->sources) || $level === null) {
@@ -93,6 +99,11 @@ class avatar {
         return $uri;
     }
 
+    /**
+     * Get the bust URI for an avatar
+     *
+     * @return string Image URI.
+     */
     public function get_busturi() {
 
         $syscontext = \context_system::instance();
@@ -118,6 +129,11 @@ class avatar {
         return self::default_avatar();
     }
 
+    /**
+     * Get the default Avatar URI.
+     *
+     * @return string Image URI.
+     */
     public static function default_avatar() {
         global $OUTPUT;
 
@@ -126,12 +142,20 @@ class avatar {
 
     /**
      * List the available avatar types.
+     *
+     * @return array Avatar types.
      */
     public static function get_types() {
         return array(self::$DEFAULT_TYPE => get_string('avatartype_normal', 'block_ludifica'));
-        //, 'user' => get_string('avatartype_user', 'block_ludifica'));
+        // The 'user' type is not avaible yet. The string is 'avatartype_user'.
     }
 
+    /**
+     * Magic get function.
+     *
+     * @param string Property name.
+     * @return mixed Name property value.
+     */
     public function __get($name) {
         if (property_exists($this, $name)){
             return $this->$name;
@@ -144,6 +168,12 @@ class avatar {
         }
     }
 
+    /**
+     * Magic ser function.
+     *
+     * @param string $name Property name.
+     * @param mixed $value Property new value.
+     */
     public function __set($name, $value) {
         if (property_exists($this, $name)){
             $this->$name = $value;

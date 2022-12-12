@@ -38,10 +38,15 @@ class ticket {
      */
     private $data;
 
+    /**
+     * var string Default ticket type.
+     */
     public static $DEFAULT_TYPE = 'normal';
 
     /**
      * Class constructor.
+     *
+     * @param $ticket
      */
     public function __construct($ticket = null) {
         global $DB;
@@ -62,6 +67,11 @@ class ticket {
         }
     }
 
+    /**
+     * Get the preisualization image.
+     *
+     * @return string Image URI.
+     */
     public function get_thumbnail() {
 
         $uri = '';
@@ -89,11 +99,19 @@ class ticket {
 
     /**
      * List the available ticket types.
+     *
+     * @return array Tickets type list.
      */
     public static function get_types() {
         return array('default' => get_string('ticketstype_default', 'block_ludifica'));
     }
 
+    /**
+     * Magic get function.
+     *
+     * @param string Property name.
+     * @return mixed Name property value.
+     */
     public function __get($name) {
         if (property_exists($this, $name)){
             return $this->$name;
@@ -106,6 +124,12 @@ class ticket {
         }
     }
 
+    /**
+     * Magic ser function.
+     *
+     * @param string $name Property name.
+     * @param mixed $value Property new value.
+     */
     public function __set($name, $value) {
         if (property_exists($this, $name)){
             $this->$name = $value;

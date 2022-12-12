@@ -25,18 +25,43 @@
 
 class block_ludifica extends block_base {
 
+    /**
+     * Initialice the block.
+     */
     function init() {
         $this->title = get_string('pluginname', 'block_ludifica');
     }
 
+    /**
+     * Subclasses should override this and return true if the
+     * subclass block has a settings.php file.
+     *
+     * @return boolean
+     */
     function has_config() {
         return true;
     }
 
+    /**
+     * Which page types this block may appear on.
+     *
+     * The information returned here is processed by the
+     * {@link blocks_name_allowed_in_format()} function. Look there if you need
+     * to know exactly how this works.
+     *
+     * Default case: everything except mod and tag.
+     *
+     * @return array page-type prefix => true/false.
+     */
     function applicable_formats() {
         return array('all' => true);
     }
 
+    /**
+     * This function is called on your subclass right after an instance is loaded
+     * Use this function to act on instance data just after it's loaded and before anything else is done
+     * For instance: if your block will have different title's depending on location (site, course, blog, etc)
+     */
     function specialization() {
         if (isset($this->config->title)) {
             $this->title = $this->title = format_string($this->config->title, true, ['context' => $this->context]);
@@ -45,10 +70,20 @@ class block_ludifica extends block_base {
         }
     }
 
+    /**
+     * Are you going to allow multiple instances of each block?
+     * If yes, then it is assumed that the block WILL USE per-instance configuration
+     * @return boolean
+     */
     function instance_allow_multiple() {
         return true;
     }
 
+    /**
+     * Implemented to return the content object.
+     *
+     * @return stdObject
+     */
     function get_content() {
         global $DB, $USER;
 
@@ -121,6 +156,13 @@ class block_ludifica extends block_base {
         return $this->content;
     }
 
+    /**
+     * Overridden by the block to prevent the block from being dockable.
+     *
+     * @return bool
+     *
+     * Return false as per MDL-64506
+     */
     public function instance_can_be_docked() {
         return false;
     }
