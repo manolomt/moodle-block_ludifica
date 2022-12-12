@@ -15,6 +15,9 @@ GIT: https://github.com/bambuco/moodle-block_ludifica
 
 IN VERSION
 =============
+2021031204:
+New points type: new user
+
 2021031203:
 Contextualized help
 
