@@ -34,7 +34,7 @@ function($) {
 
         $control.append($alert);
 
-        switch(type) {
+        switch (type) {
             case 'error':
                 cssclass = 'alert-danger';
                 break;

@@ -60,7 +60,7 @@ function($, Notification, Str, Ajax, Alertc, Player, Log) {
 
             return true;
         }).
-        fail(function (e) {
+        fail(function(e) {
             Log.debug('Error get strings');
             Log.debug(e);
         });

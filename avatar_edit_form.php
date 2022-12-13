@@ -50,8 +50,7 @@ class block_ludifica_avatar_edit extends moodleform {
         // This contains the data of this form.
         $this->_data  = $this->_customdata['data'];
 
-        if (!$this->_data) {
-        } else {
+        if ($this->_data) {
             $this->_data->description = array('text' => $this->_data->description);
             if ($this->_data->description == 'null') {
                 $this->_data->description = '';

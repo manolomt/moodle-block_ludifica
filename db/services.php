@@ -22,9 +22,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die();
 
- $functions = array(
+$functions = array(
     'block_ludifica_get_ticket' => array(
         'classname' => '\block_ludifica\external',
         'methodname' => 'get_ticket',
@@ -82,19 +82,19 @@
 );
 
 $services = array(
-        'Ludifica webservices' => array(
-                'functions' => array ('block_ludifica_get_ticket', 'block_ludifica_buy_ticket', 'block_ludifica_give_ticket',
-                                        'block_ludifica_buy_avatar', 'block_ludifica_get_profile'),
-                'restrictedusers' => 0, // If 1, the administrator must manually select which user can use this service.
-                // (Administration > Plugins > Web services > Manage services > Authorised users).
-                'enabled' => 0, // If 0, then token linked to this service won't work.
-                'shortname' => 'block_ludifica_ws'
-        ),
-        'Ludifica manage webservices' => array(
-            'functions' => array (),
-            'restrictedusers' => 1, // If 1, the administrator must manually select which user can use this service.
-            // (Administration > Plugins > Web services > Manage services > Authorised users).
-            'enabled' => 0, // If 0, then token linked to this service won't work.
-            'shortname' => 'block_ludifica_managerws'
+    'Ludifica webservices' => array(
+        'functions' => array ('block_ludifica_get_ticket', 'block_ludifica_buy_ticket', 'block_ludifica_give_ticket',
+                                'block_ludifica_buy_avatar', 'block_ludifica_get_profile'),
+        'restrictedusers' => 0, // If 1, the administrator must manually select which user can use this service.
+        // (Administration > Plugins > Web services > Manage services > Authorised users).
+        'enabled' => 0, // If 0, then token linked to this service won't work.
+        'shortname' => 'block_ludifica_ws'
+    ),
+    'Ludifica manage webservices' => array(
+        'functions' => array (),
+        'restrictedusers' => 1, // If 1, the administrator must manually select which user can use this service.
+        // (Administration > Plugins > Web services > Manage services > Authorised users).
+        'enabled' => 0, // If 0, then token linked to this service won't work.
+        'shortname' => 'block_ludifica_managerws'
     )
 );

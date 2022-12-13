@@ -139,7 +139,7 @@ function($,
 
                     if (data.available <= 0 || data.byuser <= data.usertickets.length) {
                         $ticket.find('[data-action="buy"]').hide();
-                    } else  {
+                    } else {
                         $ticket.find('[data-action="buy"]').show();
                     }
                 }
@@ -184,6 +184,10 @@ function($,
         Str.get_strings(strings).then(function(results) {
             results.forEach(function(value, index) {
                 s[strings[index].key] = value;
+            }).
+            fail(function(e) {
+                Log.debug('Error loading strings');
+                Log.debug(e);
             });
 
             return true;
@@ -239,7 +243,7 @@ function($,
                             contacts = [];
                             data.forEach(contact => {
                                 if (!contact.isdeleted && !contact.isblocked && contact.iscontact) {
-                                    contacts.push({ 'name' : contact.fullname, 'id': contact.id });
+                                    contacts.push({'name': contact.fullname, 'id': contact.id});
                                 }
                             });
 
@@ -274,6 +278,10 @@ function($,
             ModalFactory.create(props).then(function(modal) {
                 modal.show();
                 return true;
+            }).
+            fail(function(e) {
+                Log.debug('Error creating modal showmore');
+                Log.debug(e);
             });
 
         });
