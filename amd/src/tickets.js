@@ -184,13 +184,13 @@ function($,
         Str.get_strings(strings).then(function(results) {
             results.forEach(function(value, index) {
                 s[strings[index].key] = value;
-            }).
-            fail(function(e) {
-                Log.debug('Error loading strings');
-                Log.debug(e);
             });
 
             return true;
+        }).
+        fail(function(e) {
+            Log.debug('Error loading strings');
+            Log.debug(e);
         });
         // End load used strings.
 
