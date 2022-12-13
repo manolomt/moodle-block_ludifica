@@ -22,12 +22,14 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace block_ludifica\requirements;
+
 defined('MOODLE_INTERNAL') || die();
 
-include_once($CFG->dirroot . '/blocks/ludifica/requirements/requirementbase.php');
+require_once($CFG->dirroot . '/blocks/ludifica/requirements/requirementbase.php');
 
 /**
  * Level requirement.
+ *
  * Configuration example:
  * {
  *  "requirements" : [
@@ -44,10 +46,16 @@ include_once($CFG->dirroot . '/blocks/ludifica/requirements/requirementbase.php'
 class level extends requirementbase {
 
     /**
-     * var array Default properties list, key => value format.
+     * @var array Default properties list, key => value format.
      */
     protected $defaultoptions = ['min' => 0];
 
+    /**
+     * Check if player meets the requirement.
+     *
+     * @param object $player
+     * @return bool True in compliance, false in other case.
+     */
     public function compliance($player) {
         $level = \block_ludifica\controller::calc_level($player->general->points);
 
@@ -56,6 +64,8 @@ class level extends requirementbase {
 
     /**
      * Compliance text to user.
+     *
+     * @return string Compliance caption.
      */
     public function caption() {
         $levels = \block_ludifica\controller::get_levels();

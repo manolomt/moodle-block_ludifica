@@ -16,15 +16,13 @@
 /**
  * Javascript to initialise the block.
  *
- * @package   block_ludifica
+ * @module    block/ludifica
  * @copyright 2021 David Herney @ BambuCo
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 define(['jquery', 'core/modal_factory', 'block_ludifica/alertc'],
 function($, ModalFactory, Alertc) {
-
-    var wwwroot = M.cfg.wwwroot;
 
     // Based in https://philipwalton.com/articles/responsive-components-a-solution-to-the-container-queries-problem/
     var resizeobserver = function() {
@@ -43,7 +41,7 @@ function($, ModalFactory, Alertc) {
 
                     // Default breakpoints that should apply to all observed
                     // elements that don't define their own custom breakpoints.
-                    var defaultBreakpoints = { XS: 0, SM: 384, MD: 576, LG: 768, XL: 960 };
+                    var defaultBreakpoints = {XS: 0, SM: 384, MD: 576, LG: 768, XL: 960};
 
                     entries.forEach(function(entry) {
 

@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -9,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * External integration API
@@ -28,8 +27,6 @@ namespace block_ludifica;
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/externallib.php');
-//require_once($CFG->dirroot . '/blocks/ludifica/locallib.php');
-
 
 /**
  * External WS lib.
@@ -51,6 +48,12 @@ class external extends \external_api {
         );
     }
 
+    /**
+     * Return a ticket information.
+     *
+     * @param int $id Ticket id.
+     * @return object Ticket information.
+     */
     public static function get_ticket($id) {
         global $DB, $USER;
 
@@ -62,7 +65,7 @@ class external extends \external_api {
 
             // Hack for external presentation.
             $dateformat = get_string('strftimedatetimeshort');
-            foreach($ticket->usertickets as $uticket) {
+            foreach ($ticket->usertickets as $uticket) {
                 $uticket->timeusedformatted = $uticket->timeused ? userdate($uticket->timeused, $dateformat) : null;
             }
         } else {
@@ -119,6 +122,12 @@ class external extends \external_api {
         );
     }
 
+    /**
+     * Buy a ticket.
+     *
+     * @param int $id Ticket id.
+     * @return bool True if successful, false in other case.
+     */
     public static function buy_ticket($id) {
         global $DB, $USER;
 
@@ -166,7 +175,6 @@ class external extends \external_api {
         return new \external_value(PARAM_BOOL, 'True if ticket was bought');
     }
 
-
     /**
      * To validade input parameters
      * @return \external_function_parameters
@@ -180,6 +188,13 @@ class external extends \external_api {
         );
     }
 
+    /**
+     * Give a ticket.
+     *
+     * @param int $ticketid Ticket id.
+     * @param int $contactid Target user id.
+     * @return bool True if successful, false in other case.
+     */
     public static function give_ticket($ticketid, $contactid) {
         global $DB, $USER;
 
@@ -219,6 +234,12 @@ class external extends \external_api {
         );
     }
 
+    /**
+     * Buy an avatar.
+     *
+     * @param int $id Avatar id.
+     * @return bool True if successful, false in other case.
+     */
     public static function buy_avatar($id) {
         global $DB, $USER;
 
@@ -229,7 +250,7 @@ class external extends \external_api {
         $player = new \block_ludifica\player($USER->id);
 
         if ($avatar->enabled && $useravatar == 0 && $player->general->coins >= $avatar->cost &&
-                $avatar->type == \block_ludifica\avatar::$DEFAULT_TYPE) {
+                $avatar->type == \block_ludifica\avatar::$defaulttype) {
 
             $data = new \stdClass();
             $data->userid = $USER->id;
@@ -254,7 +275,6 @@ class external extends \external_api {
         return new \external_value(PARAM_BOOL, 'True if avatar was bought');
     }
 
-
     /**
      * To validade input parameters
      * @return \external_function_parameters
@@ -267,6 +287,12 @@ class external extends \external_api {
         );
     }
 
+    /**
+     * Use an avatar as current user image.
+     *
+     * @param int $id Avatar id.
+     * @return bool True if successful, false in other case.
+     */
     public static function use_avatar($id) {
         global $DB, $USER;
 
@@ -295,7 +321,6 @@ class external extends \external_api {
         return new \external_value(PARAM_BOOL, 'True if avatar was assigned to user');
     }
 
-
     /**
      * To validade input parameters
      * @return \external_function_parameters
@@ -306,6 +331,11 @@ class external extends \external_api {
         );
     }
 
+    /**
+     * Get the current player profile.
+     *
+     * @return object Current player profile.
+     */
     public static function get_profile() {
         global $DB, $USER;
 
@@ -345,6 +375,5 @@ class external extends \external_api {
             'General current player info', VALUE_DEFAULT, null
         );
     }
-
 
 }

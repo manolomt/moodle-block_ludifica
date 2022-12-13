@@ -1,7 +1,7 @@
 .block_ludifica .card-title {
     margin: 0;
     padding: 10px 0 10px 15px;
-    display: inline-block !important;
+    display: inline-block;
 }
 
 .block_ludifica .player_info {
@@ -137,11 +137,11 @@
 
 #avatars-list .oneavatar.usernothas [data-action="use"],
 #avatars-list .oneavatar.inuse [data-action="use"] {
-        display: none;
+    display: none;
 }
 
 #avatars-list .oneavatar.userhas [data-action="buy"] {
-        display: none;
+    display: none;
 }
 
 #avatars-list .oneavatar.userhas .cost {
@@ -248,7 +248,6 @@
 
 /* End Tabs control */
 
-
 /* Store */
 .store-tabs {
     display: flex;
@@ -289,7 +288,7 @@
 }
 
 .block_ludifica-tabcontent .current-user {
-    background-color: bisque!important;
+    background-color: bisque;
 }
 /* End Ranking tables */
 

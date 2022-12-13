@@ -22,8 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace block_ludifica;
-defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Avatar info.
@@ -34,14 +32,19 @@ defined('MOODLE_INTERNAL') || die();
 class avatar {
 
     /**
-     * var \stdClass Info about the avatar.
+     * @var \stdClass Info about the avatar.
      */
     private $data;
 
-    public static $DEFAULT_TYPE = 'normal';
+    /**
+     * @var string Default avatar type.
+     */
+    public static $defaulttype = 'normal';
 
     /**
      * Class constructor.
+     *
+     * @param int|object $avatar Current avatar data or id.
      */
     public function __construct($avatar = null) {
         global $USER, $DB;
@@ -62,6 +65,12 @@ class avatar {
         }
     }
 
+    /**
+     * Build the Avatar image URI.
+     *
+     * @param int $level Player level.
+     * @return string Avatar URI.
+     */
     public function get_uri($level = null) {
 
         if (empty($this->data->sources) || $level === null) {
@@ -93,6 +102,11 @@ class avatar {
         return $uri;
     }
 
+    /**
+     * Get the bust URI for an avatar
+     *
+     * @return string Image URI.
+     */
     public function get_busturi() {
 
         $syscontext = \context_system::instance();
@@ -118,6 +132,11 @@ class avatar {
         return self::default_avatar();
     }
 
+    /**
+     * Get the default Avatar URI.
+     *
+     * @return string Image URI.
+     */
     public static function default_avatar() {
         global $OUTPUT;
 
@@ -126,30 +145,44 @@ class avatar {
 
     /**
      * List the available avatar types.
+     *
+     * @return array Avatar types.
      */
     public static function get_types() {
-        return array(self::$DEFAULT_TYPE => get_string('avatartype_normal', 'block_ludifica'));
-        //, 'user' => get_string('avatartype_user', 'block_ludifica'));
+        return array(self::$defaulttype => get_string('avatartype_normal', 'block_ludifica'));
+        // The 'user' type is not avaible yet. The string is 'avatartype_user'.
     }
 
+    /**
+     * Magic get function.
+     *
+     * @param string $name Property name.
+     * @return mixed Name property value.
+     */
     public function __get($name) {
-        if (property_exists($this, $name)){
+        if (property_exists($this, $name)) {
             return $this->$name;
-        } else if (property_exists($this->data, $name)){
+        } else if (property_exists($this->data, $name)) {
             return $this->data->$name;
-        } else if(method_exists($this, 'get_' . $name)) {
+        } else if (method_exists($this, 'get_' . $name)) {
             return call_user_func(array($this, 'get_' . $name));
         } else {
             throw new \Exception('propertie_or_method_not_found: ' . get_class($this) . '->'. $name);
         }
     }
 
+    /**
+     * Magic ser function.
+     *
+     * @param string $name Property name.
+     * @param mixed $value Property new value.
+     */
     public function __set($name, $value) {
-        if (property_exists($this, $name)){
+        if (property_exists($this, $name)) {
             $this->$name = $value;
-        } else if (property_exists($this->data, $name)){
+        } else if (property_exists($this->data, $name)) {
             $this->data->$name = $value;
-        } else if(method_exists($this, 'set_' . $name)) {
+        } else if (method_exists($this, 'set_' . $name)) {
             return call_user_func(array($this, 'set_' . $name), $value);
         } else {
             throw new \Exception('propertie_or_method_not_found: ' . get_class($this) . '->'. $name);

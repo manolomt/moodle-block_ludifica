@@ -14,6 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Tickets management page.
+ *
+ * @package   block_ludifica
+ * @copyright 2022 David Herney @ BambuCo
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 require_once('../../config.php');
 
 $query = optional_param('q', '', PARAM_TEXT);
@@ -44,12 +52,12 @@ if (!in_array($sort, $sortavailable)) {
 
 echo $OUTPUT->header();
 
-// Delete a ticket, after confirmation
+// Delete a ticket, after confirmation.
 if ($hasmanage && $delete && confirm_sesskey()) {
     $ticket = $DB->get_record('block_ludifica_tickets', array('id' => $delete), '*', MUST_EXIST);
 
     if ($confirm != md5($delete)) {
-        $returnurl = new moodle_url('/blocks/ludifica/tickets.php', array('sort' => $sort, 'bypage' => $bypage, 'spage'=>$spage));
+        $returnurl = new moodle_url('/blocks/ludifica/tickets.php', array('sort' => $sort, 'bypage' => $bypage, 'spage' => $spage));
         echo $OUTPUT->heading(get_string('ticketdelete', 'block_ludifica'));
         $optionsyes = array('delete' => $delete, 'confirm' => md5($delete), 'sesskey' => sesskey());
         echo $OUTPUT->confirm(get_string('deletecheck', '', "'{$ticket->name}'"),
@@ -93,7 +101,6 @@ if ($hasmanage) {
     $tickets = $DB->get_records_select('block_ludifica_tickets', $select, $params, $sort . ' ASC', '*', $spage * $bypage, $bypage);
     $ticketscount = $DB->count_records_select('block_ludifica_tickets', $select, $params);
 }
-
 
 $pagingbar = new paging_bar($ticketscount, $spage, $bypage, "/blocks/ludifica/index.php?q={$query}&amp;sort={$sort}&amp;");
 $pagingbar->pagevar = 'spage';

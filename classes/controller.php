@@ -22,8 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace block_ludifica;
-defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Component controller.
@@ -34,15 +32,22 @@ defined('MOODLE_INTERNAL') || die();
 class controller {
 
     /**
-     * var int Instances includes in page request.
+     * @var int Instances includes in page request.
      */
     private static $instancescounter = 0;
 
-
-    private static $LEVELS = null;
+    /**
+     * @var array Available levels list.
+     */
+    private static $levels = null;
 
     /**
      * Add points to player profile when complete a course.
+     *
+     * @param int $userid
+     * @param int $courseid
+     * @param int $completionid
+     * @return bool True if points was assigned, false in other case.
      */
     public static function points_completecourse($userid, $courseid, $completionid = null) {
         global $DB;
@@ -95,6 +100,10 @@ class controller {
 
     /**
      * Add points to user according her recurrent login.
+     *
+     * @param int $userid
+     * @return bool True if points was assigned, false in other case.
+     *
      */
     public static function points_recurrentlogin($userid) {
         global $DB;
@@ -210,6 +219,9 @@ class controller {
 
     /**
      * Add points to a new user.
+     *
+     * @param int $userid
+     * @return bool True if points was assigned, false in other case.
      */
     public static function points_usercreated($userid) {
         $points = intval(get_config('block_ludifica', 'pointsbynewuser'));
@@ -225,6 +237,12 @@ class controller {
         return true;
     }
 
+    /**
+     * Calc current level according the points.
+     *
+     * @param int $points
+     * @return object Level information.
+     */
     public static function calc_level($points) {
 
         $levels = self::get_levels();
@@ -244,9 +262,14 @@ class controller {
         return $level;
     }
 
+    /**
+     * Get current levels list.
+     *
+     * @return array Levels list.
+     */
     public static function get_levels() {
-        if (!self::$LEVELS) {
-            self::$LEVELS = array();
+        if (!self::$levels) {
+            self::$levels = [];
 
             $levels = get_config('block_ludifica', 'levels');
 
@@ -278,16 +301,20 @@ class controller {
                     $level->maxpoints = (int)$fields[1];
                 }
 
-                self::$LEVELS[] = $level;
+                self::$levels[] = $level;
             }
 
         }
 
-        return self::$LEVELS;
+        return self::$levels;
     }
 
     /**
      * If a ticket is avalilable according the requirement compliance.
+     *
+     * @param int $userid
+     * @param object $ticket
+     * @return bool True if is available, false in other case.
      */
     public static function requirements_compliance($userid, $ticket) {
         global $CFG;
@@ -318,6 +345,10 @@ class controller {
 
     /**
      * Text to user about the requirement compliance.
+     *
+     * @param int $userid
+     * @param object $ticket
+     * @return array Available captions.
      */
     public static function requirements_text($userid, $ticket) {
         global $CFG;
@@ -358,12 +389,19 @@ class controller {
         return substr(implode($word), 0, $len);
     }
 
+    /**
+     * Get list of top users in courses by points.
+     *
+     * @param int $courseid
+     * @param bool $includecurrent If include the current user
+     * @return array Users list.
+     */
     public static function get_topbycourse($courseid, $includecurrent = true) {
         global $DB;
 
         $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
-                " FROM {block_ludifica_userpoints} AS lu " .
-                " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
+                " FROM {block_ludifica_userpoints} lu " .
+                " INNER JOIN {block_ludifica_general} g ON g.userid = lu.userid" .
                 " WHERE lu.courseid = :courseid" .
                 " GROUP BY lu.userid" .
                 " ORDER BY points DESC";
@@ -373,14 +411,20 @@ class controller {
 
     }
 
+    /**
+     * Get list of top users in site by points.
+     *
+     * @param bool $includecurrent If include the current user
+     * @return array Users list.
+     */
     public static function get_topbysite($includecurrent = true) {
         global $DB;
 
         $list = array();
 
         $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
-                " FROM {block_ludifica_userpoints} AS lu " .
-                " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
+                " FROM {block_ludifica_userpoints} lu " .
+                " INNER JOIN {block_ludifica_general} g ON g.userid = lu.userid" .
                 " GROUP BY lu.userid" .
                 " ORDER BY points DESC";
         $records = $DB->get_records_sql($sql);
@@ -388,11 +432,36 @@ class controller {
         return self::get_toplist($records, $includecurrent);
     }
 
+    /**
+     * Get list of top users in a course for the last month.
+     *
+     * @param int $courseid
+     * @param bool $includecurrent If include the current user
+     * @return array Users list.
+     */
     public static function get_lastmonth($courseid, $includecurrent = true) {
-        // ToDo: The current DB structure not support points by date because all points are sum by type.
-        return array();
+        global $DB;
+
+        $timeinit = strtotime(date('Y-m-01')); // First day of the current month.
+
+        $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
+                " FROM {block_ludifica_userpoints} lu " .
+                " INNER JOIN {block_ludifica_general} g ON g.userid = lu.userid" .
+                " WHERE lu.courseid = :courseid AND lu.timecreated >= :timeinit" .
+                " GROUP BY lu.userid, g.nickname" .
+                " ORDER BY points DESC";
+        $records = $DB->get_records_sql($sql, ['courseid' => $courseid, 'timeinit' => $timeinit]);
+
+        return self::get_toplist($records, $includecurrent);
     }
 
+    /**
+     * Process a list of users for general display.
+     *
+     * @param array $records Users list.
+     * @param bool $includecurrent If include the current user
+     * @return array Processed users list.
+     */
     private static function get_toplist($records, $includecurrent = true) {
         global $USER;
 
@@ -449,6 +518,12 @@ class controller {
         return $list;
     }
 
+    /**
+     * Get the current store tabs list.
+     *
+     * @param string $active Name of current active tab.
+     * @return array Tabs list.
+     */
     public static function get_storetabs($active) {
         $tabs = array();
 
@@ -469,6 +544,11 @@ class controller {
         return $tabs;
     }
 
+    /**
+     * Generate a unique id for block instance.
+     *
+     * @return string Unique identifier.
+     */
     public static function get_uniqueid() {
         $uniqueid = 'block_ludifica_' . self::$instancescounter;
         self::$instancescounter++;

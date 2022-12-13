@@ -22,8 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace block_ludifica;
-defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Ticket info.
@@ -34,14 +32,19 @@ defined('MOODLE_INTERNAL') || die();
 class ticket {
 
     /**
-     * var \stdClass Info about the ticket.
+     * @var \stdClass Info about the ticket.
      */
     private $data;
 
-    public static $DEFAULT_TYPE = 'normal';
+    /**
+     * @var string Default ticket type.
+     */
+    public static $defaulttype = 'normal';
 
     /**
      * Class constructor.
+     *
+     * @param int|object $ticket Current ticket data or id.
      */
     public function __construct($ticket = null) {
         global $DB;
@@ -62,6 +65,11 @@ class ticket {
         }
     }
 
+    /**
+     * Get the preisualization image.
+     *
+     * @return string Image URI.
+     */
     public function get_thumbnail() {
 
         $uri = '';
@@ -89,29 +97,43 @@ class ticket {
 
     /**
      * List the available ticket types.
+     *
+     * @return array Tickets type list.
      */
     public static function get_types() {
         return array('default' => get_string('ticketstype_default', 'block_ludifica'));
     }
 
+    /**
+     * Magic get function.
+     *
+     * @param string $name Property name.
+     * @return mixed Name property value.
+     */
     public function __get($name) {
-        if (property_exists($this, $name)){
+        if (property_exists($this, $name)) {
             return $this->$name;
-        } else if (property_exists($this->data, $name)){
+        } else if (property_exists($this->data, $name)) {
             return $this->data->$name;
-        } else if(method_exists($this, 'get_' . $name)) {
+        } else if (method_exists($this, 'get_' . $name)) {
             return call_user_func(array($this, 'get_' . $name));
         } else {
             throw new \Exception('propertie_or_method_not_found: ' . get_class($this) . '->'. $name);
         }
     }
 
+    /**
+     * Magic ser function.
+     *
+     * @param string $name Property name.
+     * @param mixed $value Property new value.
+     */
     public function __set($name, $value) {
-        if (property_exists($this, $name)){
+        if (property_exists($this, $name)) {
             $this->$name = $value;
-        } else if (property_exists($this->data, $name)){
+        } else if (property_exists($this->data, $name)) {
             $this->data->$name = $value;
-        } else if(method_exists($this, 'set_' . $name)) {
+        } else if (method_exists($this, 'set_' . $name)) {
             return call_user_func(array($this, 'set_' . $name), $value);
         } else {
             throw new \Exception('propertie_or_method_not_found: ' . get_class($this) . '->'. $name);

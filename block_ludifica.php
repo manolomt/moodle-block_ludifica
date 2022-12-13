@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
  * Form for editing ludifica block instances.
  *
@@ -23,21 +22,52 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/**
+ * Class containing block base implementation for Ludifica.
+ *
+ * @copyright 2022 David Herney @ BambuCo
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class block_ludifica extends block_base {
 
-    function init() {
+    /**
+     * Initialice the block.
+     */
+    public function init() {
         $this->title = get_string('pluginname', 'block_ludifica');
     }
 
-    function has_config() {
+    /**
+     * Subclasses should override this and return true if the
+     * subclass block has a settings.php file.
+     *
+     * @return boolean
+     */
+    public function has_config() {
         return true;
     }
 
-    function applicable_formats() {
+    /**
+     * Which page types this block may appear on.
+     *
+     * The information returned here is processed by the
+     * {@see blocks_name_allowed_in_format()} function. Look there if you need
+     * to know exactly how this works.
+     *
+     * Default case: everything except mod and tag.
+     *
+     * @return array page-type prefix => true/false.
+     */
+    public function applicable_formats() {
         return array('all' => true);
     }
 
-    function specialization() {
+    /**
+     * This function is called on your subclass right after an instance is loaded
+     * Use this function to act on instance data just after it's loaded and before anything else is done
+     * For instance: if your block will have different title's depending on location (site, course, blog, etc)
+     */
+    public function specialization() {
         if (isset($this->config->title)) {
             $this->title = $this->title = format_string($this->config->title, true, ['context' => $this->context]);
         } else {
@@ -45,18 +75,28 @@ class block_ludifica extends block_base {
         }
     }
 
-    function instance_allow_multiple() {
+    /**
+     * Are you going to allow multiple instances of each block?
+     * If yes, then it is assumed that the block WILL USE per-instance configuration
+     * @return boolean
+     */
+    public function instance_allow_multiple() {
         return true;
     }
 
-    function get_content() {
+    /**
+     * Implemented to return the content object.
+     *
+     * @return stdObject
+     */
+    public function get_content() {
         global $DB, $USER;
 
-        if ($this->content !== NULL) {
+        if ($this->content !== null) {
             return $this->content;
         }
 
-        $this->content         =  new stdClass;
+        $this->content         = new stdClass;
         $this->content->text   = '';
         $this->content->footer = '';
 
@@ -68,7 +108,9 @@ class block_ludifica extends block_base {
                 $tabs[] = 'profile';
             }
 
-            if ($this->page->course->id != SITEID && property_exists($this->config, 'tabtopbycourse') && $this->config->tabtopbycourse) {
+            if ($this->page->course->id != SITEID
+                    && property_exists($this->config, 'tabtopbycourse')
+                    && $this->config->tabtopbycourse) {
                 $tabs[] = 'topbycourse';
             }
 
@@ -76,10 +118,9 @@ class block_ludifica extends block_base {
                 $tabs[] = 'topbysite';
             }
 
-            // ToDo: The current DB structure not support points by date because all points are sum by type.
-            /*if ($this->page->course->id != SITEID && property_exists($this->config, 'tablastmonth') && $this->config->tablastmonth) {
+            if (property_exists($this->config, 'tablastmonth') && $this->config->tablastmonth) {
                 $tabs[] = 'lastmonth';
-            }*/
+            }
         } else {
             $tabs[] = 'profile';
         }
@@ -105,7 +146,6 @@ class block_ludifica extends block_base {
                 $info = new \block_ludifica\player();
             }
 
-
             if ($info) {
                 // Load templates to display the block content.
                 $renderable = new \block_ludifica\output\main($tabs, $info);
@@ -121,6 +161,13 @@ class block_ludifica extends block_base {
         return $this->content;
     }
 
+    /**
+     * Overridden by the block to prevent the block from being dockable.
+     *
+     * @return bool
+     *
+     * Return false as per MDL-64506
+     */
     public function instance_can_be_docked() {
         return false;
     }

@@ -22,8 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace block_ludifica;
-defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Player info.
@@ -33,45 +31,50 @@ defined('MOODLE_INTERNAL') || die();
  */
 class player {
 
+    /**
+     * @var int Default avatar id.
+     */
     const DEFAULT_AVATAR = null;
 
     /**
-     * var string Points when a course is completed by a user.
+     * @var string Points when a course is completed by a user.
      */
     const POINTS_TYPE_COURSECOMPLETED = 'coursecompleted';
 
     /**
-     * var string Points when login a minimum numbers of days.
+     * @var string Points when login a minimum numbers of days.
      */
     const POINTS_TYPE_RECURRENTLOGINBASIC = 'recurrentloginbasic';
 
     /**
-     * var string Points by recurrent login after basic.
+     * @var string Points by recurrent login after basic.
      */
     const POINTS_TYPE_RECURRENTLOGIN = 'recurrentlogin';
 
      /**
-     * var string Points by new user.
+     * @var string Points by new user.
      */
     const POINTS_TYPE_USERCREATED = 'usercreated';
 
     /**
-     * var string Points by recurrent login.
+     * @var string Points by recurrent login.
      */
     const COINS_TYPE_BYPOINTS = 'bypoints';
 
     /**
-     * var int Ranking users.
+     * @var int Ranking users.
      */
     const LIMIT_RANKING = 10;
 
     /**
-     * var \stdClass Info about the player.
+     * @var \stdClass Info about the player.
      */
     private $data;
 
     /**
      * Class constructor.
+     *
+     * @param int $userid Specific id to load a user. Current logued user is loaded by default.
      */
     public function __construct($userid = null) {
         global $USER, $DB;
@@ -105,6 +108,11 @@ class player {
         }
     }
 
+    /**
+     * Get the player profile.
+     *
+     * @return object Profile.
+     */
     public function get_profile() {
         global $OUTPUT;
 
@@ -120,7 +128,8 @@ class player {
             $usercontext = \context_user::instance($this->data->id);
             $info->description = file_rewrite_pluginfile_urls($this->data->description, 'pluginfile.php', $usercontext->id,
                                                                 'user', 'profile', null);
-            //$info->description = format_text($this->data->description, $this->data->descriptionformat);
+            // ToDo: Validation for format text of info description.
+            // Use format_text function with parameters ($this->data->description, $this->data->descriptionformat).
         }
 
         if ($this->data->avatar) {
@@ -133,6 +142,11 @@ class player {
         return $info;
     }
 
+    /**
+     * Get the player tickets.
+     *
+     * @return array Tickets list.
+     */
     public function get_tickets() {
         global $OUTPUT, $DB;
 
@@ -157,9 +171,14 @@ class player {
         return $response;
     }
 
+    /**
+     * Get the player displayed nickname.
+     *
+     * @return string
+     */
     public function get_nickname() {
 
-        if(!empty($this->data->general->nickname)) {
+        if (!empty($this->data->general->nickname)) {
             $nickname = $this->data->general->nickname;
         } else {
             $nickname = fullname($this->data);
@@ -168,6 +187,14 @@ class player {
         return $nickname;
     }
 
+    /**
+     * Sum points to the players.
+     *
+     * @param int $newpoints
+     * @param int $courseid
+     * @param string $type Points type
+     * @param object $infodata Information depend of points type
+     */
     public function add_points(int $newpoints, int $courseid, string $type, object $infodata = null) {
         global $DB;
 
@@ -195,8 +222,12 @@ class player {
 
     /**
      * Add coins by new points.
+     *
+     * @param int $courseid
+     * @param int $newpoints
+     * @return bool True if successful, false in other case.
      */
-    public function coinsbypoints($courseid, $newpoints) {
+    public function coinsbypoints(int $courseid, int $newpoints) {
         global $DB;
 
         $coinsbypoints = intval(get_config('block_ludifica', 'coinsbypoints'));
@@ -222,7 +253,6 @@ class player {
                                                         'coins' => $totalcoins,
                                                         'timeupdated' => time()]);
 
-
         $infodata = new \stdClass();
         $infodata->points = $newpoints;
         $infodata->factor = $factorpoints - $newpoints;
@@ -239,24 +269,36 @@ class player {
         return true;
     }
 
+    /**
+     * Magic get function.
+     *
+     * @param string $name Property name.
+     * @return mixed Name property value.
+     */
     public function __get($name) {
-        if (property_exists($this, $name)){
+        if (property_exists($this, $name)) {
             return $this->$name;
-        } else if (property_exists($this->data, $name)){
+        } else if (property_exists($this->data, $name)) {
             return $this->data->$name;
-        } else if(method_exists($this, 'get_' . $name)) {
+        } else if (method_exists($this, 'get_' . $name)) {
             return call_user_func(array($this, 'get_' . $name));
         } else {
             throw new \Exception('propertie_or_method_not_found: ' . get_class($this) . '->'. $name);
         }
     }
 
+    /**
+     * Magic ser function.
+     *
+     * @param string $name Property name.
+     * @param mixed $value Property new value.
+     */
     public function __set($name, $value) {
-        if (property_exists($this, $name)){
+        if (property_exists($this, $name)) {
             $this->$name = $value;
-        } else if (property_exists($this->data, $name)){
+        } else if (property_exists($this->data, $name)) {
             $this->data->$name = $value;
-        } else if(method_exists($this, 'set_' . $name)) {
+        } else if (method_exists($this, 'set_' . $name)) {
             return call_user_func(array($this, 'set_' . $name), $value);
         } else {
             throw new \Exception('propertie_or_method_not_found: ' . get_class($this) . '->'. $name);

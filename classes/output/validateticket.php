@@ -22,7 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace block_ludifica\output;
-defined('MOODLE_INTERNAL') || die();
 
 use renderable;
 use renderer_base;
@@ -37,30 +36,32 @@ use templatable;
 class validateticket implements renderable, templatable {
 
     /**
-     * var object Ticket.
+     * @var object Ticket.
      */
     private $ticket;
 
     /**
-     * var object User ticket.
+     * @var object User ticket.
      */
     private $userticket;
 
     /**
-     * var object Player user.
+     * @var object Player user.
      */
     private $user;
 
     /**
-     * var array Params for use the ticket.
+     * @var array Params for use the ticket.
      */
     private $params;
 
     /**
      * Constructor.
      *
-     * @param array $ticket The tickets info.
-     * @param array $user The player info.
+     * @param object $ticket The tickets info.
+     * @param object $userticket User tickets list.
+     * @param object $user The player info.
+     * @param array $params Parameters to use the ticket.
      */
     public function __construct($ticket, $userticket, $user, $params) {
 

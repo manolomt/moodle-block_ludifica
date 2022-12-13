@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
  * Strings for component 'block_ludifica', language 'es'
  *
@@ -86,6 +85,7 @@ $string['giveticket'] = 'Regalar un beneficio';
 $string['giveticketmessage'] = 'Elija el contacto destino';
 $string['infodata'] = 'Datos relacionados (formato JSON)';
 $string['labellevel'] = 'Nivel {$a}';
+$string['lastmonth-ranking_help'] = 'Listado de los mejores jugadores del mes actual.';
 $string['levels'] = 'Niveles';
 $string['level_help'] = '¡Acumula puntos para que tu avatar pase al siguiente nivel!';
 $string['levelrequired'] = 'Nivel <em>{$a}</em> requerido';

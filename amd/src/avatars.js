@@ -16,51 +16,53 @@
 /**
  * Javascript to avatars manage.
  *
- * @package   block_ludifica
+ * @module    block/ludifica
  * @copyright 2021 David Herney @ BambuCo
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/notification', 'core/str', 'core/ajax', 'block_ludifica/alertc', 'block_ludifica/player'],
-function($, Notification, Str, Ajax, Alertc, Player) {
+define(['jquery', 'core/notification', 'core/str', 'core/ajax', 'block_ludifica/alertc', 'block_ludifica/player', 'core/log'],
+function($, Notification, Str, Ajax, Alertc, Player, Log) {
 
-    var wwwroot = M.cfg.wwwroot;
     var s = [];
-    var currentavatarid = null;
 
     /**
      * Initialise all for avatars.
      *
      */
-    var init = function(userid, useravatarid) {
-
-        currentavatarid = useravatarid;
+    var init = function() {
 
         // Load used strings.
         var strings = [
-            { key: 'avatarbuy', component: 'block_ludifica' },
-            { key: 'avatarbuymessage', component: 'block_ludifica' },
-            { key: 'buy', component: 'block_ludifica' },
-            { key: 'notbuy', component: 'block_ludifica' },
-            { key: 'bought', component: 'block_ludifica' },
-            { key: 'avataruse', component: 'block_ludifica' },
-            { key: 'avatarusemessage', component: 'block_ludifica' },
-            { key: 'use', component: 'block_ludifica' },
-            { key: 'avatarnotuse', component: 'block_ludifica' },
-            { key: 'avatarused', component: 'block_ludifica' },
-            { key: 'cancel' },
-            { key: 'continue' },
-            { key: 'error' },
-            { key: 'info' },
+            {key: 'avatarbuy', component: 'block_ludifica'},
+            {key: 'avatarbuymessage', component: 'block_ludifica'},
+            {key: 'buy', component: 'block_ludifica'},
+            {key: 'notbuy', component: 'block_ludifica'},
+            {key: 'bought', component: 'block_ludifica'},
+            {key: 'avataruse', component: 'block_ludifica'},
+            {key: 'avatarusemessage', component: 'block_ludifica'},
+            {key: 'use', component: 'block_ludifica'},
+            {key: 'avatarnotuse', component: 'block_ludifica'},
+            {key: 'avatarused', component: 'block_ludifica'},
+            {key: 'cancel'},
+            {key: 'continue'},
+            {key: 'error'},
+            {key: 'info'},
         ];
-        strings.forEach(function(one, index) {
+        strings.forEach(function(one) {
             s[one.key] = one.key;
         });
 
-        Str.get_strings(strings).then(function (results) {
+        Str.get_strings(strings).then(function(results) {
             results.forEach(function(value, index) {
                 s[strings[index].key] = value;
             });
+
+            return true;
+        }).
+        fail(function(e) {
+            Log.debug('Error get strings');
+            Log.debug(e);
         });
         // End load used strings.
 
@@ -69,28 +71,28 @@ function($, Notification, Str, Ajax, Alertc, Player) {
             var $element = $(this);
             var avatarid = $element.data('id');
 
-            Notification.confirm(s['avatarbuy'], s['avatarbuymessage'], s['buy'], s['cancel'], function() {
+            Notification.confirm(s.avatarbuy, s.avatarbuymessage, s.buy, s.cancel, function() {
 
                 // Buy the avatar.
                 Ajax.call([{
                     methodname: 'block_ludifica_buy_avatar',
-                    args: { 'id': avatarid },
-                    done: function (data) {
+                    args: {'id': avatarid},
+                    done: function(data) {
 
                         if (data) {
-                            Alertc.success(s['bought']);
+                            Alertc.success(s.bought);
                             var $avatarbox = $('#avatar-' + avatarid);
                             $avatarbox.removeClass('usernothas');
                             $avatarbox.addClass('userhas');
                             Player.reloadStats();
                         } else {
-                            Alertc.error(s['notbuy']);
+                            Alertc.error(s.notbuy);
                         }
 
                     },
-                    fail: function (e) {
-                        console.log('Error buy avatar');
-                        console.log(e);
+                    fail: function(e) {
+                        Log.debug('Error buy avatar');
+                        Log.debug(e);
                     }
                 }]);
 
@@ -103,29 +105,29 @@ function($, Notification, Str, Ajax, Alertc, Player) {
             var $element = $(this);
             var avatarid = $element.data('id');
 
-            Notification.confirm(s['avataruse'], s['avatarusemessage'], s['use'], s['cancel'], function() {
+            Notification.confirm(s.avataruse, s.avatarusemessage, s.use, s.cancel, function() {
 
                 // Select the avatar.
                 Ajax.call([{
                     methodname: 'block_ludifica_use_avatar',
-                    args: { 'id': avatarid },
-                    done: function (data) {
+                    args: {'id': avatarid},
+                    done: function(data) {
 
                         if (data) {
-                            Alertc.success(s['avatarused']);
+                            Alertc.success(s.avatarused);
                             $('.oneavatar.inuse').removeClass('inuse');
 
                             var $avatarbox = $('#avatar-' + avatarid);
                             $avatarbox.addClass('inuse');
-                            console.log($avatarbox);
+                            Log.debug($avatarbox);
                         } else {
-                            Alertc.error(s['avatarnotuse']);
+                            Alertc.error(s.avatarnotuse);
                         }
 
                     },
-                    fail: function (e) {
-                        console.log('Error assigning avatar');
-                        console.log(e);
+                    fail: function(e) {
+                        Log.debug('Error assigning avatar');
+                        Log.debug(e);
                     }
                 }]);
 

@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
  * Strings for component 'block_ludifica', language 'en'
  *
@@ -25,7 +24,7 @@
 
 $string['pluginname'] = 'Ludifica';
 
-//Capabilities
+// Capabilities.
 $string['ludifica:addinstance'] = 'Add a new Ludifica block';
 $string['ludifica:myaddinstance'] = 'Add a new Ludifica block to Dashboard';
 $string['ludifica:manage'] = 'Manage Ludifica block settings';
@@ -86,6 +85,7 @@ $string['giveticket'] = 'Give a ticket';
 $string['giveticketmessage'] = 'Choose the target contact';
 $string['infodata'] = 'Related data (JSON format)';
 $string['labellevel'] = 'Level {$a}';
+$string['lastmonth-ranking_help'] = 'List of best players in the current month.';
 $string['levels'] = 'Levels';
 $string['level_help'] = 'Collect points to take your avatar to the next level!';
 $string['levelrequired'] = 'Level <em>{$a}</em> required';

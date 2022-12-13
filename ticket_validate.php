@@ -14,6 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Tickets validation page.
+ *
+ * @package   block_ludifica
+ * @copyright 2022 David Herney @ BambuCo
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 require_once('../../config.php');
 require_once('ticket_validate_form.php');
 
@@ -21,6 +29,8 @@ $username = optional_param('u', null, PARAM_TEXT);
 $usercode = optional_param('c', null, PARAM_TEXT);
 $utid = optional_param('ut', 0, PARAM_INT); // Userticket id.
 $confirm = optional_param('confirm', '', PARAM_ALPHANUM); // Md5 confirmation hash.
+
+require_login();
 
 $syscontext = context_system::instance();
 
@@ -40,7 +50,7 @@ if (!empty($confirm) && !empty($utid) && confirm_sesskey()) {
 
     $userticket = $DB->get_record('block_ludifica_usertickets', array('id' => $utid), '*', MUST_EXIST);
 
-    if ($confirm == MD5($utid . $userticket->usercode . $userticket->userid)) {
+    if ($confirm == md5($utid . $userticket->usercode . $userticket->userid)) {
         $userticket->timeused = time();
         $DB->update_record('block_ludifica_usertickets', $userticket);
         echo $OUTPUT->notification(get_string('ticketused', 'block_ludifica'), 'notifysuccess');
@@ -53,7 +63,7 @@ if (!empty($confirm) && !empty($utid) && confirm_sesskey()) {
 }
 
 // Create the form.
-$form = new block_ludifica_ticket_validate(NULL, array('data' => $data));
+$form = new block_ludifica_ticket_validate(null, array('data' => $data));
 
 if ($data = $form->get_data()) {
 
@@ -70,7 +80,7 @@ if ($data = $form->get_data()) {
 
 if ($ticket) {
     $params = array('sesskey' => sesskey(),
-                    'confirm' => MD5($userticket->id . $userticket->usercode . $userticket->userid),
+                    'confirm' => md5($userticket->id . $userticket->usercode . $userticket->userid),
                     'ut' => $userticket->id);
 
     $renderable = new \block_ludifica\output\validateticket($ticket, $userticket, $user, $params);

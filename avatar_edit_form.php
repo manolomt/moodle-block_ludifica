@@ -14,29 +14,43 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Class containing form definition to edit an avatar.
+ *
+ * @package   block_ludifica
+ * @copyright 2022 David Herney @ BambuCo
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->libdir . '/formslib.php');
 
 /**
  * The form for handling editing a avatar.
+ *
+ * @copyright 2021 David Herney @ BambuCo
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_ludifica_avatar_edit extends moodleform {
+
+    /**
+     * @var object List of local data.
+     */
     protected $_data;
 
     /**
      * Form definition.
      */
-    function definition() {
-        global $CFG, $PAGE, $DB;
+    public function definition() {
+        global $CFG;
 
         $mform = $this->_form;
 
-        // this contains the data of this form.
+        // This contains the data of this form.
         $this->_data  = $this->_customdata['data'];
 
-        if (!$this->_data) {
-        } else {
+        if ($this->_data) {
             $this->_data->description = array('text' => $this->_data->description);
             if ($this->_data->description == 'null') {
                 $this->_data->description = '';
@@ -45,10 +59,9 @@ class block_ludifica_avatar_edit extends moodleform {
 
         $editoroptions = array('maxfiles' => 0, 'maxbytes' => 0, 'enable_filemanagement' => false,
                                     'trusttext' => false, 'noclean' => false);
-        $editorattributes = array ('rows'=> 5, 'cols'=>50);
+        $editorattributes = array ('rows' => 5, 'cols' => 50);
         $filemanageroptions = $this->_customdata['filemanageroptions'];
 
-        //Select a course
         $mform->addElement('header', 'general', get_string('general'));
 
         $mform->addElement('text', 'name', get_string('name'), 'maxlength="127" size="30"');
@@ -79,7 +92,7 @@ class block_ludifica_avatar_edit extends moodleform {
 
         $this->add_action_buttons();
 
-        // Finally set the current form data
+        // Finally set the current form data.
         $this->set_data($this->_data);
     }
 

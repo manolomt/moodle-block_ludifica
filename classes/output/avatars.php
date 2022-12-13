@@ -22,9 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace block_ludifica\output;
-defined('MOODLE_INTERNAL') || die();
-
-//include_once('ludifica.class.php');
 
 use renderable;
 use renderer_base;
@@ -39,7 +36,7 @@ use templatable;
 class avatars implements renderable, templatable {
 
     /**
-     * var array avatars list.
+     * @var array avatars list.
      */
     private $avatars;
 

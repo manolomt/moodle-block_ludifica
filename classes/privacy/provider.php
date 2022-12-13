@@ -24,8 +24,6 @@
 
 namespace block_ludifica\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Privacy Subsystem for block implementing null_provider.
  *

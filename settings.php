@@ -1,11 +1,12 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
 //
-// This is free software: you can redistribute it and/or modify
+// Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// This is distributed in the hope that it will be useful,
+// Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -137,10 +138,6 @@ $settings->add('block_ludifica_settings', $generalsettings);
 $externalpage = new admin_externalpage('block_ludifica_avatars', get_string('avatars', 'block_ludifica'),
                     new moodle_url("/blocks/ludifica/avatars.php"), 'block/ludifica:manage');
 $settings->add('block_ludifica_settings', $externalpage);
-
-/*$externalpage = new admin_externalpage('block_ludifica_cards', get_string('cards', 'block_ludifica'),
-                    new moodle_url("/blocks/ludifica/cards.php"), 'block/ludifica:manage');
-$settings->add('block_ludifica_settings', $externalpage);*/
 
 $externalpage = new admin_externalpage('block_ludifica_tickets', get_string('tickets', 'block_ludifica'),
                     new moodle_url("/blocks/ludifica/tickets.php"), 'block/ludifica:manage');

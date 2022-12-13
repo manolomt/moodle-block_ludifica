@@ -14,28 +14,42 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Class containing form definition for ticket validation.
+ *
+ * @package   block_ludifica
+ * @copyright 2022 David Herney @ BambuCo
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->libdir . '/formslib.php');
 
 /**
  * The form for validate a ticket.
+ *
+ * @copyright 2021 David Herney @ BambuCo
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_ludifica_ticket_validate extends moodleform {
+
+    /**
+     * @var object List of local data.
+     */
     protected $_data;
 
     /**
      * Form definition.
      */
-    function definition() {
-        global $CFG, $PAGE, $DB;
+    public function definition() {
+        global $CFG;
 
         $mform = $this->_form;
 
-        // this contains the data of this form.
+        // This contains the data of this form.
         $this->_data  = $this->_customdata['data'];
 
-        //Select a course
         $mform->addElement('header', 'general', get_string('searchticket', 'block_ludifica'));
 
         $mform->addElement('text', 'username', get_string('username'));
@@ -47,9 +61,8 @@ class block_ludifica_ticket_validate extends moodleform {
         $mform->setType('usercode', PARAM_TEXT);
 
         $mform->addElement('submit', 'search', get_string('searchticket', 'block_ludifica'));
-//        $this->add_action_buttons();
 
-        // Finally set the current form data
+        // Finally set the current form data.
         $this->set_data($this->_data);
     }
 
