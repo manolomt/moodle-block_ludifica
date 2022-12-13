@@ -16,7 +16,7 @@
 /**
  * Alerts control.
  *
- * @package   block_ludifica
+ * @module    block/ludifica
  * @copyright 2021 David Herney @ BambuCo
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -24,14 +24,13 @@
 define(['jquery'],
 function($) {
 
-    var wwwroot = M.cfg.wwwroot;
-
     var TIME_AUTOCLOSE = 3000;
     var CONTAINER_SELECTOR = 'body';
 
     var show = function(type, msg, autohide) {
         var $control = $('<div class="alertc-control"></div>');
         var $alert = $('<div class="alert"></div>');
+        var cssclass = '';
 
         $control.append($alert);
 
@@ -58,7 +57,7 @@ function($) {
         });
         $alert.append($close);
 
-        if (autohide || typeof(autohide) == 'undefined') {
+        if (autohide || typeof autohide == 'undefined') {
             setTimeout(function() {
                 $control.hide(600, function() {
                     $control.remove();
@@ -69,7 +68,7 @@ function($) {
         $alert.append(msg);
 
         $(CONTAINER_SELECTOR).append($control);
-    }
+    };
 
     return {
         "info": function(msg, autohide) {

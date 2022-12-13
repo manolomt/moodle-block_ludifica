@@ -23,10 +23,13 @@
  */
 namespace block_ludifica\requirements;
 
-include_once($CFG->dirroot . '/blocks/ludifica/requirements/requirementbase.php');
+defined('MOODLE_INTERNAL') || die();
+
+require_once($CFG->dirroot . '/blocks/ludifica/requirements/requirementbase.php');
 
 /**
  * Level requirement.
+ *
  * Configuration example:
  * {
  *  "requirements" : [
@@ -43,7 +46,7 @@ include_once($CFG->dirroot . '/blocks/ludifica/requirements/requirementbase.php'
 class level extends requirementbase {
 
     /**
-     * var array Default properties list, key => value format.
+     * @var array Default properties list, key => value format.
      */
     protected $defaultoptions = ['min' => 0];
 

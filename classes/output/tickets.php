@@ -24,8 +24,6 @@
 namespace block_ludifica\output;
 defined('MOODLE_INTERNAL') || die();
 
-//include_once('ludifica.class.php');
-
 use renderable;
 use renderer_base;
 use templatable;
@@ -39,7 +37,7 @@ use templatable;
 class tickets implements renderable, templatable {
 
     /**
-     * var array Tickets list.
+     * @var array Tickets list.
      */
     private $tickets;
 
@@ -86,7 +84,7 @@ class tickets implements renderable, templatable {
             $ticket->userticketscount = count($ticket->usertickets);
             $ticket->usertickets = array_values($ticket->usertickets);
 
-            foreach($ticket->usertickets as $uticket) {
+            foreach ($ticket->usertickets as $uticket) {
 
                 if (!$uticket->timeused) {
                     $uticketavaile++;
@@ -123,7 +121,6 @@ class tickets implements renderable, templatable {
                     $ticket->enabled = false;
                 }
             }
-
 
             $ticket->cangive = $ticket->userticketscount > 0 && $uticketavaile > 0;
         }

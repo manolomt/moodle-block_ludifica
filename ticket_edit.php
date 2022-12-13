@@ -14,6 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Ticket edition page.
+ *
+ * @package   block_ludifica
+ * @copyright 2022 David Herney @ BambuCo
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 require_once('../../config.php');
 require_once('ticket_edit_form.php');
 
@@ -47,7 +55,7 @@ if ($ticket) {
 }
 
 // First create the form.
-$editform = new block_ludifica_ticket_edit(NULL, array('data' => $ticket, 'filemanageroptions' => $filemanageroptions));
+$editform = new block_ludifica_ticket_edit(null, array('data' => $ticket, 'filemanageroptions' => $filemanageroptions));
 if ($editform->is_cancelled()) {
     $url = new moodle_url($CFG->wwwroot . '/blocks/ludifica/tickets.php');
     redirect($url);

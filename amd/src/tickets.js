@@ -16,7 +16,7 @@
 /**
  * Javascript to tickets manage.
  *
- * @package   block_ludifica
+ * @module    block/ludifica
  * @copyright 2021 David Herney @ BambuCo
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -27,25 +27,31 @@ define(['jquery',
         'core/ajax',
         'block_ludifica/alertc',
         'block_ludifica/player',
-        'core/modal_factory'],
+        'core/modal_factory',
+        'core/log'],
 function($,
         Notification,
         Str,
         Ajax,
         Alertc,
         Player,
-        ModalFactory) {
+        ModalFactory,
+        Log) {
 
-    var wwwroot = M.cfg.wwwroot;
     var s = [];
     var contacts = null;
 
-    function give_view(ticketid) {
+    /**
+     * Show the give view.
+     *
+     * @param {Integer} ticketid
+     */
+    function giveView(ticketid) {
 
         var $content = $('<div></div>');
         var $contactslist = $('<select id="block_ludifica_ticket_given_contact" class="form-control"></select>');
 
-        $content.append('<h4>' + s['giveticketmessage'] + '</h4>');
+        $content.append('<h4>' + s.giveticketmessage + '</h4>');
 
         contacts.forEach(contact => {
             $contactslist.append('<option value="' + contact.id + '">' + contact.name + '</option>');
@@ -53,39 +59,44 @@ function($,
 
         $content.append($contactslist);
 
-        Notification.confirm(s['giveticket'], $content.html(), s['give'], s['cancel'], function() {
+        Notification.confirm(s.giveticket, $content.html(), s.give, s.cancel, function() {
             var contactid = parseInt($('#block_ludifica_ticket_given_contact').val());
 
             // Buy the ticket.
             Ajax.call([{
                 methodname: 'block_ludifica_give_ticket',
-                args: { 'ticketid': ticketid, 'contactid': contactid },
-                done: function (data) {
+                args: {'ticketid': ticketid, 'contactid': contactid},
+                done: function(data) {
 
                     if (data) {
-                        Alertc.success(s['given']);
-                        update_ticketdata(ticketid);
+                        Alertc.success(s.given);
+                        updateTicketData(ticketid);
                     } else {
-                        Alertc.error(s['notgive']);
+                        Alertc.error(s.notgive);
                     }
 
                 },
-                fail: function (e) {
+                fail: function(e) {
                     Alertc.error(e.message);
-                    console.log(e);
+                    Log.debug(e);
                 }
             }]);
 
         });
     }
 
-    function update_ticketdata(ticketid) {
+    /**
+     * Save the ticket data.
+     *
+     * @param {Integer} ticketid
+     */
+    function updateTicketData(ticketid) {
         Ajax.call([{
             methodname: 'block_ludifica_get_ticket',
-            args: { 'id': ticketid },
-            done: function (data) {
+            args: {'id': ticketid},
+            done: function(data) {
 
-                if (data && typeof(data) == 'object') {
+                if (data && typeof data == 'object') {
                     var $ticket = $('#ticket-' + ticketid);
                     var $usertickets = $('#moreinfo-ticket-content-' + ticketid + ' .usertickets');
                     var $userticketslist = $usertickets.find('ul');
@@ -108,7 +119,7 @@ function($,
                             if (one.timeused) {
                                 $tplusercode.addClass('usercode-used');
 
-                                var userdate = s['usedat'].replace('USERDATE', one.timeusedformatted);
+                                var userdate = s.usedat.replace('USERDATE', one.timeusedformatted);
                                 var $tpltimeused = $('<em> ' + userdate + '</em>');
                                 $tplitem.append($tpltimeused);
                             }
@@ -126,17 +137,15 @@ function($,
                         $ticket.find('[data-action="give"]').hide();
                     }
 
-                    if (data.available <= 0 ||
-                            data.byuser <= data.usertickets.length) {
-
+                    if (data.available <= 0 || data.byuser <= data.usertickets.length) {
                         $ticket.find('[data-action="buy"]').hide();
                     } else  {
                         $ticket.find('[data-action="buy"]').show();
                     }
                 }
             },
-            fail: function (e) {
-                console.log(e);
+            fail: function(e) {
+                Log.debug(e);
             }
         }]);
     }
@@ -144,36 +153,40 @@ function($,
     /**
      * Initialise all for tickets.
      *
+     * @param {Integer} userid
+     *
      */
     var init = function(userid) {
 
         // Load used strings.
         var strings = [
-            { key: 'buyticket', component: 'block_ludifica' },
-            { key: 'buyticketmessage', component: 'block_ludifica' },
-            { key: 'buy', component: 'block_ludifica' },
-            { key: 'notbuy', component: 'block_ludifica' },
-            { key: 'give', component: 'block_ludifica' },
-            { key: 'given', component: 'block_ludifica' },
-            { key: 'notgive', component: 'block_ludifica' },
-            { key: 'giveticket', component: 'block_ludifica' },
-            { key: 'giveticketmessage', component: 'block_ludifica' },
-            { key: 'notcontacts', component: 'block_ludifica' },
-            { key: 'bought', component: 'block_ludifica' },
-            { key: 'usedat', component: 'block_ludifica', param: 'USERDATE' },
-            { key: 'cancel' },
-            { key: 'continue' },
-            { key: 'error' },
-            { key: 'info' },
+            {key: 'buyticket', component: 'block_ludifica'},
+            {key: 'buyticketmessage', component: 'block_ludifica'},
+            {key: 'buy', component: 'block_ludifica'},
+            {key: 'notbuy', component: 'block_ludifica'},
+            {key: 'give', component: 'block_ludifica'},
+            {key: 'given', component: 'block_ludifica'},
+            {key: 'notgive', component: 'block_ludifica'},
+            {key: 'giveticket', component: 'block_ludifica'},
+            {key: 'giveticketmessage', component: 'block_ludifica'},
+            {key: 'notcontacts', component: 'block_ludifica'},
+            {key: 'bought', component: 'block_ludifica'},
+            {key: 'usedat', component: 'block_ludifica', param: 'USERDATE'},
+            {key: 'cancel'},
+            {key: 'continue'},
+            {key: 'error'},
+            {key: 'info'},
         ];
-        strings.forEach(function(one, index) {
+        strings.forEach(function(one) {
             s[one.key] = one.key;
         });
 
-        Str.get_strings(strings).then(function (results) {
+        Str.get_strings(strings).then(function(results) {
             results.forEach(function(value, index) {
                 s[strings[index].key] = value;
             });
+
+            return true;
         });
         // End load used strings.
 
@@ -182,26 +195,26 @@ function($,
             var $element = $(this);
             var ticketid = $element.data('id');
 
-            Notification.confirm(s['buyticket'], s['buyticketmessage'], s['buy'], s['cancel'], function() {
+            Notification.confirm(s.buyticket, s.buyticketmessage, s.buy, s.cancel, function() {
 
                 // Buy the ticket.
                 Ajax.call([{
                     methodname: 'block_ludifica_buy_ticket',
-                    args: { 'id': ticketid },
-                    done: function (data) {
+                    args: {'id': ticketid},
+                    done: function(data) {
 
                         if (data) {
-                            Alertc.success(s['bought']);
-                            update_ticketdata(ticketid);
+                            Alertc.success(s.bought);
+                            updateTicketData(ticketid);
                             Player.reloadStats();
                         } else {
-                            Alertc.error(s['notbuy']);
+                            Alertc.error(s.notbuy);
                         }
 
                     },
-                    fail: function (e) {
-                        console.log('Error buy ticket');
-                        console.log(e);
+                    fail: function(e) {
+                        Log.debug('Error buy ticket');
+                        Log.debug(e);
                     }
                 }]);
 
@@ -218,10 +231,10 @@ function($,
             if (!contacts) {
                 Ajax.call([{
                     methodname: 'core_message_get_user_contacts',
-                    args: { 'userid': userid },
-                    done: function (data) {
+                    args: {'userid': userid},
+                    done: function(data) {
 
-                        if (data && typeof(data) == 'object' && data.length > 0) {
+                        if (data && typeof data == 'object' && data.length > 0) {
 
                             contacts = [];
                             data.forEach(contact => {
@@ -230,20 +243,20 @@ function($,
                                 }
                             });
 
-                            give_view(ticketid);
+                            giveView(ticketid);
 
                         } else {
-                            Alertc.warning(s['notcontacts']);
+                            Alertc.warning(s.notcontacts);
                         }
 
                     },
-                    fail: function (e) {
+                    fail: function(e) {
                         Alertc.error(e.message);
-                        console.log(e);
+                        Log.debug(e);
                     }
                 }]);
             } else {
-                give_view(ticketid);
+                giveView(ticketid);
             }
 
         });
@@ -260,6 +273,7 @@ function($,
 
             ModalFactory.create(props).then(function(modal) {
                 modal.show();
+                return true;
             });
 
         });

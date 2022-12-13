@@ -23,8 +23,13 @@
  */
 namespace block_ludifica\event;
 
-defined('MOODLE_INTERNAL') || die();
-
+/**
+ * Class definition.
+ *
+ * @copyright 2022 David Herney @ BambuCo
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ */
 class avatar_deleted extends \core\event\base {
 
     /**

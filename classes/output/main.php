@@ -22,9 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace block_ludifica\output;
-defined('MOODLE_INTERNAL') || die();
-
-//include_once('ludifica.class.php');
 
 use renderable;
 use renderer_base;
@@ -39,18 +36,19 @@ use templatable;
 class main implements renderable, templatable {
 
     /**
-     * var \block_ludifica\player Info about the player.
+     * @var \block_ludifica\player Info about the player.
      */
     private $player;
 
     /**
-     * var array List of tabs to print.
+     * @var array List of tabs to print.
      */
     private $tabs;
 
     /**
      * Constructor.
      *
+     * @param array $tabs Tabs list to render.
      * @param \block_ludifica\player $player The player user information.
      */
     public function __construct($tabs, $player) {
@@ -109,10 +107,9 @@ class main implements renderable, templatable {
                     get_string('newnickname', 'block_ludifica', format_string($nickname)));
                     $nickcontent = $OUTPUT->render($tmpl);
                     $defaultvariables['tickets'] = array_values($this->player->get_tickets());
-                } else {
+            } else {
                 $nickcontent = $nickname;
             }
-
 
             $defaultvariables['nickcontent'] = $nickcontent;
             $defaultvariables['player'] = $this->player->get_profile();

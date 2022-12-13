@@ -32,14 +32,14 @@ namespace block_ludifica;
 class controller {
 
     /**
-     * var int Instances includes in page request.
+     * @var int Instances includes in page request.
      */
     private static $instancescounter = 0;
 
     /**
-     * var array Available levels list.
+     * @var array Available levels list.
      */
-    private static $LEVELS = null;
+    private static $levels = null;
 
     /**
      * Add points to player profile when complete a course.
@@ -268,8 +268,8 @@ class controller {
      * @return array Levels list.
      */
     public static function get_levels() {
-        if (!self::$LEVELS) {
-            self::$LEVELS = array();
+        if (!self::$levels) {
+            self::$levels = [];
 
             $levels = get_config('block_ludifica', 'levels');
 
@@ -301,12 +301,12 @@ class controller {
                     $level->maxpoints = (int)$fields[1];
                 }
 
-                self::$LEVELS[] = $level;
+                self::$levels[] = $level;
             }
 
         }
 
-        return self::$LEVELS;
+        return self::$levels;
     }
 
     /**
@@ -400,8 +400,8 @@ class controller {
         global $DB;
 
         $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
-                " FROM {block_ludifica_userpoints} AS lu " .
-                " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
+                " FROM {block_ludifica_userpoints} lu " .
+                " INNER JOIN {block_ludifica_general} g ON g.userid = lu.userid" .
                 " WHERE lu.courseid = :courseid" .
                 " GROUP BY lu.userid" .
                 " ORDER BY points DESC";
@@ -423,8 +423,8 @@ class controller {
         $list = array();
 
         $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
-                " FROM {block_ludifica_userpoints} AS lu " .
-                " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
+                " FROM {block_ludifica_userpoints} lu " .
+                " INNER JOIN {block_ludifica_general} g ON g.userid = lu.userid" .
                 " GROUP BY lu.userid" .
                 " ORDER BY points DESC";
         $records = $DB->get_records_sql($sql);
@@ -445,8 +445,8 @@ class controller {
         $timeinit = strtotime(date('Y-m-01')); // First day of the current month.
 
         $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
-                " FROM {block_ludifica_userpoints} AS lu " .
-                " INNER JOIN {block_ludifica_general} AS g ON g.userid = lu.userid" .
+                " FROM {block_ludifica_userpoints} lu " .
+                " INNER JOIN {block_ludifica_general} g ON g.userid = lu.userid" .
                 " WHERE lu.courseid = :courseid AND lu.timecreated >= :timeinit" .
                 " GROUP BY lu.userid, g.nickname" .
                 " ORDER BY points DESC";

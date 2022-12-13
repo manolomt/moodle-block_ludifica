@@ -24,8 +24,6 @@
 
 namespace block_ludifica;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Events observer.
  *
@@ -59,7 +57,7 @@ class observer {
 
     }
 
-   /**
+    /**
      * Calculate points when a new user is created.
      *
      * @param \core\event\base $event

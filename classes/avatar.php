@@ -32,16 +32,19 @@ namespace block_ludifica;
 class avatar {
 
     /**
-     * var \stdClass Info about the avatar.
+     * @var \stdClass Info about the avatar.
      */
     private $data;
 
-    public static $DEFAULT_TYPE = 'normal';
+    /**
+     * @var string Default avatar type.
+     */
+    public static $defaulttype = 'normal';
 
     /**
      * Class constructor.
      *
-     *  @param object $avatar.
+     * @param int|object $avatar Current avatar data or id.
      */
     public function __construct($avatar = null) {
         global $USER, $DB;
@@ -146,22 +149,22 @@ class avatar {
      * @return array Avatar types.
      */
     public static function get_types() {
-        return array(self::$DEFAULT_TYPE => get_string('avatartype_normal', 'block_ludifica'));
+        return array(self::$defaulttype => get_string('avatartype_normal', 'block_ludifica'));
         // The 'user' type is not avaible yet. The string is 'avatartype_user'.
     }
 
     /**
      * Magic get function.
      *
-     * @param string Property name.
+     * @param string $name Property name.
      * @return mixed Name property value.
      */
     public function __get($name) {
-        if (property_exists($this, $name)){
+        if (property_exists($this, $name)) {
             return $this->$name;
-        } else if (property_exists($this->data, $name)){
+        } else if (property_exists($this->data, $name)) {
             return $this->data->$name;
-        } else if(method_exists($this, 'get_' . $name)) {
+        } else if (method_exists($this, 'get_' . $name)) {
             return call_user_func(array($this, 'get_' . $name));
         } else {
             throw new \Exception('propertie_or_method_not_found: ' . get_class($this) . '->'. $name);
@@ -175,11 +178,11 @@ class avatar {
      * @param mixed $value Property new value.
      */
     public function __set($name, $value) {
-        if (property_exists($this, $name)){
+        if (property_exists($this, $name)) {
             $this->$name = $value;
-        } else if (property_exists($this->data, $name)){
+        } else if (property_exists($this->data, $name)) {
             $this->data->$name = $value;
-        } else if(method_exists($this, 'set_' . $name)) {
+        } else if (method_exists($this, 'set_' . $name)) {
             return call_user_func(array($this, 'set_' . $name), $value);
         } else {
             throw new \Exception('propertie_or_method_not_found: ' . get_class($this) . '->'. $name);

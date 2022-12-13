@@ -14,29 +14,43 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Class containing form definition to edit a ticket.
+ *
+ * @package   block_ludifica
+ * @copyright 2022 David Herney @ BambuCo
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->libdir . '/formslib.php');
 
 /**
  * The form for handling editing a ticket.
+ *
+ * @copyright 2021 David Herney @ BambuCo
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_ludifica_ticket_edit extends moodleform {
+
+    /**
+     * @var object List of local data.
+     */
     protected $_data;
 
     /**
      * Form definition.
      */
-    function definition() {
-        global $CFG, $PAGE, $DB;
+    public function definition() {
+        global $CFG;
 
         $mform = $this->_form;
 
         // This contains the data of this form.
         $this->_data  = $this->_customdata['data'];
 
-        if (!$this->_data) {
-        } else {
+        if ($this->_data) {
             $this->_data->moreinfo = array('text' => $this->_data->moreinfo);
             if ($this->_data->infodata == 'null') {
                 $this->_data->infodata = '';
@@ -46,7 +60,7 @@ class block_ludifica_ticket_edit extends moodleform {
         $dateattributes = array('stopyear' => date('Y', time()) + 15, 'startyear' => date('Y', time()));
         $editoroptions = array('maxfiles' => 0, 'maxbytes' => $CFG->maxbytes,
                                     'trusttext' => false, 'noclean' => true);
-        $editorattributes = array ('rows'=> 5, 'cols'=>50);
+        $editorattributes = array ('rows' => 5, 'cols' => 50);
         $filemanageroptions = $this->_customdata['filemanageroptions'];
 
         $mform->addElement('header', 'general', get_string('general'));

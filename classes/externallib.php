@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -24,6 +23,8 @@
  */
 
 namespace block_ludifica;
+
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/externallib.php');
 
@@ -64,7 +65,7 @@ class external extends \external_api {
 
             // Hack for external presentation.
             $dateformat = get_string('strftimedatetimeshort');
-            foreach($ticket->usertickets as $uticket) {
+            foreach ($ticket->usertickets as $uticket) {
                 $uticket->timeusedformatted = $uticket->timeused ? userdate($uticket->timeused, $dateformat) : null;
             }
         } else {
@@ -190,7 +191,7 @@ class external extends \external_api {
     /**
      * Give a ticket.
      *
-     * @param int $id Ticket id.
+     * @param int $ticketid Ticket id.
      * @param int $contactid Target user id.
      * @return bool True if successful, false in other case.
      */
@@ -249,7 +250,7 @@ class external extends \external_api {
         $player = new \block_ludifica\player($USER->id);
 
         if ($avatar->enabled && $useravatar == 0 && $player->general->coins >= $avatar->cost &&
-                $avatar->type == \block_ludifica\avatar::$DEFAULT_TYPE) {
+                $avatar->type == \block_ludifica\avatar::$defaulttype) {
 
             $data = new \stdClass();
             $data->userid = $USER->id;

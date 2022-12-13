@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
  * Form for editing ludifica block instances.
  *
@@ -23,12 +22,18 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/**
+ * Class containing block base implementation for Ludifica.
+ *
+ * @copyright 2022 David Herney @ BambuCo
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class block_ludifica extends block_base {
 
     /**
      * Initialice the block.
      */
-    function init() {
+    public function init() {
         $this->title = get_string('pluginname', 'block_ludifica');
     }
 
@@ -38,7 +43,7 @@ class block_ludifica extends block_base {
      *
      * @return boolean
      */
-    function has_config() {
+    public function has_config() {
         return true;
     }
 
@@ -46,14 +51,14 @@ class block_ludifica extends block_base {
      * Which page types this block may appear on.
      *
      * The information returned here is processed by the
-     * {@link blocks_name_allowed_in_format()} function. Look there if you need
+     * {@see blocks_name_allowed_in_format()} function. Look there if you need
      * to know exactly how this works.
      *
      * Default case: everything except mod and tag.
      *
      * @return array page-type prefix => true/false.
      */
-    function applicable_formats() {
+    public function applicable_formats() {
         return array('all' => true);
     }
 
@@ -62,7 +67,7 @@ class block_ludifica extends block_base {
      * Use this function to act on instance data just after it's loaded and before anything else is done
      * For instance: if your block will have different title's depending on location (site, course, blog, etc)
      */
-    function specialization() {
+    public function specialization() {
         if (isset($this->config->title)) {
             $this->title = $this->title = format_string($this->config->title, true, ['context' => $this->context]);
         } else {
@@ -75,7 +80,7 @@ class block_ludifica extends block_base {
      * If yes, then it is assumed that the block WILL USE per-instance configuration
      * @return boolean
      */
-    function instance_allow_multiple() {
+    public function instance_allow_multiple() {
         return true;
     }
 
@@ -84,14 +89,14 @@ class block_ludifica extends block_base {
      *
      * @return stdObject
      */
-    function get_content() {
+    public function get_content() {
         global $DB, $USER;
 
-        if ($this->content !== NULL) {
+        if ($this->content !== null) {
             return $this->content;
         }
 
-        $this->content         =  new stdClass;
+        $this->content         = new stdClass;
         $this->content->text   = '';
         $this->content->footer = '';
 
@@ -103,7 +108,9 @@ class block_ludifica extends block_base {
                 $tabs[] = 'profile';
             }
 
-            if ($this->page->course->id != SITEID && property_exists($this->config, 'tabtopbycourse') && $this->config->tabtopbycourse) {
+            if ($this->page->course->id != SITEID
+                    && property_exists($this->config, 'tabtopbycourse')
+                    && $this->config->tabtopbycourse) {
                 $tabs[] = 'topbycourse';
             }
 
@@ -111,10 +118,11 @@ class block_ludifica extends block_base {
                 $tabs[] = 'topbysite';
             }
 
-            // ToDo: The current DB structure not support points by date because all points are sum by type.
-            /*if ($this->page->course->id != SITEID && property_exists($this->config, 'tablastmonth') && $this->config->tablastmonth) {
+            if ($this->page->course->id != SITEID
+                    && property_exists($this->config, 'tablastmonth')
+                    && $this->config->tablastmonth) {
                 $tabs[] = 'lastmonth';
-            }*/
+            }
         } else {
             $tabs[] = 'profile';
         }
@@ -139,7 +147,6 @@ class block_ludifica extends block_base {
             } else {
                 $info = new \block_ludifica\player();
             }
-
 
             if ($info) {
                 // Load templates to display the block content.

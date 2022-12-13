@@ -16,31 +16,29 @@
 /**
  * Players info control.
  *
- * @package   block_ludifica
+ * @module    block/ludifica
  * @copyright 2021 David Herney @ BambuCo
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/ajax'],
-function($, Ajax) {
-
-    var wwwroot = M.cfg.wwwroot;
+define(['jquery', 'core/ajax', 'core/log'],
+function($, Ajax, Log) {
 
     var reloadStats = function() {
         Ajax.call([{
             methodname: 'block_ludifica_get_profile',
             args: { },
-            done: function (data) {
+            done: function(data) {
 
-                if (data && typeof(data) == 'object') {
+                if (data && typeof data == 'object') {
 
                     $('val[key="usercoins"]').html(data.coins);
                     $('val[key="userpoints"]').html(data.points);
 
                 }
             },
-            fail: function (e) {
-                console.log(e);
+            fail: function(e) {
+                Log.debug(e);
             }
         }]);
     };

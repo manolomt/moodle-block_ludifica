@@ -1,11 +1,12 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
 //
-// It is free software: you can redistribute it and/or modify
+// Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// It is distributed in the hope that it will be useful,
+// Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -71,13 +72,13 @@ function block_ludifica_inplace_editable($itemtype, $itemid, $newvalue) {
         $exists = $DB->get_record('block_ludifica_general', array('nickname' => $newvalue));
 
         if ($exists && $USER->id != $exists->userid) {
-            print_error('nicknameexists', 'block_ludifica');
+            throw new \moodle_exception('nicknameexists', 'block_ludifica');
         }
 
         $record = $DB->get_record('block_ludifica_general', array('id' => $itemid), '*', MUST_EXIST);
 
         if (isguestuser($USER) || $USER->id != $record->userid) {
-            print_error('cannotchangeprofiletoother');
+            throw new \moodle_exception('cannotchangeprofiletoother');
         }
 
         // Check permission of the user to update your profile.

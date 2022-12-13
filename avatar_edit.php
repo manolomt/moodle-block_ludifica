@@ -14,6 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Avatar edition page.
+ *
+ * @package   block_ludifica
+ * @copyright 2022 David Herney @ BambuCo
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 require_once('../../config.php');
 require_once('avatar_edit_form.php');
 
@@ -47,7 +55,7 @@ if ($avatar) {
 }
 
 // First create the form.
-$editform = new block_ludifica_avatar_edit(NULL, array('data' => $avatar, 'filemanageroptions' => $filemanageroptions));
+$editform = new block_ludifica_avatar_edit(null, array('data' => $avatar, 'filemanageroptions' => $filemanageroptions));
 if ($editform->is_cancelled()) {
     $url = new moodle_url($CFG->wwwroot . '/blocks/ludifica/avatars.php');
     redirect($url);

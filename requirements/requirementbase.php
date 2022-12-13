@@ -22,8 +22,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace block_ludifica\requirements;
-defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Requirement base.
@@ -34,12 +32,12 @@ defined('MOODLE_INTERNAL') || die();
 class requirementbase {
 
     /**
-     * var \stdClass Complement options.
+     * @var \stdClass Complement options.
      */
     protected $options;
 
     /**
-     * var array Default properties list, key => value format.
+     * @var array Default properties list, key => value format.
      */
     protected $defaultoptions = [];
 
@@ -66,7 +64,7 @@ class requirementbase {
     /**
      * It define if a player compliance the requirement.
      *
-     * @param object $player
+     * @param \block_ludifica\player $player
      * @return bool True in compliance, false in other case.
      */
     public function compliance(\block_ludifica\player $player) {
