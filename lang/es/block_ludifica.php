@@ -85,6 +85,7 @@ $string['giveticket'] = 'Regalar un beneficio';
 $string['giveticketmessage'] = 'Elija el contacto destino';
 $string['infodata'] = 'Datos relacionados (formato JSON)';
 $string['labellevel'] = 'Nivel {$a}';
+$string['lastmonth-ranking_help'] = 'Listado de los mejores jugadores del mes actual.';
 $string['levels'] = 'Niveles';
 $string['level_help'] = '¡Acumula puntos para que tu avatar pase al siguiente nivel!';
 $string['levelrequired'] = 'Nivel <em>{$a}</em> requerido';

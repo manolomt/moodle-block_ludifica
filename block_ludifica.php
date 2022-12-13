@@ -118,9 +118,7 @@ class block_ludifica extends block_base {
                 $tabs[] = 'topbysite';
             }
 
-            if ($this->page->course->id != SITEID
-                    && property_exists($this->config, 'tablastmonth')
-                    && $this->config->tablastmonth) {
+            if (property_exists($this->config, 'tablastmonth') && $this->config->tablastmonth) {
                 $tabs[] = 'lastmonth';
             }
         } else {
