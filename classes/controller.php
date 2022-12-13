@@ -403,8 +403,8 @@ class controller {
                 " FROM {block_ludifica_userpoints} lu " .
                 " INNER JOIN {block_ludifica_general} g ON g.userid = lu.userid" .
                 " WHERE lu.courseid = :courseid" .
-                " GROUP BY lu.userid" .
-                " ORDER BY points DESC";
+                " GROUP BY lu.userid, g.nickname" .
+                " ORDER BY points DESC, g.nickname ASC";
         $records = $DB->get_records_sql($sql, array('courseid' => $courseid));
 
         return self::get_toplist($records, $includecurrent);
@@ -425,8 +425,8 @@ class controller {
         $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
                 " FROM {block_ludifica_userpoints} lu " .
                 " INNER JOIN {block_ludifica_general} g ON g.userid = lu.userid" .
-                " GROUP BY lu.userid" .
-                " ORDER BY points DESC";
+                " GROUP BY lu.userid, g.nickname" .
+                " ORDER BY points DESC, g.nickname ASC";
         $records = $DB->get_records_sql($sql);
 
         return self::get_toplist($records, $includecurrent);
@@ -449,7 +449,7 @@ class controller {
                 " INNER JOIN {block_ludifica_general} g ON g.userid = lu.userid" .
                 " WHERE lu.courseid = :courseid AND lu.timecreated >= :timeinit" .
                 " GROUP BY lu.userid, g.nickname" .
-                " ORDER BY points DESC";
+                " ORDER BY points DESC, g.nickname ASC";
         $records = $DB->get_records_sql($sql, ['courseid' => $courseid, 'timeinit' => $timeinit]);
 
         return self::get_toplist($records, $includecurrent);
