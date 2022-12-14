@@ -29,7 +29,7 @@ namespace block_ludifica;
  * @copyright 2021 David Herney @ BambuCo
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class player {
+class player extends entity {
 
     /**
      * @var int Default avatar id.
@@ -65,11 +65,6 @@ class player {
      * @var int Ranking users.
      */
     const LIMIT_RANKING = 10;
-
-    /**
-     * @var \stdClass Info about the player.
-     */
-    private $data;
 
     /**
      * Class constructor.
@@ -269,39 +264,4 @@ class player {
         return true;
     }
 
-    /**
-     * Magic get function.
-     *
-     * @param string $name Property name.
-     * @return mixed Name property value.
-     */
-    public function __get($name) {
-        if (property_exists($this, $name)) {
-            return $this->$name;
-        } else if (property_exists($this->data, $name)) {
-            return $this->data->$name;
-        } else if (method_exists($this, 'get_' . $name)) {
-            return call_user_func(array($this, 'get_' . $name));
-        } else {
-            throw new \Exception('propertie_or_method_not_found: ' . get_class($this) . '->'. $name);
-        }
-    }
-
-    /**
-     * Magic ser function.
-     *
-     * @param string $name Property name.
-     * @param mixed $value Property new value.
-     */
-    public function __set($name, $value) {
-        if (property_exists($this, $name)) {
-            $this->$name = $value;
-        } else if (property_exists($this->data, $name)) {
-            $this->data->$name = $value;
-        } else if (method_exists($this, 'set_' . $name)) {
-            return call_user_func(array($this, 'set_' . $name), $value);
-        } else {
-            throw new \Exception('propertie_or_method_not_found: ' . get_class($this) . '->'. $name);
-        }
-    }
 }
