@@ -69,12 +69,11 @@ class observer {
     }
 
     /**
-     * Calculate points when an activity is completed.
+     * Calculate points when a course module is completed.
      *
-     * @param \core\event\base $event
+     * @param \core\event\course_module_completion_updated $event
      */
     public static function course_module_completion_updated(\core\event\course_module_completion_updated $event) {
-        global $DB;
 
         $eventdata = $event->get_record_snapshot('course_modules_completion', $event->objectid);
 
