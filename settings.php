@@ -85,6 +85,27 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtext($name, $title, $help, 0, PARAM_INT);
     $generalsettings->add($setting);
 
+    // Modules points.
+    $name = 'block_ludifica/settingsheaderpointsmodules';
+    $heading = get_string('settingsheaderpointsmodules', 'block_ludifica');
+    $setting = new admin_setting_heading($name, $heading, '');
+    $generalsettings->add($setting);
+
+    // End course module points.
+    $name = 'block_ludifica/pointsbyendcoursemodule';
+    $title = get_string('pointsbyendcoursemodule', 'block_ludifica');
+    $help = get_string('pointsbyendcoursemodule_help', 'block_ludifica');
+    $setting = new admin_setting_configtext($name, $title, $help, 0, PARAM_INT);
+    $generalsettings->add($setting);
+
+    // Point for all course modules.
+    $choices = [0 => get_string('no'), 1 => get_string('yes')];
+    $name = 'block_ludifica/pointsbyendallmodules';
+    $title = get_string('pointsbyendallmodules', 'block_ludifica');
+    $help = get_string('pointsbyendallmodules_help', 'block_ludifica');
+    $setting = new admin_setting_configselect($name, $title, $help, 0, $choices);
+    $generalsettings->add($setting);
+
     // Other points.
     $name = 'block_ludifica/settingsheaderpointsother';
     $heading = get_string('settingsheaderpointsother', 'block_ludifica');

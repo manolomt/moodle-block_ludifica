@@ -57,6 +57,11 @@ class player extends entity {
     const POINTS_TYPE_USERCREATED = 'usercreated';
 
     /**
+     * @var string Points when a module is completed by the user.
+     */
+    const POINTS_TYPE_MODULECOMPLETED = 'modulecompleted';
+
+    /**
      * @var string Points by recurrent login.
      */
     const COINS_TYPE_BYPOINTS = 'bypoints';
@@ -189,8 +194,9 @@ class player extends entity {
      * @param int $courseid
      * @param string $type Points type
      * @param object $infodata Information depend of points type
+     * @param int $objectid Other item related with the points.
      */
-    public function add_points(int $newpoints, int $courseid, string $type, object $infodata = null) {
+    public function add_points(int $newpoints, int $courseid, string $type, object $infodata = null, $objectid = null) {
         global $DB;
 
         $totalpoints = $newpoints + $this->data->general->points;
@@ -211,6 +217,7 @@ class player extends entity {
         $data->points = $newpoints;
         $data->infodata = json_encode($infodata);
         $data->timecreated = $timeaction;
+        $data->objectid = $objectid;
 
         $DB->insert_record('block_ludifica_userpoints', $data);
     }
