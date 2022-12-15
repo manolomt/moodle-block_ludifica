@@ -241,13 +241,12 @@ class controller {
      * Add points when a user complete a course module.
      *
      * @param int $userid
-     * @param int $relateduserid
      * @param int $courseid
      * @param int $completionid Id from course_modules_completion.
      * @param int $cmid Course module completed.
      * @return bool True if points was assigned, false in other case.
      */
-    public static function points_completemodule($userid, $relateduserid, $courseid, $completionid, $cmid) {
+    public static function points_completemodule($userid, $courseid, $completionid, $cmid) {
         global $DB;
 
         $conditions = [
@@ -261,11 +260,6 @@ class controller {
 
         // If exists not add points again.
         if ($record) {
-            return false;
-        }
-
-        // If was completed by other user, not add points.
-        if ($userid != $relateduserid) {
             return false;
         }
 

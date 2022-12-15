@@ -78,8 +78,7 @@ class observer {
         $eventdata = $event->get_record_snapshot('course_modules_completion', $event->objectid);
 
         if ($eventdata->completionstate == COMPLETION_COMPLETE || $eventdata->completionstate == COMPLETION_COMPLETE_PASS) {
-            controller::points_completemodule($event->userid,
-                                                $event->relateduserid,
+            controller::points_completemodule($event->relateduserid,
                                                 $event->courseid,
                                                 $event->objectid,
                                                 $eventdata->coursemoduleid);
