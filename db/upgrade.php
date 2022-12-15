@@ -30,5 +30,22 @@
 function xmldb_block_ludifica_upgrade($oldversion) {
     global $CFG, $DB;
 
+    $dbman = $DB->get_manager();
+
+    if ($oldversion < 2021031204.02) {
+
+        // Define field objectid to be added to block_ludifica_userpoints.
+        $table = new xmldb_table('block_ludifica_userpoints');
+        $field = new xmldb_field('objectid', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'courseid');
+
+        // Conditionally launch add field objectid.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Ludifica savepoint reached.
+        upgrade_block_savepoint(true, 2021031204.02, 'ludifica');
+    }
+
     return true;
 }

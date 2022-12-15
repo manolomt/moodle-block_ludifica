@@ -238,6 +238,93 @@ class controller {
     }
 
     /**
+     * Add points when a user complete a course module.
+     *
+     * @param int $userid
+     * @param int $relateduserid
+     * @param int $courseid
+     * @param int $completionid Id from course_modules_completion.
+     * @param int $cmid Course module completed.
+     * @return bool True if points was assigned, false in other case.
+     */
+    public static function points_completemodule($userid, $relateduserid, $courseid, $completionid, $cmid) {
+        global $DB;
+
+        $conditions = [
+                    'userid' => $userid,
+                    'courseid' => $courseid,
+                    'objectid' => $cmid,
+                    'type' => player::POINTS_TYPE_MODULECOMPLETED
+        ];
+
+        $record = $DB->get_record('block_ludifica_userpoints', $conditions);
+
+        // If exists not add points again.
+        if ($record) {
+            return false;
+        }
+
+        // If was completed by other user, not add points.
+        if ($userid != $relateduserid) {
+            return false;
+        }
+
+        $pointsbycoursemodule = intval(get_config('block_ludifica', 'pointsbyendcoursemodule'));
+        $allmodules = get_config('block_ludifica', 'pointsbyendallmodules');
+
+        // If is empty this points type are disabled.
+        if (!empty($pointsbycoursemodule)) {
+
+            $points = 0;
+
+            $infodata = new \stdClass();
+            $infodata->completionid = $completionid;
+
+            if ($allmodules) {
+                // Same points for all modules instances.
+                $points = $pointsbycoursemodule;
+                $infodata->origin = 'allmodules';
+
+            } else {
+
+                $infodata->origin = 'instance';
+                $context = \context_course::instance($courseid);
+
+                // Get the first block instance in the course.
+                $conditions = ['blockname' => 'ludifica', 'parentcontextid' => $context->id];
+                $blockinstances = $DB->get_records('block_instances', $conditions, 'timemodified DESC', 'id, configdata');
+
+                $fieldkey = "points_module_" . $cmid;
+
+                foreach ($blockinstances as $instance) {
+
+                    if (!empty($instance->configdata)) {
+
+                        $instanceconfig = unserialize(base64_decode($instance->configdata));
+
+                        if (isset($instanceconfig->{$fieldkey}) && !empty($instanceconfig->{$fieldkey})) {
+                            // Use the first instance configuration found. This is the more recently block instance configured.
+                            $infodata->instance = $instance->id;
+                            $points = $instanceconfig->{$fieldkey};
+                            break;
+                        }
+                    }
+
+                }
+            }
+
+            if (empty($points)) {
+                return false;
+            }
+
+            $player = new player($userid);
+            $player->add_points($points, $courseid, player::POINTS_TYPE_MODULECOMPLETED, $infodata, $cmid);
+        }
+
+        return true;
+    }
+
+    /**
      * Calc current level according the points.
      *
      * @param int $points
