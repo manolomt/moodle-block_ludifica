@@ -525,13 +525,21 @@ class controller {
 
         $timeinit = strtotime(date('Y-m-01')); // First day of the current month.
 
+        $conditions = ['timeinit' => $timeinit];
+        $coursecondition = '';
+
+        if ($courseid != SITEID) {
+            $conditions['courseid'] = $courseid;
+            $coursecondition = "lu.courseid = :courseid AND ";
+        }
+
         $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
                 " FROM {block_ludifica_userpoints} lu " .
                 " INNER JOIN {block_ludifica_general} g ON g.userid = lu.userid" .
-                " WHERE lu.courseid = :courseid AND lu.timecreated >= :timeinit" .
+                " WHERE " . $coursecondition . " lu.timecreated >= :timeinit" .
                 " GROUP BY lu.userid, g.nickname" .
                 " ORDER BY points DESC, g.nickname ASC";
-        $records = $DB->get_records_sql($sql, ['courseid' => $courseid, 'timeinit' => $timeinit]);
+        $records = $DB->get_records_sql($sql, $conditions);
 
         return self::get_toplist($records, $includecurrent);
     }
@@ -585,7 +593,6 @@ class controller {
                 }
 
                 if (empty($record->nickname)) {
-                    global $USER;
                     $record->nickname = fullname($USER);
                 }
 
