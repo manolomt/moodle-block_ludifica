@@ -71,6 +71,7 @@ class main implements renderable, templatable {
                         'topbycourse' => 'sort-amount-desc',
                         'topbysite' => 'trophy',
                         'lastmonth' => 'calendar-check-o',
+                        'additionalpoints' => 'star-o'
                     );
 
         $showtabs = array();
@@ -87,12 +88,41 @@ class main implements renderable, templatable {
 
         $uniqueid = \block_ludifica\controller::get_uniqueid();
 
+        // Load config parameters to use in help mustache.
+        $globalconfig = get_config('block_ludifica');
+
+        $helpvars = new \stdClass();
+
+        // Fields not used in help.
+        $notusedpropeties = ['levels', 'duration'];
+
+        foreach ($globalconfig as $key => $val) {
+
+            if (in_array($key, $notusedpropeties)) {
+                continue;
+            }
+
+            $val = intval($val);
+
+            if (!empty($val)) {
+                $helpvars->{$key} = $val;
+            }
+        }
+
+        $helpvars->levels = \block_ludifica\controller::get_levels();
+        // End of load config params.
+
+        $lastlevel = end($helpvars->levels);
+        array_pop($helpvars->levels);
+
         $defaultvariables = [
             'uniqueid' => $uniqueid,
             'hastabs' => count($this->tabs) > 1,
             'tabs' => $showtabs,
             'baseurl' => $CFG->wwwroot,
-            'layoutgeneral' => true
+            'layoutgeneral' => true,
+            'helpvars' => $helpvars,
+            'lastlevel' => $lastlevel
         ];
 
         if (in_array('profile', $this->tabs)) {
@@ -139,6 +169,12 @@ class main implements renderable, templatable {
             $defaultvariables['lastmonth'] = array_values(\block_ludifica\controller::get_lastmonth($COURSE->id));
             $defaultvariables['hasrowslastmonth'] = count($defaultvariables['lastmonth']) > 0;
             $defaultvariables['lastmonthstate'] = !$activetab ? 'active' : '';
+            $activetab = true;
+        }
+
+        if (in_array('additionalpoints', $this->tabs)) {
+            $defaultvariables['hasadditionalpoints'] = true;
+            $defaultvariables['additionalpointsstate'] = !$activetab ? 'active' : '';
             $activetab = true;
         }
 

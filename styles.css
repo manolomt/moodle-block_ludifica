@@ -299,3 +299,45 @@
     color: #0f6cbf;
 }
 /* End contextual help */
+
+/* Dynamic help */
+
+.tab-additionalpoints > ul{
+    list-style: none;
+    max-width: 600px;
+    margin: auto;
+}
+
+.tab-additionalpoints h3 {
+    text-align: center;
+}
+
+.tab-additionalpoints > ul > li{
+    margin-bottom: 5px;
+}
+
+.tab-additionalpoints > .levels_info > li:last-child{
+    text-align: center;
+    font-weight: bolder;
+}
+
+.tab-additionalpoints > ul .fa {
+    font-size: 1.5em;
+    color: #2CA58D;
+}
+
+.tab-additionalpoints .levels_info .fa-level-up {
+    color: #194866;
+}
+
+.tab-additionalpoints .levels_info .fa-bolt {
+    color: #f98012;
+}
+
+.tab-additionalpoints .levels_info {
+    background-color: #f7f7f7;
+    padding: 1em;
+    margin-top: 24px;
+}
+
+/* End dynamic help */

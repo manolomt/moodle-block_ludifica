@@ -42,6 +42,42 @@
         </div>
     {{/hastabs}}
 
+    {{#hasadditionalpoints}}
+    <div class="tab-additionalpoints block_ludifica-tabcontent {{additionalpointsstate}}">
+        <h3>{{#str}} dynamic_help_title, block_ludifica {{/str}}</h3>
+        {{#helpvars}}
+        <ul>
+            {{#pointsbyendcourse}}
+                <li><i class="fa fa-check"></i> {{#str}} dynamic_help-pointsbyendcourse, block_ludifica, {{pointsbyendcourse}} {{/str}}</li>
+            {{/pointsbyendcourse}}
+            {{#recurrentlogindays}}
+            <li>
+                <i class="fa fa-check"></i> {{#str}} dynamic_help-recurrentlogindays, block_ludifica, {{recurrentlogindays}} {{/str}}
+                {{#str}} dynamic_help-pointsrecurrentlogin, block_ludifica, {{pointsbyrecurrentlogin1}} {{/str}}
+            </li>
+            <li><i class="fa fa-check"></i> {{#str}} dynamic_help-pointsbyday, block_ludifica, {{pointsbyrecurrentlogin2}} {{/str}}</li>
+            {{/recurrentlogindays}}
+            {{#coinsbypoints}}
+            <li>
+                <i class="fa fa-check"></i> {{#str}} dynamic_help-pointstocoins, block_ludifica, {{pointstocoins}} {{/str}}
+                {{#str}} dynamic_help-coinsbypoints, block_ludifica, {{coinsbypoints}} {{/str}}
+            </li>
+            {{/coinsbypoints}}
+        </ul>
+        <ul class="levels_info">
+            <h3>{{#str}} levelup, block_ludifica {{/str}}</h3>
+            {{#levels}}
+                <li><i class="fa fa-level-up"></i> {{#str}} pointslevel, block_ludifica, {{maxpoints}} {{/str}} {{#str}} overcomelevel, block_ludifica, {{name}} {{/str}}</li>
+            {{/levels}}
+            {{#lastlevel}}
+                <li>{{#str}} maxlevel, block_ludifica, {{name}} {{/str}} <i class="fa fa-bolt"></i></li>
+            {{/lastlevel}}
+        </ul>
+
+        {{/helpvars}}
+    </div>   
+    {{/hasadditionalpoints}}
+
     {{#player}}
     <div class="tab-profile block_ludifica-tabcontent {{profilestate}}">
         <div class="player_info">

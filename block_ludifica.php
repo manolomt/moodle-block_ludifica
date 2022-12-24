@@ -121,6 +121,10 @@ class block_ludifica extends block_base {
             if (property_exists($this->config, 'tablastmonth') && $this->config->tablastmonth) {
                 $tabs[] = 'lastmonth';
             }
+
+            if (property_exists($this->config, 'additionalpoints') && $this->config->additionalpoints) {
+                $tabs[] = 'additionalpoints';
+            }
         } else {
             $tabs[] = 'profile';
         }
