@@ -67,4 +67,21 @@ class observer {
         controller::points_usercreated($event->relateduserid);
 
     }
+
+    /**
+     * Calculate points when a course module is completed.
+     *
+     * @param \core\event\course_module_completion_updated $event
+     */
+    public static function course_module_completion_updated(\core\event\course_module_completion_updated $event) {
+
+        $eventdata = $event->get_record_snapshot('course_modules_completion', $event->objectid);
+
+        if ($eventdata->completionstate == COMPLETION_COMPLETE || $eventdata->completionstate == COMPLETION_COMPLETE_PASS) {
+            controller::points_completemodule($event->relateduserid,
+                                                $event->courseid,
+                                                $event->objectid,
+                                                $eventdata->coursemoduleid);
+        }
+    }
 }

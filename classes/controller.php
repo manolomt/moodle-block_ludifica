@@ -238,6 +238,87 @@ class controller {
     }
 
     /**
+     * Add points when a user complete a course module.
+     *
+     * @param int $userid
+     * @param int $courseid
+     * @param int $completionid Id from course_modules_completion.
+     * @param int $cmid Course module completed.
+     * @return bool True if points was assigned, false in other case.
+     */
+    public static function points_completemodule($userid, $courseid, $completionid, $cmid) {
+        global $DB;
+
+        $conditions = [
+                    'userid' => $userid,
+                    'courseid' => $courseid,
+                    'objectid' => $cmid,
+                    'type' => player::POINTS_TYPE_MODULECOMPLETED
+        ];
+
+        $record = $DB->get_record('block_ludifica_userpoints', $conditions);
+
+        // If exists not add points again.
+        if ($record) {
+            return false;
+        }
+
+        $pointsbycoursemodule = intval(get_config('block_ludifica', 'pointsbyendcoursemodule'));
+        $allmodules = get_config('block_ludifica', 'pointsbyendallmodules');
+
+        // If is empty this points type are disabled.
+        if (!empty($pointsbycoursemodule)) {
+
+            $points = 0;
+
+            $infodata = new \stdClass();
+            $infodata->completionid = $completionid;
+
+            if ($allmodules) {
+                // Same points for all modules instances.
+                $points = $pointsbycoursemodule;
+                $infodata->origin = 'allmodules';
+
+            } else {
+
+                $infodata->origin = 'instance';
+                $context = \context_course::instance($courseid);
+
+                // Get the first block instance in the course.
+                $conditions = ['blockname' => 'ludifica', 'parentcontextid' => $context->id];
+                $blockinstances = $DB->get_records('block_instances', $conditions, 'timemodified DESC', 'id, configdata');
+
+                $fieldkey = "points_module_" . $cmid;
+
+                foreach ($blockinstances as $instance) {
+
+                    if (!empty($instance->configdata)) {
+
+                        $instanceconfig = unserialize(base64_decode($instance->configdata));
+
+                        if (isset($instanceconfig->{$fieldkey}) && !empty($instanceconfig->{$fieldkey})) {
+                            // Use the first instance configuration found. This is the more recently block instance configured.
+                            $infodata->instance = $instance->id;
+                            $points = $instanceconfig->{$fieldkey};
+                            break;
+                        }
+                    }
+
+                }
+            }
+
+            if (empty($points)) {
+                return false;
+            }
+
+            $player = new player($userid);
+            $player->add_points($points, $courseid, player::POINTS_TYPE_MODULECOMPLETED, $infodata, $cmid);
+        }
+
+        return true;
+    }
+
+    /**
      * Calc current level according the points.
      *
      * @param int $points
@@ -403,8 +484,8 @@ class controller {
                 " FROM {block_ludifica_userpoints} lu " .
                 " INNER JOIN {block_ludifica_general} g ON g.userid = lu.userid" .
                 " WHERE lu.courseid = :courseid" .
-                " GROUP BY lu.userid" .
-                " ORDER BY points DESC";
+                " GROUP BY lu.userid, g.nickname" .
+                " ORDER BY points DESC, g.nickname ASC";
         $records = $DB->get_records_sql($sql, array('courseid' => $courseid));
 
         return self::get_toplist($records, $includecurrent);
@@ -425,8 +506,8 @@ class controller {
         $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
                 " FROM {block_ludifica_userpoints} lu " .
                 " INNER JOIN {block_ludifica_general} g ON g.userid = lu.userid" .
-                " GROUP BY lu.userid" .
-                " ORDER BY points DESC";
+                " GROUP BY lu.userid, g.nickname" .
+                " ORDER BY points DESC, g.nickname ASC";
         $records = $DB->get_records_sql($sql);
 
         return self::get_toplist($records, $includecurrent);
@@ -444,13 +525,21 @@ class controller {
 
         $timeinit = strtotime(date('Y-m-01')); // First day of the current month.
 
+        $conditions = ['timeinit' => $timeinit];
+        $coursecondition = '';
+
+        if ($courseid != SITEID) {
+            $conditions['courseid'] = $courseid;
+            $coursecondition = "lu.courseid = :courseid AND ";
+        }
+
         $sql = "SELECT lu.userid AS id, g.nickname, " . $DB->sql_ceil('SUM(lu.points)') . " AS points " .
                 " FROM {block_ludifica_userpoints} lu " .
                 " INNER JOIN {block_ludifica_general} g ON g.userid = lu.userid" .
-                " WHERE lu.courseid = :courseid AND lu.timecreated >= :timeinit" .
+                " WHERE " . $coursecondition . " lu.timecreated >= :timeinit" .
                 " GROUP BY lu.userid, g.nickname" .
-                " ORDER BY points DESC";
-        $records = $DB->get_records_sql($sql, ['courseid' => $courseid, 'timeinit' => $timeinit]);
+                " ORDER BY points DESC, g.nickname ASC";
+        $records = $DB->get_records_sql($sql, $conditions);
 
         return self::get_toplist($records, $includecurrent);
     }
@@ -504,7 +593,6 @@ class controller {
                 }
 
                 if (empty($record->nickname)) {
-                    global $USER;
                     $record->nickname = fullname($USER);
                 }
 
