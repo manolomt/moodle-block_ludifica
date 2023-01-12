@@ -42,55 +42,124 @@
         </div>
     {{/hastabs}}
 
-    {{#hasadditionalpoints}}
-    <div class="tab-additionalpoints block_ludifica-tabcontent {{additionalpointsstate}}">
-        <h3>{{#str}} dynamic_help_title, block_ludifica {{/str}}</h3>
-        {{#helpvars}}
-        <ul>
-            {{#pointsbyendcourse}}
-                <li><i class="fa fa-check"></i> {{#str}} dynamic_help-pointsbyendcourse, block_ludifica, {{pointsbyendcourse}} {{/str}}</li>
-            {{/pointsbyendcourse}}
-            {{#recurrentlogindays}}
-            <li>
-                <i class="fa fa-check"></i> {{#str}} dynamic_help-recurrentlogindays, block_ludifica, {{recurrentlogindays}} {{/str}}
-                {{#str}} dynamic_help-pointsrecurrentlogin, block_ludifica, {{pointsbyrecurrentlogin1}} {{/str}}
-            </li>
-            <li><i class="fa fa-check"></i> {{#str}} dynamic_help-pointsbyday, block_ludifica, {{pointsbyrecurrentlogin2}} {{/str}}</li>
-            {{/recurrentlogindays}}
-            {{#coinsbypoints}}
-            <li>
-                <i class="fa fa-check"></i> {{#str}} dynamic_help-pointstocoins, block_ludifica, {{pointstocoins}} {{/str}}
-                {{#str}} dynamic_help-coinsbypoints, block_ludifica, {{coinsbypoints}} {{/str}}
-            </li>
-            {{/coinsbypoints}}
-        </ul>
-        <ul class="levels_info">
-            <h3>{{#str}} levelup, block_ludifica {{/str}}</h3>
-            {{#levels}}
-                <li><i class="fa fa-level-up"></i> {{#str}} pointslevel, block_ludifica, {{maxpoints}} {{/str}} {{#str}} overcomelevel, block_ludifica, {{name}} {{/str}}</li>
-            {{/levels}}
-            {{#lastlevel}}
-                <li>{{#str}} maxlevel, block_ludifica, {{name}} {{/str}} <i class="fa fa-bolt"></i></li>
-            {{/lastlevel}}
-        </ul>
+    {{#hasdynamichelps}}
+    <div class="tab-dynamichelps block_ludifica-tabcontent {{dynamichelpsstate}}">
+        <div class="pointsinfo">
+            {{#insitecontext}}
+            <div>
+                <h3>{{#str}} dynamic_help_title, block_ludifica {{/str}}</h3>
+                <hr>
+                {{#helpvars}}
+                <ul>
+                    {{#pointsbyendcourse}}
+                        <li>
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-graduation-cap fa-stack-2x"></i>
+                            </span>
+                            {{#str}} dynamic_help-pointsbyendcourse, block_ludifica, {{pointsbyendcourse}} {{/str}}
+                        </li>
+                    {{/pointsbyendcourse}}
+                    {{#recurrentlogindays}}
+                    <li>
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-calendar-o fa-stack-2x"></i>
+                            <i class="mt6 fa fa-trophy fa-stack-1x"></i>
+                        </span>
+                        {{#str}} dynamic_help-recurrentlogindays, block_ludifica, {{recurrentlogindays}} {{/str}}
+                        {{#str}} dynamic_help-pointsrecurrentlogin, block_ludifica, {{pointsbyrecurrentlogin1}} {{/str}}
+                    </li>
+                    <li>
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-calendar fa-stack-2x"></i>
+                        </span>
+                        {{#str}} dynamic_help-pointsbyday, block_ludifica, {{pointsbyrecurrentlogin2}} {{/str}}</li>
+                    {{/recurrentlogindays}}
+                    {{#coinsbypoints}}
+                    <li>
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-database fa-stack-2x"></i>
+                            <i class="fa-scale fa fa-usd fa-stack-1x fa-inverse"></i>
+                        </span>
+                        {{#str}} dynamic_help-pointstocoins, block_ludifica, {{pointstocoins}} {{/str}}
+                        {{#str}} dynamic_help-coinsbypoints, block_ludifica, {{coinsbypoints}} {{/str}}
+                    </li>
+                    {{/coinsbypoints}}
+                </ul>
+            </div>
+            <div>
+                <h3>{{#str}} levelup, block_ludifica {{/str}}</h3>
+                <hr>
+                <ul>
+                    {{#levels}}
+                        <li>
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-user-o fa-stack-2x"></i>
+                                <i class="fa-levelup fa fa-arrow-circle-up fa-stack-1x"></i>
+                            </span>
+                            {{#str}} pointslevel, block_ludifica, {{maxpoints}} {{/str}} {{#str}} overcomelevel, block_ludifica, {{name}} {{/str}}</li>
+                    {{/levels}}
+                    {{#lastlevel}}
+                        <li>
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-user fa-stack-2x"></i>
+                                <i class="fa-levelup fa fa-star fa-stack-1x"></i>
+                            </span>
+                            {{#str}} maxlevel, block_ludifica, {{name}} {{/str}}</li>
+                    {{/lastlevel}}
+                </ul>
+                {{/helpvars}}
+            </div>
+            {{/insitecontext}}
+            {{^insitecontext}}
+            {{#pointsbyallmodules}}
+            <div>
+                {{#helpvars}}
+                <h4>{{#str}} dynamic_help-pointsbyendmodule, block_ludifica, {{pointsbyendcoursemodule}} {{/str}}</h4>
+                {{/helpvars}}
+            </div>
+            {{/pointsbyallmodules}}
+            {{^pointsbyallmodules}}
 
-        {{/helpvars}}
+            {{#hasactivities}}
+            <div>
+                <h5>{{#str}} helptitle_pointsbycoursemodule, block_ludifica {{/str}}</h5>
+                <ul>
+                {{#pointsbymodules}}
+                    <li><img src="{{{iconurl}}}" alt="{{typetitle}}" title="{{typetitle}}" /> <strong>{{name}}</strong> (<em>{{typetitle}}</em>): 
+                        {{#str}} dynamic_help-pointsbymodule, block_ludifica, {{points}} {{/str}}</li>
+                {{/pointsbymodules}}
+                </ul>
+            </div>
+            {{/hasactivities}}
+
+            {{^hasactivities}}
+            <div>
+                <h3>{{#str}} dynamic_help-noactivities, block_ludifica {{/str}}</h3>
+            </div>
+            {{/hasactivities}}
+
+            {{/pointsbyallmodules}}
+            {{/insitecontext}}
+
+        </div>
     </div>   
-    {{/hasadditionalpoints}}
+    {{/hasdynamichelps}}
 
     {{#player}}
     <div class="tab-profile block_ludifica-tabcontent {{profilestate}}">
         <div class="player_info">
             <div class="avatar-box">
                 <img src="{{avatarurl}}" alt="{{nickname}}" /><br />
-                <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}level_help, block_ludifica{{/str}}"></button><br />
+                <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" 
+                data-content="{{#str}}level_help, block_ludifica{{/str}}"></button><br />
                 <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="btn btn-secondary">{{#str}} avatars, block_ludifica {{/str}}</a>
             </div>
             <div>
                 <div>
                     <h2>
                         {{{nickcontent}}}
-                        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}name_help, block_ludifica{{/str}}"></button>
+                        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" 
+                        data-content="{{#str}}name_help, block_ludifica{{/str}}"></button>
                     </h2>
 
                     {{>block_ludifica/playerstats}}
@@ -122,7 +191,8 @@
     {{#hastopbycourse}}
     <div class="tab-topbycourse block_ludifica-tabcontent {{topbycoursestate}}">
         {{#hasrowstopbycourse}}
-        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}course-ranking_help, block_ludifica{{/str}}"></button>
+        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" 
+        data-content="{{#str}}course-ranking_help, block_ludifica{{/str}}"></button>
         <table class="generaltable">
             <thead>
                 <tr>
@@ -177,7 +247,8 @@
                 {{#str}} nottopyet, block_ludifica {{/str}}
             </p>
         {{/hasrowstopbysite}}
-        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}site-ranking_help, block_ludifica{{/str}}"></button>
+        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" 
+        data-content="{{#str}}site-ranking_help, block_ludifica{{/str}}"></button>
     </div>
     {{/hastopbysite}}
 
@@ -208,7 +279,8 @@
                 {{#str}} nottopyet, block_ludifica {{/str}}
             </p>
         {{/hasrowslastmonth}}
-        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}lastmonth-ranking_help, block_ludifica{{/str}}"></button>
+        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" 
+        data-content="{{#str}}lastmonth-ranking_help, block_ludifica{{/str}}"></button>
     </div>
     {{/haslastmonth}}
 </div>

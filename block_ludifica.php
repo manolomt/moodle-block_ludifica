@@ -122,8 +122,8 @@ class block_ludifica extends block_base {
                 $tabs[] = 'lastmonth';
             }
 
-            if (property_exists($this->config, 'additionalpoints') && $this->config->additionalpoints) {
-                $tabs[] = 'additionalpoints';
+            if (property_exists($this->config, 'dynamichelps') && $this->config->dynamichelps) {
+                $tabs[] = 'dynamichelps';
             }
         } else {
             $tabs[] = 'profile';

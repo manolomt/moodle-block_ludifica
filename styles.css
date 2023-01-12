@@ -302,43 +302,49 @@
 
 /* Dynamic help */
 
-.tab-additionalpoints > ul {
-    list-style: none;
-    max-width: 600px;
-    margin: auto;
-}
-
-.tab-additionalpoints h3 {
-    text-align: center;
-}
-
-.tab-additionalpoints > ul > li {
-    margin-bottom: 5px;
-}
-
-.tab-additionalpoints > .levels_info > li:last-child {
-    text-align: center;
-    font-weight: bolder;
-}
-
-.tab-additionalpoints > ul .fa {
-    font-size: 1.5em;
-    color: #2ca58d;
-}
-
-.tab-additionalpoints .levels_info .fa-level-up {
-    color: #194866;
-}
-
-.tab-additionalpoints .levels_info .fa-bolt {
-    color: #f98012;
-}
-
-.tab-additionalpoints .levels_info {
+.pointsinfo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     background-color: #f7f7f7;
-    padding: 1em;
-    margin-top: 24px;
 }
 
+.pointsinfo > div {
+    max-width: 500px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    margin: 15px;
+    padding: 1em;
+    font-size: 1em;
+}
+
+.pointsinfo ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.pointsinfo li {
+    margin-bottom: 15px;
+    color: #3a4044;
+}
+
+.pointsinfo .fa-stack {
+    margin-right: 10px;
+}
+
+.pointsinfo .fa-stack .mt6 {
+    margin-top: 6px;
+}
+
+.pointsinfo .fa-stack .fa-scale {
+    margin-top: -14px;
+    transform: scale(1, 0.4);
+}
+
+.pointsinfo .fa-stack .fa-levelup {
+    left: 21px;
+    top: -5px;
+}
 
 /* End dynamic help */

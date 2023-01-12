@@ -36,7 +36,7 @@ class block_ludifica_edit_form extends block_edit_form {
      * @param object $mform Parent form.
      */
     protected function specific_definition($mform) {
-        global $CFG, $COURSE;
+        global $CFG, $COURSE, $DB;
 
         // Fields for editing HTML block title and contents.
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
@@ -52,82 +52,26 @@ class block_ludifica_edit_form extends block_edit_form {
 
         $mform->addElement('checkbox', 'config_tablastmonth', get_string('tablastmonth', 'block_ludifica'));
 
-        $mform->addElement('checkbox', 'config_additionalpoints', get_string('additionalpoints', 'block_ludifica'));
+        $mform->addElement('checkbox', 'config_dynamichelps', get_string('dynamichelps', 'block_ludifica'));
 
-        // Points by complete modules not apply in the site level.
-        if ($COURSE->id > SITEID && $COURSE->enablecompletion) {
+        $coursemodules = \block_ludifica\controller::get_coursemodules();
+        
+        if (count($coursemodules) > 0) {
 
-            $pointsbycoursemodule = intval(get_config('block_ludifica', 'pointsbyendcoursemodule'));
-            $allmodules = get_config('block_ludifica', 'pointsbyendallmodules');
+            $mform->addElement('header', 'configheader_modules', get_string('configheader_modules', 'block_ludifica'));
+            $mform->addElement('static', 'configmodules_help', '', get_string('configmodules_help', 'block_ludifica'));
 
-            if (!empty($pointsbycoursemodule) && !$allmodules) {
+            foreach ($coursemodules as $cm) {
+                $content = '<img src="' . $cm->iconurl . '" alt="' . $cm->typetitle . '" title="' .
+                                $cm->typetitle . '" class="icon">';
 
-                $format = course_get_format($COURSE->id);
-                $sections = $format->get_sections();
-                $modinfo = get_fast_modinfo($COURSE);
-                $context = context_course::instance($COURSE->id);
-                $completioninfo = new completion_info($COURSE);
+                $content .= ' ' . $cm->name . ' ';
+                $content .= '<label>(' . $cm->typetitle . ')</label>';
 
-                $coursemodules = [];
-                foreach ($sections as $section) {
-                    $sectionindex = $section->section;
+                $mform->addElement('text', 'config_points_module_' . $cm->id, $content, ['size' => 4]);
+                $mform->setType('config_points_module_' . $cm->id, PARAM_INT);
+                $mform->setDefault('config_points_module_' . $cm->id, 0);
 
-                    if (isset($course->numsections) && $sectionindex > $course->numsections) {
-                        // Support for legacy formats that still provide numsections (see MDL-57769).
-                        break;
-                    }
-
-                    if (empty($modinfo->sections[$sectionindex])) {
-                        continue;
-                    }
-
-                    foreach ($modinfo->sections[$sectionindex] as $modnumber) {
-                        $module = $modinfo->cms[$modnumber];
-                        $iconurl = $module->get_icon_url();
-                        $siconurl = s($iconurl);
-
-                        // Exclude labels.
-                        if ($module->modname == 'label') {
-                            continue;
-                        }
-
-                        if ($module->deletioninprogress) {
-                            continue;
-                        }
-
-                        if ($completioninfo->is_enabled($module) == COMPLETION_TRACKING_NONE) {
-                            continue;
-                        }
-
-                        $thismod = new \stdClass();
-                        $thismod->id = $module->id;
-                        $thismod->name = format_string($module->name, true, ['context' => $context]);
-                        $thismod->type = $module->modname;
-                        $thismod->typetitle = get_string('pluginname', $module->modname);
-                        $thismod->iconurl = $siconurl;
-
-                        $coursemodules[] = $thismod;
-
-                    }
-                }
-
-                if (count($coursemodules) > 0) {
-
-                    $mform->addElement('header', 'configheader_modules', get_string('configheader_modules', 'block_ludifica'));
-                    $mform->addElement('static', 'configmodules_help', '', get_string('configmodules_help', 'block_ludifica'));
-
-                    foreach ($coursemodules as $cm) {
-                        $content = '<img src="' . $cm->iconurl . '" alt="' . $cm->typetitle . '" title="' .
-                                        $cm->typetitle . '" class="icon">';
-
-                        $content .= ' ' . $cm->name . ' ';
-                        $content .= '<label>(' . $cm->typetitle . ')</label>';
-
-                        $mform->addElement('text', 'config_points_module_' . $cm->id, $content, ['size' => 4]);
-                        $mform->setType('config_points_module_' . $cm->id, PARAM_INT);
-                        $mform->setDefault('config_points_module_' . $cm->id, 0);
-                    }
-                }
             }
         }
     }

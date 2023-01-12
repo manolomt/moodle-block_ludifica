@@ -71,7 +71,7 @@ class main implements renderable, templatable {
                         'topbycourse' => 'sort-amount-desc',
                         'topbysite' => 'trophy',
                         'lastmonth' => 'calendar-check-o',
-                        'additionalpoints' => 'star-o'
+                        'dynamichelps' => 'star-o'
                     );
 
         $showtabs = array();
@@ -90,7 +90,7 @@ class main implements renderable, templatable {
 
         // Load config parameters to use in help mustache.
         $globalconfig = get_config('block_ludifica');
-
+        
         $helpvars = new \stdClass();
 
         // Fields not used in help.
@@ -115,6 +115,36 @@ class main implements renderable, templatable {
         $lastlevel = end($helpvars->levels);
         array_pop($helpvars->levels);
 
+        $coursemodules = \block_ludifica\controller::get_coursemodules();
+        $cmconfig = \block_ludifica\controller::get_modulespoints($COURSE->id);
+        $pointsbymodules = [];
+        $insitecontext = true;
+        $pointsbyallmodules = false;
+        $hasactivities = false;
+
+        if ($COURSE->id > SITEID && $COURSE->enablecompletion) {
+
+            $pointsbycoursemodule = intval(get_config('block_ludifica', 'pointsbyendcoursemodule'));
+            $allmodules = get_config('block_ludifica', 'pointsbyendallmodules');
+            $insitecontext = false;
+
+            if (!empty($pointsbycoursemodule) && !$allmodules && count($coursemodules) > 0) {
+
+                foreach ($coursemodules as $cm) {
+
+                    if (isset($cmconfig[$cm->id]) && !empty($cmconfig[$cm->id]->points)) {
+                        $pointsbymodules[] = $cm;
+                        $cm->points = $cmconfig[$cm->id]->points;
+                        $hasactivities = true;
+                    }
+                }
+            }
+
+            if ($allmodules) {
+                $pointsbyallmodules = true;
+            }
+        }
+
         $defaultvariables = [
             'uniqueid' => $uniqueid,
             'hastabs' => count($this->tabs) > 1,
@@ -122,7 +152,11 @@ class main implements renderable, templatable {
             'baseurl' => $CFG->wwwroot,
             'layoutgeneral' => true,
             'helpvars' => $helpvars,
-            'lastlevel' => $lastlevel
+            'lastlevel' => $lastlevel,
+            'pointsbymodules' => $pointsbymodules,
+            'insitecontext' => $insitecontext,
+            'hasactivities' => $hasactivities,
+            'pointsbyallmodules' => $pointsbyallmodules
         ];
 
         if (in_array('profile', $this->tabs)) {
@@ -172,9 +206,9 @@ class main implements renderable, templatable {
             $activetab = true;
         }
 
-        if (in_array('additionalpoints', $this->tabs)) {
-            $defaultvariables['hasadditionalpoints'] = true;
-            $defaultvariables['additionalpointsstate'] = !$activetab ? 'active' : '';
+        if (in_array('dynamichelps', $this->tabs)) {
+            $defaultvariables['hasdynamichelps'] = true;
+            $defaultvariables['dynamichelpsstate'] = !$activetab ? 'active' : '';
             $activetab = true;
         }
 
