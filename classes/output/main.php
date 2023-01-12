@@ -89,15 +89,10 @@ class main implements renderable, templatable {
 
         $hasranking = false;
 
-        if (in_array('topbycourse', $this->tabs)) {
-            $hasranking = true;
-        }
-
-        if (in_array('topbysite', $this->tabs)) {
-            $hasranking = true;
-        }
-
-        if (in_array('lastmonth', $this->tabs)) {
+        if (in_array('topbycourse', $this->tabs) ||
+            in_array('topbysite', $this->tabs) ||
+            in_array('lastmonth', $this->tabs)) {
+            
             $hasranking = true;
         }
 
