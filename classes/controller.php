@@ -282,7 +282,7 @@ class controller {
             } else {
 
                 $infodata->origin = 'instance';
-                
+
                 $cmconfig = self::get_modulespoints($courseid, $cmid);
 
                 if (isset($cmconfig[$cmid])) {
@@ -692,7 +692,7 @@ class controller {
                         $thismod->type = $module->modname;
                         $thismod->typetitle = get_string('pluginname', $module->modname);
                         $thismod->iconurl = $siconurl;
-                        
+
                         $coursemodules[] = $thismod;
                     }
                 }
@@ -709,7 +709,7 @@ class controller {
      * @param int $cmid Course module completed.
      * @return array Configurations of the first block instance.
      */
-    public static function get_modulespoints($courseid, $cmid = NULL) {
+    public static function get_modulespoints($courseid, $cmid = null) {
         global $DB;
 
         $cmconfig = [];
@@ -720,7 +720,7 @@ class controller {
         $conditions = ['blockname' => 'ludifica', 'parentcontextid' => $context->id];
         $blockinstances = $DB->get_records('block_instances', $conditions, 'timemodified DESC', 'id, configdata');
 
-        $fieldkey = $cmid ? "points_module_" . $cmid : NULL;
+        $fieldkey = $cmid ? "points_module_" . $cmid : null;
 
         foreach ($blockinstances as $instance) {
 

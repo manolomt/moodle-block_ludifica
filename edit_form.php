@@ -55,7 +55,7 @@ class block_ludifica_edit_form extends block_edit_form {
         $mform->addElement('checkbox', 'config_dynamichelps', get_string('dynamichelps', 'block_ludifica'));
 
         $coursemodules = \block_ludifica\controller::get_coursemodules();
-        
+
         if (count($coursemodules) > 0) {
 
             $mform->addElement('header', 'configheader_modules', get_string('configheader_modules', 'block_ludifica'));

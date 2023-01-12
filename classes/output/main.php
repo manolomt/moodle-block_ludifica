@@ -90,7 +90,7 @@ class main implements renderable, templatable {
 
         // Load config parameters to use in help mustache.
         $globalconfig = get_config('block_ludifica');
-        
+
         $helpvars = new \stdClass();
 
         // Fields not used in help.
