@@ -92,7 +92,7 @@ class main implements renderable, templatable {
         if (in_array('topbycourse', $this->tabs) ||
             in_array('topbysite', $this->tabs) ||
             in_array('lastmonth', $this->tabs)) {
-            
+
             $hasranking = true;
         }
 
