@@ -112,8 +112,15 @@ class main implements renderable, templatable {
         $helpvars->levels = \block_ludifica\controller::get_levels();
         // End of load config params.
 
-        $lastlevel = end($helpvars->levels);
-        array_pop($helpvars->levels);
+        $levels = [];
+
+        for ($i = 0; $i < count($helpvars->levels) - 1; $i++) {
+
+            $level = new \stdClass();
+            $level->name = $helpvars->levels[$i + 1]->name;
+            $level->maxpoints = $helpvars->levels[$i]->maxpoints;
+            array_push($levels, $level);
+        }
 
         $coursemodules = \block_ludifica\controller::get_coursemodules();
         $cmconfig = \block_ludifica\controller::get_modulespoints($COURSE->id);
@@ -141,6 +148,7 @@ class main implements renderable, templatable {
             }
 
             if ($allmodules) {
+
                 $pointsbyallmodules = true;
             }
         }
@@ -152,11 +160,11 @@ class main implements renderable, templatable {
             'baseurl' => $CFG->wwwroot,
             'layoutgeneral' => true,
             'helpvars' => $helpvars,
-            'lastlevel' => $lastlevel,
             'pointsbymodules' => $pointsbymodules,
             'insitecontext' => $insitecontext,
             'hasactivities' => $hasactivities,
-            'pointsbyallmodules' => $pointsbyallmodules
+            'pointsbyallmodules' => $pointsbyallmodules,
+            'levels' => $levels
         ];
 
         if (in_array('profile', $this->tabs)) {

@@ -53,61 +53,41 @@
                 <ul>
                     {{#pointsbyendcourse}}
                         <li>
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-graduation-cap fa-stack-2x"></i>
-                            </span>
-                            {{#str}} dynamic_help-pointsbyendcourse, block_ludifica, {{pointsbyendcourse}} {{/str}}
+                            {{#pix}} i/courseevent, core {{/pix}}
+                            <div>{{#str}} dynamic_help-pointsbyendcourse, block_ludifica, {{pointsbyendcourse}} {{/str}}</div>
                         </li>
                     {{/pointsbyendcourse}}
                     {{#recurrentlogindays}}
                     <li>
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-calendar-o fa-stack-2x"></i>
-                            <i class="mt6 fa fa-trophy fa-stack-1x"></i>
-                        </span>
-                        {{#str}} dynamic_help-recurrentlogindays, block_ludifica, {{recurrentlogindays}} {{/str}}
-                        {{#str}} dynamic_help-pointsrecurrentlogin, block_ludifica, {{pointsbyrecurrentlogin1}} {{/str}}
+                        {{#pix}} i/scheduled, core {{/pix}}
+                        <div>{{#str}} dynamic_help-recurrentlogindays, block_ludifica, {{recurrentlogindays}} {{/str}}
+                        {{#str}} dynamic_help-pointsrecurrentlogin, block_ludifica, {{pointsbyrecurrentlogin1}} {{/str}}</div>
                     </li>
                     <li>
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-calendar fa-stack-2x"></i>
-                        </span>
-                        {{#str}} dynamic_help-pointsbyday, block_ludifica, {{pointsbyrecurrentlogin2}} {{/str}}</li>
+                        {{#pix}} i/otherevent, core {{/pix}}
+                        <div>{{#str}} dynamic_help-pointsbyday, block_ludifica, {{pointsbyrecurrentlogin2}} {{/str}}</div></li>
                     {{/recurrentlogindays}}
                     {{#coinsbypoints}}
                     <li>
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-database fa-stack-2x"></i>
-                            <i class="fa-scale fa fa-usd fa-stack-1x fa-inverse"></i>
-                        </span>
-                        {{#str}} dynamic_help-pointstocoins, block_ludifica, {{pointstocoins}} {{/str}}
-                        {{#str}} dynamic_help-coinsbypoints, block_ludifica, {{coinsbypoints}} {{/str}}
+                        {{#pix}} i/db, core {{/pix}}
+                        <div>{{#str}} dynamic_help-pointstocoins, block_ludifica, {{pointstocoins}} {{/str}}
+                        {{#str}} dynamic_help-coinsbypoints, block_ludifica, {{coinsbypoints}} {{/str}}</div>
                     </li>
                     {{/coinsbypoints}}
                 </ul>
             </div>
+            {{/helpvars}}
             <div>
                 <h3>{{#str}} levelup, block_ludifica {{/str}}</h3>
                 <hr>
                 <ul>
                     {{#levels}}
                         <li>
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-user-o fa-stack-2x"></i>
-                                <i class="fa-levelup fa fa-arrow-circle-up fa-stack-1x"></i>
-                            </span>
-                            {{#str}} pointslevel, block_ludifica, {{maxpoints}} {{/str}} {{#str}} overcomelevel, block_ludifica, {{name}} {{/str}}</li>
+                            {{#pix}} t/restore, core {{/pix}}
+                            <div>{{#str}} pointslevel, block_ludifica, {{maxpoints}} {{/str}} {{#str}} overcomelevel, block_ludifica, {{name}} {{/str}}</div>
+                        </li>
                     {{/levels}}
-                    {{#lastlevel}}
-                        <li>
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-user fa-stack-2x"></i>
-                                <i class="fa-levelup fa fa-star fa-stack-1x"></i>
-                            </span>
-                            {{#str}} maxlevel, block_ludifica, {{name}} {{/str}}</li>
-                    {{/lastlevel}}
                 </ul>
-                {{/helpvars}}
             </div>
             {{/insitecontext}}
             {{^insitecontext}}
@@ -125,8 +105,8 @@
                 <h5>{{#str}} helptitle_pointsbycoursemodule, block_ludifica {{/str}}</h5>
                 <ul>
                 {{#pointsbymodules}}
-                    <li><img src="{{{iconurl}}}" alt="{{typetitle}}" title="{{typetitle}}" /> <strong>{{name}}</strong> (<em>{{typetitle}}</em>): 
-                        {{#str}} dynamic_help-pointsbymodule, block_ludifica, {{points}} {{/str}}</li>
+                    <li><img src="{{{iconurl}}}" alt="{{typetitle}}" title="{{typetitle}}" /> <div>{{name}} ({{typetitle}}):
+                        {{#str}} dynamic_help-pointsbymodule, block_ludifica, {{points}} {{/str}}</div></li>
                 {{/pointsbymodules}}
                 </ul>
             </div>
@@ -142,7 +122,7 @@
             {{/insitecontext}}
 
         </div>
-    </div>   
+    </div>
     {{/hasdynamichelps}}
 
     {{#player}}
@@ -150,7 +130,7 @@
         <div class="player_info">
             <div class="avatar-box">
                 <img src="{{avatarurl}}" alt="{{nickname}}" /><br />
-                <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" 
+                <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right"
                 data-content="{{#str}}level_help, block_ludifica{{/str}}"></button><br />
                 <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="btn btn-secondary">{{#str}} avatars, block_ludifica {{/str}}</a>
             </div>
@@ -158,7 +138,7 @@
                 <div>
                     <h2>
                         {{{nickcontent}}}
-                        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" 
+                        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right"
                         data-content="{{#str}}name_help, block_ludifica{{/str}}"></button>
                     </h2>
 
@@ -191,7 +171,7 @@
     {{#hastopbycourse}}
     <div class="tab-topbycourse block_ludifica-tabcontent {{topbycoursestate}}">
         {{#hasrowstopbycourse}}
-        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" 
+        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right"
         data-content="{{#str}}course-ranking_help, block_ludifica{{/str}}"></button>
         <table class="generaltable">
             <thead>
@@ -247,7 +227,7 @@
                 {{#str}} nottopyet, block_ludifica {{/str}}
             </p>
         {{/hasrowstopbysite}}
-        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" 
+        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right"
         data-content="{{#str}}site-ranking_help, block_ludifica{{/str}}"></button>
     </div>
     {{/hastopbysite}}
@@ -279,7 +259,7 @@
                 {{#str}} nottopyet, block_ludifica {{/str}}
             </p>
         {{/hasrowslastmonth}}
-        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" 
+        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right"
         data-content="{{#str}}lastmonth-ranking_help, block_ludifica{{/str}}"></button>
     </div>
     {{/haslastmonth}}
