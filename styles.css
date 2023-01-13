@@ -337,13 +337,12 @@
     display: flex;
 }
 
-.pointsinfo > div > ul > li > img{
+.pointsinfo > div > ul > li > img {
     margin-right: 9px;
 }
 
 .pointsinfo .fa {
     margin-right: 26px;
 }
-
 
 /* End dynamic help */
