@@ -87,12 +87,22 @@ class main implements renderable, templatable {
 
         $uniqueid = \block_ludifica\controller::get_uniqueid();
 
+        $hasranking = false;
+
+        if (in_array('topbycourse', $this->tabs) ||
+            in_array('topbysite', $this->tabs) ||
+            in_array('lastmonth', $this->tabs)) {
+
+            $hasranking = true;
+        }
+
         $defaultvariables = [
             'uniqueid' => $uniqueid,
             'hastabs' => count($this->tabs) > 1,
             'tabs' => $showtabs,
             'baseurl' => $CFG->wwwroot,
-            'layoutgeneral' => true
+            'layoutgeneral' => true,
+            'hasranking' => $hasranking
         ];
 
         if (in_array('profile', $this->tabs)) {
