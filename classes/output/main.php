@@ -153,6 +153,15 @@ class main implements renderable, templatable {
             }
         }
 
+        $hasranking = false;
+
+        if (in_array('topbycourse', $this->tabs) ||
+            in_array('topbysite', $this->tabs) ||
+            in_array('lastmonth', $this->tabs)) {
+
+            $hasranking = true;
+        }
+
         $defaultvariables = [
             'uniqueid' => $uniqueid,
             'hastabs' => count($this->tabs) > 1,
@@ -164,7 +173,8 @@ class main implements renderable, templatable {
             'insitecontext' => $insitecontext,
             'hasactivities' => $hasactivities,
             'pointsbyallmodules' => $pointsbyallmodules,
-            'levels' => $levels
+            'levels' => $levels,
+            'hasranking' => $hasranking
         ];
 
         if (in_array('profile', $this->tabs)) {
