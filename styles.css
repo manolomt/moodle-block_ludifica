@@ -299,3 +299,50 @@
     color: #0f6cbf;
 }
 /* End contextual help */
+
+/* Dynamic help */
+
+.pointsinfo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #f7f7f7;
+}
+
+.pointsinfo > div {
+    max-width: 500px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    margin: 15px;
+    padding: 1em;
+    font-size: 1em;
+}
+
+.pointsinfo ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.pointsinfo li {
+    margin-bottom: 15px;
+    color: #3a4044;
+}
+
+.pointsinfo .icon {
+    font-size: 2em;
+}
+
+.pointsinfo > div > ul > li {
+    display: flex;
+}
+
+.pointsinfo > div > ul > li > img {
+    margin-right: 9px;
+}
+
+.pointsinfo .fa {
+    margin-right: 26px;
+}
+
+/* End dynamic help */

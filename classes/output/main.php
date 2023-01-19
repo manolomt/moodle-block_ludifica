@@ -71,6 +71,7 @@ class main implements renderable, templatable {
                         'topbycourse' => 'sort-amount-desc',
                         'topbysite' => 'trophy',
                         'lastmonth' => 'calendar-check-o',
+                        'dynamichelps' => 'question-circle'
                     );
 
         $showtabs = array();
@@ -87,6 +88,70 @@ class main implements renderable, templatable {
 
         $uniqueid = \block_ludifica\controller::get_uniqueid();
 
+        // Load config parameters to use in help mustache.
+        $globalconfig = get_config('block_ludifica');
+
+        $helpvars = new \stdClass();
+
+        // Fields not used in help.
+        $notusedpropeties = ['levels', 'duration'];
+
+        foreach ($globalconfig as $key => $val) {
+
+            if (in_array($key, $notusedpropeties)) {
+                continue;
+            }
+
+            $val = intval($val);
+
+            if (!empty($val)) {
+                $helpvars->{$key} = $val;
+            }
+        }
+
+        $helpvars->levels = \block_ludifica\controller::get_levels();
+        // End of load config params.
+
+        $levels = [];
+
+        for ($i = 0; $i < count($helpvars->levels) - 1; $i++) {
+
+            $level = new \stdClass();
+            $level->name = $helpvars->levels[$i + 1]->name;
+            $level->maxpoints = $helpvars->levels[$i]->maxpoints;
+            array_push($levels, $level);
+        }
+
+        $coursemodules = \block_ludifica\controller::get_coursemodules();
+        $cmconfig = \block_ludifica\controller::get_modulespoints($COURSE->id);
+        $pointsbymodules = [];
+        $insitecontext = true;
+        $pointsbyallmodules = false;
+        $hasactivities = false;
+
+        if ($COURSE->id > SITEID && $COURSE->enablecompletion) {
+
+            $allmodules = $globalconfig->pointsbyendallmodules;
+            $insitecontext = false;
+
+            if (!$allmodules && count($coursemodules) > 0) {
+
+                foreach ($coursemodules as $cm) {
+
+                    if (isset($cmconfig[$cm->id]) && !empty($cmconfig[$cm->id]->points)) {
+                        $pointsbymodules[] = $cm;
+                        $cm->points = $cmconfig[$cm->id]->points;
+                        $hasactivities = true;
+                    }
+                }
+            }
+
+            if ($allmodules) {
+
+                $pointsbyallmodules = true;
+            }
+        }
+
         $hasranking = false;
 
         if (in_array('topbycourse', $this->tabs) ||
@@ -102,6 +167,12 @@ class main implements renderable, templatable {
             'tabs' => $showtabs,
             'baseurl' => $CFG->wwwroot,
             'layoutgeneral' => true,
+            'helpvars' => $helpvars,
+            'pointsbymodules' => $pointsbymodules,
+            'insitecontext' => $insitecontext,
+            'hasactivities' => $hasactivities,
+            'pointsbyallmodules' => $pointsbyallmodules,
+            'levels' => $levels,
             'hasranking' => $hasranking
         ];
 
@@ -149,6 +220,12 @@ class main implements renderable, templatable {
             $defaultvariables['lastmonth'] = array_values(\block_ludifica\controller::get_lastmonth($COURSE->id));
             $defaultvariables['hasrowslastmonth'] = count($defaultvariables['lastmonth']) > 0;
             $defaultvariables['lastmonthstate'] = !$activetab ? 'active' : '';
+            $activetab = true;
+        }
+
+        if (in_array('dynamichelps', $this->tabs)) {
+            $defaultvariables['hasdynamichelps'] = true;
+            $defaultvariables['dynamichelpsstate'] = !$activetab ? 'active' : '';
             $activetab = true;
         }
 

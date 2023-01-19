@@ -282,28 +282,12 @@ class controller {
             } else {
 
                 $infodata->origin = 'instance';
-                $context = \context_course::instance($courseid);
 
-                // Get the first block instance in the course.
-                $conditions = ['blockname' => 'ludifica', 'parentcontextid' => $context->id];
-                $blockinstances = $DB->get_records('block_instances', $conditions, 'timemodified DESC', 'id, configdata');
+                $cmconfig = self::get_modulespoints($courseid, $cmid);
 
-                $fieldkey = "points_module_" . $cmid;
-
-                foreach ($blockinstances as $instance) {
-
-                    if (!empty($instance->configdata)) {
-
-                        $instanceconfig = unserialize(base64_decode($instance->configdata));
-
-                        if (isset($instanceconfig->{$fieldkey}) && !empty($instanceconfig->{$fieldkey})) {
-                            // Use the first instance configuration found. This is the more recently block instance configured.
-                            $infodata->instance = $instance->id;
-                            $points = $instanceconfig->{$fieldkey};
-                            break;
-                        }
-                    }
-
+                if (isset($cmconfig[$cmid])) {
+                    $infodata->instance = $cmconfig[$cmid]->instanceid;
+                    $points = $cmconfig[$cmid]->points;
                 }
             }
 
@@ -642,5 +626,134 @@ class controller {
         self::$instancescounter++;
 
         return $uniqueid;
+    }
+
+    /**
+     * Get a list with all modules for the current course.
+     *
+     * @return array Course modules.
+     */
+    public static function get_coursemodules() {
+        global $COURSE;
+
+        $coursemodules = array();
+
+        // Points by complete modules not apply in the site level.
+        if ($COURSE->id > SITEID && $COURSE->enablecompletion) {
+
+            $pointsbycoursemodule = intval(get_config('block_ludifica', 'pointsbyendcoursemodule'));
+            $allmodules = get_config('block_ludifica', 'pointsbyendallmodules');
+
+            if (!empty($pointsbycoursemodule) && !$allmodules) {
+
+                $format = course_get_format($COURSE->id);
+                $sections = $format->get_sections();
+                $modinfo = get_fast_modinfo($COURSE);
+                $context = \context_course::instance($COURSE->id);
+                $completioninfo = new \completion_info($COURSE);
+
+                foreach ($sections as $section) {
+                    $sectionindex = $section->section;
+
+                    if (isset($course->numsections) && $sectionindex > $course->numsections) {
+                        // Support for legacy formats that still provide numsections (see MDL-57769).
+                        break;
+                    }
+
+                    if (empty($modinfo->sections[$sectionindex])) {
+                        continue;
+                    }
+
+                    foreach ($modinfo->sections[$sectionindex] as $modnumber) {
+                        $module = $modinfo->cms[$modnumber];
+                        $iconurl = $module->get_icon_url();
+                        $siconurl = s($iconurl);
+
+                        // Exclude labels.
+                        if ($module->modname == 'label') {
+                            continue;
+                        }
+
+                        if ($module->deletioninprogress) {
+                            continue;
+                        }
+
+                        if ($completioninfo->is_enabled($module) == COMPLETION_TRACKING_NONE) {
+                            continue;
+                        }
+
+                        if (!$module->visible) {
+                            continue;
+                        }
+
+                        $thismod = new \stdClass();
+                        $thismod->id = $module->id;
+                        $thismod->name = format_string($module->name, true, ['context' => $context]);
+                        $thismod->type = $module->modname;
+                        $thismod->typetitle = get_string('pluginname', $module->modname);
+                        $thismod->iconurl = $siconurl;
+
+                        $coursemodules[] = $thismod;
+                    }
+                }
+            }
+        }
+
+        return $coursemodules;
+    }
+
+    /**
+     * Get a list with the points given to each module in an instance.
+     *
+     * @param int $courseid
+     * @param int $cmid Course module completed.
+     * @return array Configurations of the first block instance.
+     */
+    public static function get_modulespoints($courseid, $cmid = null) {
+        global $DB;
+
+        $cmconfig = [];
+
+        $context = \context_course::instance($courseid);
+
+        // Get the first block instance in the course.
+        $conditions = ['blockname' => 'ludifica', 'parentcontextid' => $context->id];
+        $blockinstances = $DB->get_records('block_instances', $conditions, 'timemodified DESC', 'id, configdata');
+
+        $fieldkey = $cmid ? "points_module_" . $cmid : null;
+
+        foreach ($blockinstances as $instance) {
+
+            if (!empty($instance->configdata)) {
+
+                $instanceconfig = unserialize(base64_decode($instance->configdata));
+
+                if ($fieldkey && isset($instanceconfig->{$fieldkey}) && !empty($instanceconfig->{$fieldkey})) {
+                    // Use the first instance configuration found. This is the more recently block instance configured.
+                    $cmconfig[$cmid] = (object)[
+                        'instanceid' => $instance->id,
+                        'points' => $instanceconfig->{$fieldkey}
+                    ];
+                    break;
+                } else if (!$fieldkey) {
+                    foreach ($instanceconfig as $key => $cmpoints) {
+
+                        if (strpos($key, 'points_module_') === false) {
+                            continue;
+                        }
+
+                        $cmid = str_replace('points_module_', '', $key);
+                        if (!isset($cmconfig[$cmid])) {
+                            $cmconfig[$cmid] = (object)[
+                                'instanceid' => $instance->id,
+                                'points' => $cmpoints
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+
+        return $cmconfig;
     }
 }
