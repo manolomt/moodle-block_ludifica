@@ -113,13 +113,17 @@ class main implements renderable, templatable {
         // End of load config params.
 
         $levels = [];
+        $get_profile = $this->player->get_profile();
+        $current_points = (int) $get_profile->points;
 
         for ($i = 0; $i < count($helpvars->levels) - 1; $i++) {
 
-            $level = new \stdClass();
-            $level->name = $helpvars->levels[$i + 1]->name;
-            $level->maxpoints = $helpvars->levels[$i]->maxpoints;
-            array_push($levels, $level);
+            if ($helpvars->levels[$i]->maxpoints > $current_points) {
+                $level = new \stdClass();
+                $level->name = $helpvars->levels[$i + 1]->name;
+                $level->maxpoints = $helpvars->levels[$i]->maxpoints;
+                array_push($levels, $level);
+            }
         }
 
         $coursemodules = \block_ludifica\controller::get_coursemodules();
@@ -193,7 +197,7 @@ class main implements renderable, templatable {
             }
 
             $defaultvariables['nickcontent'] = $nickcontent;
-            $defaultvariables['player'] = $this->player->get_profile();
+            $defaultvariables['player'] = $get_profile;
             $defaultvariables['profilestate'] = 'active';
             $defaultvariables['ownprofile'] = $ownprofile;
             $activetab = true;
