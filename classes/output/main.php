@@ -197,7 +197,7 @@ class main implements renderable, templatable {
             }
 
             $defaultvariables['nickcontent'] = $nickcontent;
-            $defaultvariables['player'] = $get_profile;
+            $defaultvariables['player'] = $getprofile;
             $defaultvariables['profilestate'] = 'active';
             $defaultvariables['ownprofile'] = $ownprofile;
             $activetab = true;
