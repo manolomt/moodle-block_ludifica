@@ -71,7 +71,7 @@ class main implements renderable, templatable {
                         'topbycourse' => 'sort-amount-desc',
                         'topbysite' => 'trophy',
                         'lastmonth' => 'calendar-check-o',
-                        'dynamichelps' => 'star-o'
+                        'dynamichelps' => 'question-circle'
                     );
 
         $showtabs = array();
