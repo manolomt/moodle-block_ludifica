@@ -131,10 +131,11 @@ class main implements renderable, templatable {
 
         if ($COURSE->id > SITEID && $COURSE->enablecompletion) {
 
-            $allmodules = $globalconfig->pointsbyendallmodules;
+            $pointsbycoursemodule = intval(get_config('block_ludifica', 'pointsbyendcoursemodule'));
+            $allmodules = get_config('block_ludifica', 'pointsbyendallmodules');
             $insitecontext = false;
 
-            if (!$allmodules && count($coursemodules) > 0) {
+            if (!empty($pointsbycoursemodule) && !$allmodules && count($coursemodules) > 0) {
 
                 foreach ($coursemodules as $cm) {
 
