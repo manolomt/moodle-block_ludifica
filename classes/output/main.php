@@ -113,12 +113,12 @@ class main implements renderable, templatable {
         // End of load config params.
 
         $levels = [];
-        $get_profile = $this->player->get_profile();
-        $current_points = (int) $get_profile->points;
+        $getprofile = $this->player->get_profile();
+        $currentpoints = (int) $getprofile->points;
 
         for ($i = 0; $i < count($helpvars->levels) - 1; $i++) {
 
-            if ($helpvars->levels[$i]->maxpoints > $current_points) {
+            if ($helpvars->levels[$i]->maxpoints > $currentpoints) {
                 $level = new \stdClass();
                 $level->name = $helpvars->levels[$i + 1]->name;
                 $level->maxpoints = $helpvars->levels[$i]->maxpoints;
