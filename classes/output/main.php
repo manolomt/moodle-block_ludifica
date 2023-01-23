@@ -94,7 +94,7 @@ class main implements renderable, templatable {
         $helpvars = new \stdClass();
 
         // Fields not used in help.
-        $notusedpropeties = ['levels', 'duration'];
+        $notusedpropeties = ['levels'];
 
         foreach ($globalconfig as $key => $val) {
 
@@ -122,6 +122,7 @@ class main implements renderable, templatable {
                 $level = new \stdClass();
                 $level->name = $helpvars->levels[$i + 1]->name;
                 $level->maxpoints = $helpvars->levels[$i]->maxpoints;
+                $level->label = get_string('overcomelevel', 'block_ludifica', $level);
                 array_push($levels, $level);
             }
         }
@@ -177,6 +178,7 @@ class main implements renderable, templatable {
             'hasactivities' => $hasactivities,
             'pointsbyallmodules' => $pointsbyallmodules,
             'levels' => $levels,
+            'haslevels' => count($levels) > 0,
             'hasranking' => $hasranking
         ];
 

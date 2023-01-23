@@ -46,69 +46,99 @@
     <div class="tab-dynamichelps block_ludifica-tabcontent {{dynamichelpsstate}}">
         <div class="pointsinfo">
             {{#insitecontext}}
-            <div>
-                <h3>{{#str}} dynamic_help_title, block_ludifica {{/str}}</h3>
-                <hr>
+            <div class="card">
+                <div class="card-header">
+                    {{#str}} dynamic_help_title, block_ludifica {{/str}}
+                </div>
+
                 {{#helpvars}}
-                <ul>
-                    {{#pointsbyendcourse}}
-                        <li>
-                            {{#pix}} i/courseevent, core {{/pix}}
-                            <div>{{#str}} dynamic_help-pointsbyendcourse, block_ludifica, {{pointsbyendcourse}} {{/str}}</div>
-                        </li>
-                    {{/pointsbyendcourse}}
-                    {{#recurrentlogindays}}
-                    <li>
-                        {{#pix}} i/scheduled, core {{/pix}}
-                        <div>{{#str}} dynamic_help-recurrentlogindays, block_ludifica, {{recurrentlogindays}} {{/str}}
-                        {{#str}} dynamic_help-pointsrecurrentlogin, block_ludifica, {{pointsbyrecurrentlogin1}} {{/str}}</div>
-                    </li>
-                    <li>
-                        {{#pix}} i/otherevent, core {{/pix}}
-                        <div>{{#str}} dynamic_help-pointsbyday, block_ludifica, {{pointsbyrecurrentlogin2}} {{/str}}</div></li>
-                    {{/recurrentlogindays}}
-                    {{#coinsbypoints}}
-                    <li>
-                        {{#pix}} i/db, core {{/pix}}
-                        <div>{{#str}} dynamic_help-pointstocoins, block_ludifica, {{pointstocoins}} {{/str}}
-                        {{#str}} dynamic_help-coinsbypoints, block_ludifica, {{coinsbypoints}} {{/str}}</div>
-                    </li>
-                    {{/coinsbypoints}}
-                </ul>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {{#pointsbyendcourse}}
+                            <li class="list-group-item d-flex">
+                                {{#pix}} i/courseevent, core {{/pix}}
+                                <div>
+                                    {{#duration}}
+                                        {{#str}} dynamic_help-pointsbyendcourseduration, block_ludifica, {{pointsbyendcourse}} {{/str}}
+                                    {{/duration}}
+                                    {{^duration}}
+                                        {{#str}} dynamic_help-pointsbyendcourse, block_ludifica, {{pointsbyendcourse}} {{/str}}
+                                    {{/duration}}
+                                </div>
+                            </li>
+                        {{/pointsbyendcourse}}
+                        {{#recurrentlogindays}}
+                            <li class="list-group-item d-flex">
+                                {{#pix}} i/scheduled, core {{/pix}}
+                                <div>{{#str}} dynamic_help-recurrentlogindays, block_ludifica, {{recurrentlogindays}} {{/str}}
+                                {{#str}} dynamic_help-pointsrecurrentlogin, block_ludifica, {{pointsbyrecurrentlogin1}} {{/str}}</div>
+                            </li>
+                            <li class="list-group-item d-flex">
+                                {{#pix}} i/otherevent, core {{/pix}}
+                                <div>{{#str}} dynamic_help-pointsbyday, block_ludifica, {{pointsbyrecurrentlogin2}} {{/str}}</div></li>
+                            {{/recurrentlogindays}}
+                            {{#coinsbypoints}}
+                            <li class="list-group-item d-flex">
+                                {{#pix}} i/db, core {{/pix}}
+                                <div>{{#str}} dynamic_help-pointstocoins, block_ludifica, {{pointstocoins}} {{/str}}
+                                {{#str}} dynamic_help-coinsbypoints, block_ludifica, {{coinsbypoints}} {{/str}}</div>
+                            </li>
+                        {{/coinsbypoints}}
+                    </ul>
+                </div>
             </div>
             {{/helpvars}}
-            <div>
-                <h3>{{#str}} levelup, block_ludifica {{/str}}</h3>
-                <hr>
-                <ul>
-                    {{#levels}}
-                        <li>
-                            {{#pix}} t/restore, core {{/pix}}
-                            <div>{{#str}} pointslevel, block_ludifica, {{maxpoints}} {{/str}} {{#str}} overcomelevel, block_ludifica, {{name}} {{/str}}</div>
-                        </li>
-                    {{/levels}}
-                </ul>
+            {{#haslevels}}
+            <div class="card">
+                <div class="card-header">
+                    {{#str}} levelup, block_ludifica {{/str}}
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {{#player}}
+                            <li class="list-group-item">
+                                {{#str}} currentlevel, block_ludifica, {{#level}}{{name}}{{/level}} {{/str}}
+                            </li>
+                        {{/player}}
+                        {{#levels}}
+                            <li class="list-group-item d-flex">
+                                {{#pix}} t/restore, core {{/pix}}
+                                <div>{{{label}}}</div>
+                            </li>
+                        {{/levels}}
+                    </ul>
+                </div>
             </div>
+            {{/haslevels}}
             {{/insitecontext}}
             {{^insitecontext}}
             {{#pointsbyallmodules}}
             <div>
                 {{#helpvars}}
-                <h4>{{#str}} dynamic_help-pointsbyendmodule, block_ludifica, {{pointsbyendcoursemodule}} {{/str}}</h4>
+                <h5>{{#str}} dynamic_help-pointsbyendmodule, block_ludifica, {{pointsbyendcoursemodule}} {{/str}}</h5>
                 {{/helpvars}}
             </div>
             {{/pointsbyallmodules}}
             {{^pointsbyallmodules}}
 
             {{#hasactivities}}
-            <div>
-                <h5>{{#str}} helptitle_pointsbycoursemodule, block_ludifica {{/str}}</h5>
-                <ul>
-                {{#pointsbymodules}}
-                    <li><img src="{{{iconurl}}}" alt="{{typetitle}}" title="{{typetitle}}" /> <div>{{name}} ({{typetitle}}):
-                        {{#str}} dynamic_help-pointsbymodule, block_ludifica, {{points}} {{/str}}</div></li>
-                {{/pointsbymodules}}
-                </ul>
+            <div class="card activities-list">
+                <div class="card-header">
+                    {{#str}} helptitle_pointsbycoursemodule, block_ludifica {{/str}}
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                    {{#pointsbymodules}}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <img src="{{{iconurl}}}" alt="{{typetitle}}" title="{{typetitle}}" />
+                                {{name}} ({{typetitle}})
+                            </div>
+                            <span class="badge bg-primary rounded-pill">{{#str}} dynamic_help-pointsbymodule, block_ludifica, {{points}} {{/str}}</span>
+                        </li>
+                    {{/pointsbymodules}}
+                    </ul>
+                </div>
             </div>
             {{/hasactivities}}
 
