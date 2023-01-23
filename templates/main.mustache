@@ -54,19 +54,6 @@
                 {{#helpvars}}
                 <div class="card-body">
                     <ul class="list-group">
-                        {{#pointsbyendcourse}}
-                            <li class="list-group-item d-flex">
-                                {{#pix}} i/courseevent, core {{/pix}}
-                                <div>
-                                    {{#duration}}
-                                        {{#str}} dynamic_help-pointsbyendcourseduration, block_ludifica, {{pointsbyendcourse}} {{/str}}
-                                    {{/duration}}
-                                    {{^duration}}
-                                        {{#str}} dynamic_help-pointsbyendcourse, block_ludifica, {{pointsbyendcourse}} {{/str}}
-                                    {{/duration}}
-                                </div>
-                            </li>
-                        {{/pointsbyendcourse}}
                         {{#recurrentlogindays}}
                             <li class="list-group-item d-flex">
                                 {{#pix}} i/scheduled, core {{/pix}}
@@ -115,7 +102,16 @@
             {{#pointsbyallmodules}}
             <div>
                 {{#helpvars}}
-                <h5>{{#str}} dynamic_help-pointsbyendmodule, block_ludifica, {{pointsbyendcoursemodule}} {{/str}}</h5>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            {{#pix}} t/award, core {{/pix}}
+                            <div>
+                                {{#str}} dynamic_help-pointsbyendmodule, block_ludifica, {{pointsbyendcoursemodule}} {{/str}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {{/helpvars}}
             </div>
             {{/pointsbyallmodules}}
@@ -149,6 +145,27 @@
             {{/hasactivities}}
 
             {{/pointsbyallmodules}}
+
+            {{#helpvars}}
+            <div class="card">
+                <div class="card-body">
+                    {{#pointsbyendcourse}}
+                    <div class="d-flex">
+                        {{#pix}} i/courseevent, core {{/pix}}
+                        <div>
+                            {{#duration}}
+                                {{#str}} dynamic_help-pointsbyendcourseduration, block_ludifica, {{pointsbyendcourse}} {{/str}}
+                            {{/duration}}
+                            {{^duration}}
+                                {{#str}} dynamic_help-pointsbyendcourse, block_ludifica, {{pointsbyendcourse}} {{/str}}
+                            {{/duration}}
+                        </div>
+                        </div>
+                {{/pointsbyendcourse}}
+                </div>
+            </div>
+            {{/helpvars}}
+
             {{/insitecontext}}
 
         </div>
