@@ -1,9 +1,3 @@
-.block_ludifica .card-title {
-    margin: 0;
-    padding: 10px 0 10px 15px;
-    display: inline-block;
-}
-
 .block_ludifica .player_info {
     display: flex;
     flex-wrap: wrap;
@@ -305,39 +299,14 @@
 .pointsinfo {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    background-color: #f7f7f7;
-}
-
-.pointsinfo > div {
-    max-width: 500px;
-    background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    margin: 15px;
-    padding: 1em;
-    font-size: 1em;
-}
-
-.pointsinfo ul {
-    list-style: none;
-    margin-left: 0;
-    padding-left: 0;
-}
-
-.pointsinfo li {
-    margin-bottom: 15px;
-    color: #3a4044;
+    justify-content: space-evenly;
 }
 
 .pointsinfo .icon {
     font-size: 2em;
 }
 
-.pointsinfo > div > ul > li {
-    display: flex;
-}
-
-.pointsinfo > div > ul > li > img {
+.pointsinfo .card-text > ul > li > img {
     margin-right: 9px;
 }
 
@@ -345,4 +314,17 @@
     margin-right: 26px;
 }
 
+.tab-dynamichelps .card {
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+.tab-dynamichelps .card-header {
+    font-size: 120%;
+    line-height: 120%;
+}
+
+.tab-dynamichelps .activities-list .bg-primary {
+    color: #fff;
+}
 /* End dynamic help */
