@@ -99,6 +99,30 @@
             {{/haslevels}}
             {{/insitecontext}}
             {{^insitecontext}}
+
+            {{#helpvars}}
+            <div class="card">
+                <div class="card-body">
+                    {{#pointsbyendcourse}}
+                    <div class="d-flex">
+                        {{#pix}} i/courseevent, core {{/pix}}
+                        <div>
+                            {{#hasduration}}
+                                {{#pointsbycomplete}}
+                                    {{{label}}}
+                                {{/pointsbycomplete}}
+                            {{/hasduration}}
+
+                            {{^hasduration}}
+                                {{#str}} dynamic_help-pointsbyendcourse, block_ludifica, {{pointsbyendcourse}} {{/str}}
+                            {{/hasduration}}
+                        </div>
+                        </div>
+                {{/pointsbyendcourse}}
+                </div>
+            </div>
+            {{/helpvars}}
+
             {{#pointsbyallmodules}}
             <div>
                 {{#helpvars}}
@@ -145,26 +169,6 @@
             {{/hasactivities}}
 
             {{/pointsbyallmodules}}
-
-            {{#helpvars}}
-            <div class="card">
-                <div class="card-body">
-                    {{#pointsbyendcourse}}
-                    <div class="d-flex">
-                        {{#pix}} i/courseevent, core {{/pix}}
-                        <div>
-                            {{#duration}}
-                                {{#str}} dynamic_help-pointsbyendcourseduration, block_ludifica, {{pointsbyendcourse}} {{/str}}
-                            {{/duration}}
-                            {{^duration}}
-                                {{#str}} dynamic_help-pointsbyendcourse, block_ludifica, {{pointsbyendcourse}} {{/str}}
-                            {{/duration}}
-                        </div>
-                        </div>
-                {{/pointsbyendcourse}}
-                </div>
-            </div>
-            {{/helpvars}}
 
             {{/insitecontext}}
 

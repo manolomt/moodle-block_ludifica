@@ -42,7 +42,10 @@ if ($ADMIN->fulltree) {
     $customfields = $DB->get_records_menu('customfield_field', null, 'name', 'id, name');
 
     if (is_array($fields) && count($fields) > 0) {
-        $fields = array_merge($fields, $customfields);
+
+        foreach ($customfields as $k => $v) {
+            $fields[$k] = $v;
+        }
     }
 
     $name = 'block_ludifica/duration';

@@ -65,7 +65,7 @@ class main implements renderable, templatable {
      * @return array Context variables for the template
      */
     public function export_for_template(renderer_base $output) {
-        global $CFG, $COURSE, $USER, $OUTPUT;
+        global $CFG, $COURSE, $USER, $OUTPUT, $DB;
 
         $icons = array('profile' => 'address-card',
                         'topbycourse' => 'sort-amount-desc',
@@ -166,6 +166,18 @@ class main implements renderable, templatable {
             $hasranking = true;
         }
 
+        $pointsbycomplete = new \stdClass();
+        $params = ['fieldid' => $globalconfig->duration, 'instanceid' => $COURSE->id];
+        $pointsbycomplete->courseduration = $DB->get_field('customfield_data', 'value', $params);
+
+        // Check if duration is defined and configured.
+        if (!empty($pointsbycomplete->courseduration)) {
+            $pointsbycomplete->totalpoints = $globalconfig->pointsbyendcourse * $pointsbycomplete->courseduration;
+        }
+
+        $pointsbycomplete->label = get_string('dynamic_help-pointsbyendcourseduration',
+                                              'block_ludifica', $pointsbycomplete);
+
         $defaultvariables = [
             'uniqueid' => $uniqueid,
             'hastabs' => count($this->tabs) > 1,
@@ -179,7 +191,9 @@ class main implements renderable, templatable {
             'pointsbyallmodules' => $pointsbyallmodules,
             'levels' => $levels,
             'haslevels' => count($levels) > 0,
-            'hasranking' => $hasranking
+            'hasranking' => $hasranking,
+            'hasduration' => !empty($pointsbycomplete->courseduration),
+            'pointsbycomplete' => $pointsbycomplete
         ];
 
         if (in_array('profile', $this->tabs)) {
