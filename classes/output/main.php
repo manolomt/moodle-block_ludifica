@@ -171,7 +171,7 @@ class main implements renderable, templatable {
         $pointsbycomplete->courseduration = $DB->get_field('customfield_data', 'value', $params);
 
         // Check if duration is defined and configured.
-        if (!empty($pointsbycomplete->courseduration)) {
+        if (!empty($globalconfig->duration) && !empty($pointsbycomplete->courseduration)) {
             $pointsbycomplete->totalpoints = $globalconfig->pointsbyendcourse * $pointsbycomplete->courseduration;
         }
 
@@ -192,7 +192,7 @@ class main implements renderable, templatable {
             'levels' => $levels,
             'haslevels' => count($levels) > 0,
             'hasranking' => $hasranking,
-            'hasduration' => !empty($pointsbycomplete->courseduration),
+            'hasduration' => !empty($globalconfig->duration),
             'pointsbycomplete' => $pointsbycomplete
         ];
 

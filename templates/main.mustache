@@ -54,6 +54,19 @@
                 {{#helpvars}}
                 <div class="card-body">
                     <ul class="list-group">
+                        {{#pointsbyendcourse}}
+                            <li class="list-group-item d-flex">
+                                {{#pix}} i/courseevent, core {{/pix}}
+                                <div>
+                                    {{#hasduration}}
+                                        {{#str}} dynamic_help-pointsbyendcourseduration_site, block_ludifica, {{pointsbyendcourse}} {{/str}}
+                                    {{/hasduration}}
+                                    {{^hasduration}}
+                                        {{#str}} dynamic_help-pointsbyendcourse, block_ludifica, {{pointsbyendcourse}} {{/str}}
+                                    {{/hasduration}}
+                                </div>
+                            </li>
+                        {{/pointsbyendcourse}}
                         {{#recurrentlogindays}}
                             <li class="list-group-item d-flex">
                                 {{#pix}} i/scheduled, core {{/pix}}
