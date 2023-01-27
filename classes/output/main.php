@@ -171,12 +171,19 @@ class main implements renderable, templatable {
         $pointsbycomplete->courseduration = $DB->get_field('customfield_data', 'value', $params);
 
         // Check if duration is defined and configured.
-        if (!empty($globalconfig->duration) && !empty($pointsbycomplete->courseduration)) {
-            $pointsbycomplete->totalpoints = $globalconfig->pointsbyendcourse * $pointsbycomplete->courseduration;
+        if (!empty($globalconfig->duration)) {
+            if (!empty($pointsbycomplete->courseduration) && !empty($globalconfig->pointsbyendcourse)) {
+                $pointsbycomplete->totalpoints = $globalconfig->pointsbyendcourse * $pointsbycomplete->courseduration;
+            } else {
+                // Not points for this course.
+                $pointsbycomplete = null;
+            }
+        } else if (!empty($globalconfig->pointsbyendcourse)) {
+            $pointsbycomplete->totalpoints = $globalconfig->pointsbyendcourse;
+        } else {
+            // Not points by ending course.
+            $pointsbycomplete = null;
         }
-
-        $pointsbycomplete->label = get_string('dynamic_help-pointsbyendcourseduration',
-                                              'block_ludifica', $pointsbycomplete);
 
         $defaultvariables = [
             'uniqueid' => $uniqueid,

@@ -111,29 +111,27 @@
             </div>
             {{/haslevels}}
             {{/insitecontext}}
+
             {{^insitecontext}}
-
             {{#helpvars}}
-            <div class="card">
-                <div class="card-body">
-                    {{#pointsbyendcourse}}
-                    <div class="d-flex">
-                        {{#pix}} i/courseevent, core {{/pix}}
-                        <div>
-                            {{#hasduration}}
-                                {{#pointsbycomplete}}
-                                    {{{label}}}
-                                {{/pointsbycomplete}}
-                            {{/hasduration}}
+                {{#pointsbycomplete}}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            {{#pix}} i/courseevent, core {{/pix}}
+                            <div>
+                                {{#hasduration}}
+                                    {{#str}} dynamic_help-pointsbyendcourseduration, block_ludifica, {{totalpoints}} {{/str}}
+                                {{/hasduration}}
 
-                            {{^hasduration}}
-                                {{#str}} dynamic_help-pointsbyendcourse, block_ludifica, {{pointsbyendcourse}} {{/str}}
-                            {{/hasduration}}
+                                {{^hasduration}}
+                                    {{#str}} dynamic_help-pointsbyendcourse, block_ludifica, {{pointsbyendcourse}} {{/str}}
+                                {{/hasduration}}
+                            </div>
                         </div>
-                        </div>
-                {{/pointsbyendcourse}}
+                    </div>
                 </div>
-            </div>
+                {{/pointsbycomplete}}
             {{/helpvars}}
 
             {{#pointsbyallmodules}}
