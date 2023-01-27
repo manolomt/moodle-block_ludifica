@@ -65,7 +65,7 @@ class main implements renderable, templatable {
      * @return array Context variables for the template
      */
     public function export_for_template(renderer_base $output) {
-        global $CFG, $COURSE, $USER, $OUTPUT;
+        global $CFG, $COURSE, $USER, $OUTPUT, $DB;
 
         $icons = array('profile' => 'address-card',
                         'topbycourse' => 'sort-amount-desc',
@@ -166,6 +166,25 @@ class main implements renderable, templatable {
             $hasranking = true;
         }
 
+        $pointsbycomplete = new \stdClass();
+        $params = ['fieldid' => $globalconfig->duration, 'instanceid' => $COURSE->id];
+        $pointsbycomplete->courseduration = $DB->get_field('customfield_data', 'value', $params);
+
+        // Check if duration is defined and configured.
+        if (!empty($globalconfig->duration)) {
+            if (!empty($pointsbycomplete->courseduration) && !empty($globalconfig->pointsbyendcourse)) {
+                $pointsbycomplete->totalpoints = $globalconfig->pointsbyendcourse * $pointsbycomplete->courseduration;
+            } else {
+                // Not points for this course.
+                $pointsbycomplete = null;
+            }
+        } else if (!empty($globalconfig->pointsbyendcourse)) {
+            $pointsbycomplete->totalpoints = $globalconfig->pointsbyendcourse;
+        } else {
+            // Not points by ending course.
+            $pointsbycomplete = null;
+        }
+
         $defaultvariables = [
             'uniqueid' => $uniqueid,
             'hastabs' => count($this->tabs) > 1,
@@ -179,7 +198,9 @@ class main implements renderable, templatable {
             'pointsbyallmodules' => $pointsbyallmodules,
             'levels' => $levels,
             'haslevels' => count($levels) > 0,
-            'hasranking' => $hasranking
+            'hasranking' => $hasranking,
+            'hasduration' => !empty($globalconfig->duration),
+            'pointsbycomplete' => $pointsbycomplete
         ];
 
         if (in_array('profile', $this->tabs)) {
