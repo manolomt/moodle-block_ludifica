@@ -152,6 +152,7 @@ $string['points_help'] = 'A medida que ganes puntos se te irán otorgando moneda
 $string['pointstocoins'] = 'Puntos para dar monedas';
 $string['pointstocoins_help'] = '';
 $string['positionhead'] = 'Pos';
+$string['recorddeleted'] = 'Registro eliminado';
 $string['recurrentlogindays'] = 'Días de autenticación recurrente';
 $string['recurrentlogindays_help'] = 'Días de autenticación continua para iniciar la asignación de puntos. 0 para no usar esta característica.';
 $string['requiretext'] = 'Prerequisitos';

@@ -152,6 +152,7 @@ $string['points_help'] = 'As you earn points you will be awarded with coins, use
 $string['pointstocoins'] = 'Points to add coins';
 $string['pointstocoins_help'] = '';
 $string['positionhead'] = 'Pos';
+$string['recorddeleted'] = 'Record deleted';
 $string['recurrentlogindays'] = 'Recurrent login days';
 $string['recurrentlogindays_help'] = 'Days to start to assign points. 0 to don\'t use this.';
 $string['requiretext'] = 'Prerequisites';
