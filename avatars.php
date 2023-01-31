@@ -54,35 +54,35 @@ if (!in_array($sort, $sortavailable)) {
 
 echo $OUTPUT->header();
 
-// Delete a ticket, after confirmation.
+// Delete an avatar, after confirmation.
 if ($hasmanage && $delete && confirm_sesskey()) {
-    $ticket = $DB->get_record('block_ludifica_avatars', array('id' => $delete), '*', MUST_EXIST);
+    $avatar = $DB->get_record('block_ludifica_avatars', array('id' => $delete), '*', MUST_EXIST);
 
     if ($confirm != md5($delete)) {
         $returnurl = new moodle_url('/blocks/ludifica/avatars.php', array('sort' => $sort, 'bypage' => $bypage, 'spage' => $spage));
         echo $OUTPUT->heading(get_string('avatardelete', 'block_ludifica'));
         $optionsyes = array('delete' => $delete, 'confirm' => md5($delete), 'sesskey' => sesskey());
-        echo $OUTPUT->confirm(get_string('deletecheck', '', "'{$ticket->name}'"),
+        echo $OUTPUT->confirm(get_string('deletecheck', '', "'{$avatar->name}'"),
                                 new moodle_url($returnurl, $optionsyes), $returnurl);
         echo $OUTPUT->footer();
         die;
     } else if (data_submitted()) {
 
         $fs = get_file_storage();
-        $files = $fs->get_area_files($syscontext->id, 'block_ludifica', 'ticket', $ticket->id);
+        $files = $fs->get_area_files($syscontext->id, 'block_ludifica', 'avatar', $avatar->id);
 
         foreach ($files as $file) {
             $file->delete();
         }
 
-        $DB->delete_records('block_ludifica_useravatars', array('ticketid' => $ticket->id));
-        $DB->delete_records('block_ludifica_avatars', array('id' => $ticket->id));
+        $DB->delete_records('block_ludifica_useravatars', array('avatarid' => $avatar->id));
+        $DB->delete_records('block_ludifica_avatars', array('id' => $avatar->id));
 
-        $event = \block_ludifica\event\ticket_deleted::create(array(
-            'objectid' => $ticket->id,
+        $event = \block_ludifica\event\avatar_deleted::create(array(
+            'objectid' => $avatar->id,
             'context' => $syscontext
         ));
-        $event->add_record_snapshot('block_ludifica_avatars', $ticket);
+        $event->add_record_snapshot('block_ludifica_avatars', $avatar);
         $event->trigger();
 
         $msg = 'recorddeleted';
