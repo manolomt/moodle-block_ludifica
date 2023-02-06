@@ -24,29 +24,34 @@
     border-top: 2px solid #ddd;
 }
 
-#block_ludifica-store .notavailableyet,
-#block_ludifica-tickets .notavailableyet,
+#page-blocks-ludifica-avatars .notavailableyet,
+#page-blocks-ludifica-tickets .notavailableyet,
+#page-blocks-ludifica-badges .notavailableyet,
 .block_ludifica .notavailableyet {
-    color: #fff;
     font-size: 20px;
     line-height: 22px;
     text-align: center;
+    width: 100%;
 }
 
-#tickets-list .oneticket {
+#tickets-list .oneticket,
+#badges-list .onebadge {
     margin-bottom: 20px;
 }
 
-#tickets-list .oneticket .picture-box {
+#tickets-list .oneticket .picture-box,
+#badges-list .onebadge .picture-box {
     padding-right: 15px;
 }
 
-#tickets-list .oneticket .picture-box img {
+#tickets-list .oneticket .picture-box img,
+#badges-list .onebadge .picture-box img {
     max-width: 150px;
     max-height: 150px;
 }
 
-#tickets-list .oneticket .ticketcontent {
+#tickets-list .oneticket .ticketcontent,
+#badges-list .onebadge .badgecontent {
     display: flex;
 }
 
@@ -175,11 +180,13 @@
     max-width: 100%;
 }
 
-.block_ludifica .tickets-box > div {
+.block_ludifica .tickets-box > div,
+.block_ludifica .badges-box > div {
     display: flex;
 }
 
-.block_ludifica .tickets-box .oneticket {
+.block_ludifica .tickets-box .oneticket,
+.block_ludifica .badges-box .onebadge {
     width: 70px;
     height: 70px;
     overflow: hidden;
@@ -188,7 +195,8 @@
     margin: 5px;
 }
 
-.block_ludifica .tickets-box .oneticket img {
+.block_ludifica .tickets-box .oneticket img,
+.block_ludifica .badges-box .onebadge img {
     width: 100%;
 }
 

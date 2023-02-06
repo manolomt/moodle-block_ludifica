@@ -613,6 +613,13 @@ class controller {
         $tickets->active = $active == 'tickets';
         $tabs[] = $tickets;
 
+        $badges = new \stdClass();
+        $badges->text = get_string('badges', 'block_ludifica');
+        $badges->title = $badges->text;
+        $badges->url = new \moodle_url('/blocks/ludifica/badges.php');
+        $badges->active = $active == 'badges';
+        $tabs[] = $badges;
+
         return $tabs;
     }
 

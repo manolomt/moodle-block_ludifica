@@ -136,6 +136,18 @@ function($, ModalFactory, Alertc) {
 
     };
 
+    $('.openshare').on('click', function() {
+        var $content = $('.share_badge_modal');
+        var $title = $content.attr('title');
+
+        ModalFactory.create({
+          title: $title,
+          body: $content.html()
+        }).then(function(modal) {
+        modal.show();
+        });
+    });
+
     return {
         init: init
     };
