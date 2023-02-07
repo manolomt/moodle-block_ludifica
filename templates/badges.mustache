@@ -29,7 +29,7 @@
 {{>block_ludifica/storetabs}}
 <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}badges_help, block_ludifica{{/str}}"></button>
 <div id="badges-list" class="row">
-    {{^badges}}
+    {{#badges}}
     <div id="badge-{{id}}" class="col-lg-6 onebadge">
         <div class="card">
             <h3 class="card-header">{{name}}</h3>
@@ -74,7 +74,7 @@
                                                     <i class="fa fa-link"></i>
                                                 </span>
                                             </div>
-                                            <input class="input_linkcopy" type="text" name="badgelink" aria-label="badge link" value="{{url}}">
+                                            <input type="text" name="badgelink" aria-label="badge link" value="{{url}}">
                                         </div>
                                     </div>
                                 </div>

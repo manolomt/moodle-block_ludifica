@@ -166,27 +166,24 @@ function($, str, ModalFactory, Alertc, Log) {
                 Log.debug('Error creating modal share buttons');
                 Log.debug(e);
             }).then(function(modal) {
-                modal.show();
-                return true;
+                return modal.show().then(function() {
+                    $('input[name="badgelink"]').on('click', function() {
+                        var $input = $(this);
+                        $input.select();
+                        document.execCommand("copy");
+
+                        var $msg = $('<div class="msg-badgelink-copy">' + s['badgelinkcopiedtoclipboard'] + '</div>');
+
+                        $input.parent().append($msg);
+                        window.setTimeout(function() {
+                            $msg.remove();
+                        }, 1600);
+                    });
+                });
             });
+            return true;
         });
         // End of share badge buttons.
-
-
-        // Copy URL badge.
-        $(document).on('click', 'input[name="badgelink"]', function() {
-            var $input = $('input[name="badgelink"]');
-            $input.select();
-            document.execCommand("copy");
-
-            var $msg = $('<div class="msg-badgelink-copy">' + s['badgelinkcopiedtoclipboard'] + '</div>');
-
-            $input.parent().append($msg);
-            window.setTimeout(function() {
-                $msg.remove();
-            }, 1000);
-          });
-          // End of copy URL badge.
 
         resizeobserver();
 
@@ -195,4 +192,5 @@ function($, str, ModalFactory, Alertc, Log) {
     return {
         init: init
     };
+
 });
