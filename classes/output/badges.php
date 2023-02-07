@@ -36,21 +36,6 @@ use templatable;
 class badges implements renderable, templatable {
 
     /**
-     * @var array Tickets list.
-     */
-    private $badges;
-
-    /**
-     * Constructor.
-     *
-     * @param array $badges The tickets list.
-     */
-    public function __construct(/* $badges */) {
-
-        /* $this->badges = $badges; */
-    }
-
-    /**
      * Export this data so it can be used as the context for a mustache template.
      *
      * @param \renderer_base $output
@@ -64,14 +49,10 @@ class badges implements renderable, templatable {
 
         $player = new \block_ludifica\player($USER->id);
 
-
-
         $uniqueid = \block_ludifica\controller::get_uniqueid();
-
 
         $defaultvariables = [
             'uniqueid' => $uniqueid,
-            /* 'badges' => array_values($this->badges), */
             'baseurl' => $CFG->wwwroot,
             'canedit' => $hasmanage,
             'storetabs' => \block_ludifica\controller::get_storetabs('badges'),
