@@ -42,8 +42,8 @@ function($, str, ModalFactory, Alertc, Log) {
                 s[one.key] = results[pos];
                 pos++;
             });
-            return true;
         });
+        return true;
     }
     // End of Load strings.
 
@@ -162,10 +162,7 @@ function($, str, ModalFactory, Alertc, Log) {
 
             ModalFactory.create({
                 title: $title,
-                body: $content.html()
-            }).fail(function(e) {
-                Log.debug('Error creating modal share buttons');
-                Log.debug(e);
+                body: $content.html(),
             }).then(function(modal) {
                 return modal.show().then(function() {
                     $('input[name="badgelink"]').on('click', function() {
@@ -173,7 +170,7 @@ function($, str, ModalFactory, Alertc, Log) {
                         $input.select();
                         document.execCommand("copy");
 
-                        var $msg = $('<div class="msg-badgelink-copy">' + s['badgelinkcopiedtoclipboard'] + '</div>');
+                        var $msg = $('<div class="msg-badgelink-copy">' + s.badgelinkcopiedtoclipboard + '</div>');
 
                         $input.parent().append($msg);
                         window.setTimeout(function() {
@@ -182,7 +179,11 @@ function($, str, ModalFactory, Alertc, Log) {
                     });
                     return true;
                 });
+            }).fail(function(e) {
+                Log.debug('Error creating modal share buttons');
+                Log.debug(e);
             });
+            return true;
         });
         // End of share badge buttons.
 
