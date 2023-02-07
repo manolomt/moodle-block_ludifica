@@ -57,6 +57,7 @@ $string['badge_info'] = 'About the badge';
 $string['badge_copy'] = 'Copiar enlace';
 $string['badge_facebook'] = 'Share on Facebook';
 $string['badgemanage'] = 'Manage badges';
+$string['badgelinkcopiedtoclipboard'] = 'Badge link copied to clipboard';
 $string['badge_linkedin'] = 'Share as a badge on Linkedin';
 $string['badge_linkedin_bio'] = 'Share as a publication on Linkedin';
 $string['badge_share'] = 'Share';

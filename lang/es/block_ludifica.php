@@ -57,6 +57,7 @@ $string['badge_info'] = 'Acerca de este logro';
 $string['badge_copy'] = 'Copiar enlace';
 $string['badge_facebook'] = 'Compartir en Facebook';
 $string['badgemanage'] = 'Gestionar insignias';
+$string['badgelinkcopiedtoclipboard'] = 'El enlace se ha copiado al portapapeles';
 $string['badge_linkedin'] = 'Compatir como certificado en Linkedin';
 $string['badge_linkedin_bio'] = 'Compatir como publicación en Linkedin';
 $string['badge_share'] = 'Compatir';

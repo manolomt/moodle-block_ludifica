@@ -29,7 +29,7 @@
 {{>block_ludifica/storetabs}}
 <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}badges_help, block_ludifica{{/str}}"></button>
 <div id="badges-list" class="row">
-    {{#badges}}
+    {{^badges}}
     <div id="badge-{{id}}" class="col-lg-6 onebadge">
         <div class="card">
             <h3 class="card-header">{{name}}</h3>
@@ -67,7 +67,16 @@
                                     <a href="https://twitter.com/intent/tweet?text={{name}}&url={{url}}" target="_blank" class="btn btn-primary">{{#pix}} i/publish, core {{/pix}} {{#str}} badge_twitter, block_ludifica {{/str}}</a>
                                 </div>
                                 <div class="list-group-item d-flex">
-                                    <button class="btn btn-primary sharebadgelink" data-clipboard-text="{{url}}">{{#pix}} e/insert_edit_link, core {{/pix}} {{#str}} badge_copy, block_ludifica {{/str}}</button>
+                                    <div class="input-container">
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-link"></i>
+                                                </span>
+                                            </div>
+                                            <input class="input_linkcopy" type="text" name="badgelink" aria-label="badge link" value="{{url}}">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

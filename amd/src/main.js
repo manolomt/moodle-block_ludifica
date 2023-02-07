@@ -21,8 +21,30 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/modal_factory', 'block_ludifica/alertc'],
-function($, ModalFactory, Alertc) {
+define(['jquery', 'core/str', 'core/modal_factory', 'block_ludifica/alertc'],
+function($, str, ModalFactory, Alertc, Log) {
+
+    // Load strings.
+    var strings = [];
+    strings.push({ key: 'badgelinkcopiedtoclipboard', component: 'block_ludifica' });
+
+    var s = [];
+
+    if (strings.length > 0) {
+
+        strings.forEach(one => {
+            s[one.key] = one.key;
+        });
+
+        str.get_strings(strings).then(function (results) {
+            var pos = 0;
+            strings.forEach(one => {
+                s[one.key] = results[pos];
+                pos++;
+            });
+        });
+    }
+    // End of Load strings.
 
     // Based in https://philipwalton.com/articles/responsive-components-a-solution-to-the-container-queries-problem/
     var resizeobserver = function() {
@@ -132,6 +154,7 @@ function($, ModalFactory, Alertc) {
             }
         });
 
+        // Share badge buttons.
         $('.openshare').on('click', function() {
             var $content = $('.share_badge_modal');
             var $title = $content.attr('title');
@@ -139,10 +162,31 @@ function($, ModalFactory, Alertc) {
             ModalFactory.create({
                 title: $title,
                 body: $content.html()
+            }).fail(function(e) {
+                Log.debug('Error creating modal share buttons');
+                Log.debug(e);
             }).then(function(modal) {
                 modal.show();
+                return true;
             });
         });
+        // End of share badge buttons.
+
+
+        // Copy URL badge.
+        $(document).on('click', 'input[name="badgelink"]', function() {
+            var $input = $('input[name="badgelink"]');
+            $input.select();
+            document.execCommand("copy");
+
+            var $msg = $('<div class="msg-badgelink-copy">' + s['badgelinkcopiedtoclipboard'] + '</div>');
+
+            $input.parent().append($msg);
+            window.setTimeout(function() {
+                $msg.remove();
+            }, 1000);
+          });
+          // End of copy URL badge.
 
         resizeobserver();
 
