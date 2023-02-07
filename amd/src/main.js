@@ -26,7 +26,7 @@ function($, str, ModalFactory, Alertc, Log) {
 
     // Load strings.
     var strings = [];
-    strings.push({ key: 'badgelinkcopiedtoclipboard', component: 'block_ludifica' });
+    strings.push({key: 'badgelinkcopiedtoclipboard', component: 'block_ludifica'});
 
     var s = [];
 
@@ -36,12 +36,13 @@ function($, str, ModalFactory, Alertc, Log) {
             s[one.key] = one.key;
         });
 
-        str.get_strings(strings).then(function (results) {
+        str.get_strings(strings).then(function(results) {
             var pos = 0;
             strings.forEach(one => {
                 s[one.key] = results[pos];
                 pos++;
             });
+            return true;
         });
     }
     // End of Load strings.
@@ -179,9 +180,9 @@ function($, str, ModalFactory, Alertc, Log) {
                             $msg.remove();
                         }, 1600);
                     });
+                    return true;
                 });
             });
-            return true;
         });
         // End of share badge buttons.
 
