@@ -42,8 +42,11 @@ function($, str, ModalFactory, Alertc, Log) {
                 s[one.key] = results[pos];
                 pos++;
             });
+            return true;
+        }).fail(function(e) {
+            Log.debug('Error loading strings');
+            Log.debug(e);
         });
-        return true;
     }
     // End of Load strings.
 
