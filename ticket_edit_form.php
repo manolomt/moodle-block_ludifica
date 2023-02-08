@@ -97,9 +97,6 @@ class block_ludifica_ticket_edit extends moodleform {
         $mform->addElement('text', 'byuser', get_string('ticketbyuser', 'block_ludifica'), 'maxlength="10" size="10"');
         $mform->setType('byuser', PARAM_INT);
 
-        $mform->addElement('textarea', 'infodata', get_string('infodata', 'block_ludifica'), 'cols="30" rows="10"');
-        $mform->setType('infodata', PARAM_TEXT);
-
         $values = array('1' => get_string('yes'), '0' => get_string('no'));
         $mform->addElement('select', 'enabled', get_string('enabled', 'block_ludifica'), $values);
 
