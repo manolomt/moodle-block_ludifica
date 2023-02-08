@@ -77,6 +77,7 @@ if ($hasmanage && $delete && confirm_sesskey()) {
 
         $DB->delete_records('block_ludifica_useravatars', array('avatarid' => $avatar->id));
         $DB->delete_records('block_ludifica_avatars', array('id' => $avatar->id));
+        $DB->set_field('block_ludifica_general', 'avatarid', null, ['avatarid' => $avatar->id]);
 
         $event = \block_ludifica\event\avatar_deleted::create(array(
             'objectid' => $avatar->id,
