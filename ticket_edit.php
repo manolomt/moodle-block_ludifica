@@ -86,8 +86,12 @@ if ($editform->is_cancelled()) {
     $ticket->availabledate = !empty($data->availabledate) ? $data->availabledate : 0;
     $ticket->available = $data->available;
     $ticket->byuser = $data->byuser;
-    $ticket->infodata = json_encode(json_decode($data->infodata)); // Check by correct json format.
     $ticket->enabled = $data->enabled;
+
+    // Check by correct json format.
+    $ticket->infodata = property_exists($data, 'infodata') ? json_encode(json_decode($data->infodata)) :
+                        (property_exists($ticket, 'infodata') ? $ticket->infodata : '');
+
 
     if (!empty($ticket->id)) {
         $DB->update_record('block_ludifica_tickets', $ticket);
