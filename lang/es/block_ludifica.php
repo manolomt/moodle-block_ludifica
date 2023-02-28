@@ -178,9 +178,12 @@ $string['socialnetworks_help'] = 'Una red social por línea con la siguiente est
 Primero escribe el nombre del sitio en minúscula y sin caractéres especiales|Las llaves {name} y {url} se pueden incluir en tu URL.
 <br /><br />
 Adicionalmente, si quieres compartir un logro como certificado de LinkedIn, puedes usar la siguiente estructura:<br /><br />
-<em>linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=<strong>15093394</strong>&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire={expire}</em><br /><br />
+<em>linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=<strong>91534158</strong>&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire={expire}</em><br /><br />
 <em><strong>organizationId</strong> es el único parametro del enlace que necesitas editar, este es el ID del perfil de LinkedIn de la organización que emite el certificado.</em><br /><br />
 <em>No es necesario que incluyas todas las llaves.</em>';
+$string['socialnetworks_default'] = 'facebook|https://www.facebook.com/sharer/sharer.php?u={url}
+twitter|https://twitter.com/intent/tweet?text={name}&url={url}
+linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=91534158&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire={expire}';
 $string['settingsheaderpointscourse'] = 'Al finalizar un curso';
 $string['settingsheaderpointslogin'] = 'Puntos por autenticación';
 $string['settingsheaderpointsmodules'] = 'Puntos por módulos';

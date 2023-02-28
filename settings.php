@@ -159,7 +159,8 @@ if ($ADMIN->fulltree) {
     $name = 'block_ludifica/networks';
     $title = get_string('socialnetworks', 'block_ludifica');
     $help = get_string('socialnetworks_help', 'block_ludifica');
-    $setting = new admin_setting_configtextarea($name, $title, $help, '');
+    $default = get_string('socialnetworks_default', 'block_ludifica');
+    $setting = new admin_setting_configtextarea($name, $title, $help, $default);
     $generalsettings->add($setting);
 }
 

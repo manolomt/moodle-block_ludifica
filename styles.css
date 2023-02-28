@@ -409,6 +409,7 @@
     display: block;
     margin: auto;
     max-width: 100px;
+    margin-bottom: 15px;
 }
 
 #page-blocks-ludifica-badges .modal .list-group-item {
