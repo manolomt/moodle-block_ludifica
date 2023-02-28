@@ -21,13 +21,15 @@
  * @copyright 2021 David Herney @ BambuCo
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace block_ludifica\output;
+
+require_once($CFG->dirroot . '/lib/badgeslib.php');
 
 use renderable;
 use renderer_base;
 use templatable;
 
-require_once($CFG->dirroot . '/lib/badgeslib.php');
 /**
  * Class containing data for the block.
  *
@@ -60,7 +62,7 @@ class badges implements renderable, templatable {
 
             // Equal symbol encode so it can work in LinkedIn URL.
             $badge->url = (string)(new \moodle_url('/badges/badge.php', ['hash' => $badge->uniquehash]));
-            $badge_encode = str_replace('=', urlencode('='), $badge->url);
+            $badgeencode = str_replace('=', urlencode('='), $badge->url);
 
             $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID, 'badges', 'badgeimage', $badge->id, '/', 'f3', false);
 
@@ -76,7 +78,7 @@ class badges implements renderable, templatable {
                     $network->icon = trim($row[0]);
                     $network->url = trim($row[1]);
                     $network->url = str_replace('{name}', urlencode($badge->name), $network->url);
-                    $network->url = str_replace('{url}', $badge_encode, $network->url);
+                    $network->url = str_replace('{url}', $badgeencode, $network->url);
                     $network->url = str_replace('{badgeyear}', date('Y', $badge->timecreated), $network->url);
                     $network->url = str_replace('{badgemonth}', date('m', $badge->timecreated), $network->url);
                     $network->url = str_replace('{badgeid}', $badge->uniquehash, $network->url);
@@ -86,12 +88,8 @@ class badges implements renderable, templatable {
             }
 
             $badge->networks = $socialnetworks;
-            $badges[]= $badge;
+            $badges[] = $badge;
         }
-
-        /* var_dump($badges[2]->networks); die; */
-
-
         // End Get user badges.
 
         $defaultvariables = [

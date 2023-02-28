@@ -23,11 +23,11 @@
  */
 namespace block_ludifica\output;
 
+require_once($CFG->dirroot . '/lib/badgeslib.php');
+
 use renderable;
 use renderer_base;
 use templatable;
-
-require_once($CFG->dirroot . '/lib/badgeslib.php');
 
 /**
  * Class containing data for the block.
@@ -214,7 +214,7 @@ class main implements renderable, templatable {
             foreach ($userbadges as $badge) {
                 $badge->url = urldecode((string)(new \moodle_url('/badges/badge.php', ['hash' => $badge->uniquehash])));
                 $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID, 'badges', 'badgeimage', $badge->id, '/', 'f3', false);
-                $badges[]= $badge;
+                $badges[] = $badge;
             }
             $defaultvariables['badges'] = $badges;
             // End Get user badges.
