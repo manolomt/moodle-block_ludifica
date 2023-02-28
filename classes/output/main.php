@@ -27,6 +27,8 @@ use renderable;
 use renderer_base;
 use templatable;
 
+require_once($CFG->dirroot . '/lib/badgeslib.php');
+
 /**
  * Class containing data for the block.
  *
@@ -204,6 +206,18 @@ class main implements renderable, templatable {
         ];
 
         if (in_array('profile', $this->tabs)) {
+
+            // Get user badges only in profile tab.
+            $userbadges = badges_get_user_badges($this->player->general->userid, null);
+            $badges = [];
+
+            foreach ($userbadges as $badge) {
+                $badge->url = urldecode((string)(new \moodle_url('/badges/badge.php', ['hash' => $badge->uniquehash])));
+                $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID, 'badges', 'badgeimage', $badge->id, '/', 'f3', false);
+                $badges[]= $badge;
+            }
+            $defaultvariables['badges'] = $badges;
+            // End Get user badges.
 
             $nickname = $this->player->get_nickname();
             $ownprofile = $this->player->general->userid == $USER->id;

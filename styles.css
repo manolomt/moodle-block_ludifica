@@ -405,4 +405,24 @@
     min-width: 208px;
 }
 
+#page-blocks-ludifica-badges .modal img {
+    display: block;
+    margin: auto;
+    max-width: 100px;
+}
+
+#page-blocks-ludifica-badges .modal .list-group-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
 /* End copy badge url */
+
+/* Criteria list */
+
+.badgecontent ul {
+    list-style: none;
+}
+
+/* End of criteria list */

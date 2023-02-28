@@ -172,6 +172,15 @@ $string['recurrentlogindays'] = 'Recurrent login days';
 $string['recurrentlogindays_help'] = 'Days to start to assign points. 0 to don\'t use this.';
 $string['requiretext'] = 'Prerequisites';
 $string['searchticket'] = 'Search';
+$string['socialnetworks'] = 'Social networks to share badge';
+$string['socialnetworks_help'] = 'One network by line, with the next structure:<br /><br />
+<em>twitter|https://twitter.com/intent/tweet?text={name}&url={url}</em><br /><br />
+First write the site name lowecase and without special symbols|You can include {name} and {url} keys in your URL.
+<br /><br />
+Additionally, if you want to include the share link of the achievement as a LinkedIn badge, you can use the next structure:<br /><br />
+<em>linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=<strong>15093394</strong>&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire={expire}</em><br /><br />
+<em><strong>organizationId</strong> is the only param that you will need to edit, it\'s the ID of the LinkedIn profile of the organization issuing the certificate.</em><br /><br />
+<em>You don\'t need to use all of the keys.</em>';
 $string['settingsheaderpointscourse'] = 'When end course';
 $string['settingsheaderpointslogin'] = 'Login points';
 $string['settingsheaderpointsmodules'] = 'Modules points';

@@ -32,40 +32,29 @@
     {{#badges}}
     <div id="badge-{{id}}" class="col-lg-6 onebadge">
         <div class="card">
-            <h3 class="card-header">temp {{name}}</h3>
+            <h3 class="card-header">{{name}}</h3>
             <div class="card-body badgecontent">
-                {{#thumbnail}}
                 <div class="picture-box">
-                    <img src="{{thumbnail}}" alt="{{name}}" />
+                    <a href="{{url}}">
+                        <img src="{{thumbnail}}" alt="{{name}}" />
+                    </a>
                 </div>
-                {{/thumbnail}}
                 <div class="info-box">
                     <p><em>{{description}}</em></p>
-                    <p>{{#str}} criteria_emisor, block_ludifica {{/str}} {{emisor}}</p>
-                    <ul>
-                        <li>
-                            <strong>{{criterianame}}</strong>
-                            <ul>
-                                <li>{{criteriaitem}}</li>
-                            </ul>
-                        </li>
-                    </ul>
                     <button class="btn btn-secondary openshare">{{#pix}} i/publish, core {{/pix}} {{#str}} badge_share, block_ludifica {{/str}}</button>
                     <div class="share_badge_modal block_ludifica-modal" title="{{#str}} badge_share_title, block_ludifica {{/str}}">
+                        <img src="{{thumbnail}}" alt="{{name}}" />
                         <div class="card-body">
                             <div class="list-group">
                                 <div class="list-group-item">
-                                    <a href="https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={{name}}&organizationId=15093394&issueYear={{badgeyear}}&issueMonth={{badgemonth}}&certUrl={{url}}&certId={{badgeid}}&credentialDoesNotExpire=1" target="_blank" class="btn btn-primary ">{{#pix}} i/publish, core {{/pix}} {{#str}} badge_linkedin, block_ludifica {{/str}}</a>
+                                    {{#networks}}
+                                    <a href="{{url}}" target="_blank">
+                                        <i class="fa fa-lg fa-{{icon}}"></i>
+                                    </a>
+                                    {{/networks}}
                                 </div>
-                                <div class="list-group-item">
-                                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{url}}" target="_blank" class="btn btn-primary">{{#pix}} i/publish, core {{/pix}} {{#str}} badge_linkedin_bio, block_ludifica {{/str}}</a>
-                                </div>
-                                <div class="list-group-item">
-                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{url}}" target="_blank" class="btn btn-primary">{{#pix}} i/publish, core {{/pix}} {{#str}} badge_facebook, block_ludifica {{/str}}</a>
-                                </div>
-                                <div class="list-group-item">
-                                    <a href="https://twitter.com/intent/tweet?text={{name}}&url={{url}}" target="_blank" class="btn btn-primary">{{#pix}} i/publish, core {{/pix}} {{#str}} badge_twitter, block_ludifica {{/str}}</a>
-                                </div>
+                            </div>
+                            <div class="list-group">
                                 <div class="list-group-item d-flex">
                                     <div class="input-container">
                                         <div class="input-group">
@@ -82,7 +71,9 @@
                         </div>
                     </div>
                     <hr>
-                    <p><em>{{expiry}}</em></p>
+                    {{#dateexpire}}
+                    <p><em>{{dateexpire}}</em></p>
+                    {{/dateexpire}}
                 </div>
             </div>
         </div>
