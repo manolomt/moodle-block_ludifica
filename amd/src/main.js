@@ -22,7 +22,7 @@
  */
 
 define(['jquery', 'core/str', 'core/modal_factory', 'block_ludifica/alertc','core/log', 'core/ajax'],
-function($, str, ModalFactory, Alertc, Log, /* Ajax */) {
+function($, str, ModalFactory, Alertc, Log/* , Ajax */) {
 
     // Load strings.
     var strings = [];
