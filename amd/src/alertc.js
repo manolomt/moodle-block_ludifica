@@ -66,7 +66,6 @@ function($) {
         }
 
         $alert.append(msg);
-
         $(CONTAINER_SELECTOR).append($control);
     };
 

@@ -211,8 +211,10 @@ function($,
                             Alertc.success(s.bought);
                             updateTicketData(ticketid);
                             Player.reloadStats();
+
                         } else {
                             Alertc.error(s.notbuy);
+
                         }
 
                     },

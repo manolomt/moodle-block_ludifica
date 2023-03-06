@@ -162,7 +162,6 @@ function($, str, ModalFactory, Alertc, Log) {
 /*         Ajax.call([{
             methodname: 'block_ludifica_get_badge_info',
             done: function() {
-
             },
             fail: function(e) {
                 Alertc.error(e.message);
