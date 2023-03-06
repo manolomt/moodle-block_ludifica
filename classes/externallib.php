@@ -377,10 +377,10 @@ class external extends \external_api {
     }
 
     /**
-    * Return a badge information.
-    *
-    * @return object Badges information.
-    */
+     * Return a badge information.
+     *
+     * @return object Badges information.
+     */
     public static function get_badge_info () {
         global $USER;
 

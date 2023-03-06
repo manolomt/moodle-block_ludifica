@@ -96,8 +96,8 @@ class block_ludifica extends block_base {
             return $this->content;
         }
 
-        $this->content         = new stdClass;
-        $this->content->text   = '';
+        $this->content = new stdClass;
+        $this->content->text = '';
         $this->content->footer = '';
 
         $tabs = array();

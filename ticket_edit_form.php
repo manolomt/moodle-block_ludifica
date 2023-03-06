@@ -48,7 +48,7 @@ class block_ludifica_ticket_edit extends moodleform {
         $mform = $this->_form;
 
         // This contains the data of this form.
-        $this->_data  = $this->_customdata['data'];
+        $this->_data = $this->_customdata['data'];
 
         if ($this->_data) {
             $this->_data->moreinfo = array('text' => $this->_data->moreinfo);

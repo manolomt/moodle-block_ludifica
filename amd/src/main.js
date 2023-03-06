@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/str', 'core/modal_factory', 'block_ludifica/alertc','core/log', 'core/ajax'],
+define(['jquery', 'core/str', 'core/modal_factory', 'block_ludifica/alertc', 'core/log', 'core/ajax'],
 function($, str, ModalFactory, Alertc, Log/* , Ajax */) {
 
     // Load strings.
