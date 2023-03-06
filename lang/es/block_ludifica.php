@@ -55,6 +55,7 @@ $string['badges'] = 'Logros';
 $string['badges_help'] = '¡Obtén logros y compartelos en tus redes sociales!';
 $string['badge_info'] = 'Acerca de este logro';
 $string['badge_copy'] = 'Copiar enlace';
+$string['badge_expire'] = 'Expira: ';
 $string['badge_facebook'] = 'Compartir en Facebook';
 $string['badgemanage'] = 'Gestionar insignias';
 $string['badgelinkcopiedtoclipboard'] = 'El enlace se ha copiado al portapapeles';
@@ -178,12 +179,12 @@ $string['socialnetworks_help'] = 'Una red social por línea con la siguiente est
 Primero escribe el nombre del sitio en minúscula y sin caractéres especiales|Las llaves {name} y {url} se pueden incluir en tu URL.
 <br /><br />
 Adicionalmente, si quieres compartir un logro como certificado de LinkedIn, puedes usar la siguiente estructura:<br /><br />
-<em>linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=<strong>91534158</strong>&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire={expire}</em><br /><br />
+<em>linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=<strong>91534158</strong>&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1</em><br /><br />
 <em><strong>organizationId</strong> es el único parametro del enlace que necesitas editar, este es el ID del perfil de LinkedIn de la organización que emite el certificado.</em><br /><br />
 <em>No es necesario que incluyas todas las llaves.</em>';
 $string['socialnetworks_default'] = 'facebook|https://www.facebook.com/sharer/sharer.php?u={url}
 twitter|https://twitter.com/intent/tweet?text={name}&url={url}
-linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=91534158&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire={expire}';
+linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=91534158&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1';
 $string['settingsheaderpointscourse'] = 'Al finalizar un curso';
 $string['settingsheaderpointslogin'] = 'Puntos por autenticación';
 $string['settingsheaderpointsmodules'] = 'Puntos por módulos';
@@ -217,6 +218,7 @@ $string['ticketsvalidate'] = 'Validar beneficio';
 $string['ticketused'] = 'Beneficio usado';
 $string['thumbnail'] = 'Miniatura';
 $string['unlimited'] = 'Ilimitado';
+$string['unavailablewarning'] = 'Todavía no has obtenido este logro.';
 $string['use'] = 'Usar';
 $string['usedat'] = 'Usado el {$a}';
 $string['useddate'] = 'Fecha de uso';

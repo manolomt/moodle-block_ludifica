@@ -32,8 +32,8 @@
     {{#badges}}
     <div id="badge-{{id}}" class="col-lg-6 onebadge">
         <div class="card">
-            <h3 class="card-header">{{name}}</h3>
-            <div class="card-body badgecontent">
+            <h3 class="card-header">{{name}} <span class="unavailablewarning">{{unavailablewarning}}</span></h3>
+            <div class="card-body badgecontent {{unavailable}}">
                 <div class="picture-box">
                     <a href="{{url}}">
                         <img src="{{thumbnail}}" alt="{{name}}" />
@@ -70,10 +70,12 @@
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    {{#dateexpire}}
-                    <p><em>{{dateexpire}}</em></p>
-                    {{/dateexpire}}
+                    <div class="expirebadge">
+                        {{#dateexpire}}
+                        <hr>
+                        <p><em>{{#str}} badge_expire, block_ludifica {{/str}} {{expire}}</em></p>
+                        {{/dateexpire}}
+                    </div>
                 </div>
             </div>
         </div>

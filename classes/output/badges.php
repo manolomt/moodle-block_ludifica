@@ -57,6 +57,8 @@ class badges implements renderable, templatable {
         $uniqueid = \block_ludifica\controller::get_uniqueid();
 
         // Get user badges only in profile tab.
+
+        $allbadges = badges_get_badges(BADGE_TYPE_SITE);
         $userbadges = badges_get_user_badges($player->general->userid, null);
         $badges = [];
 
@@ -64,6 +66,7 @@ class badges implements renderable, templatable {
 
             // Equal symbol encode so it can work in LinkedIn URL.
             $badge->url = (string)(new \moodle_url('/badges/badge.php', ['hash' => $badge->uniquehash]));
+            $badge->expire = date('F Y', $badge->dateexpire);
             $badgeencode = str_replace('=', urlencode('='), $badge->url);
 
             $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID, 'badges', 'badgeimage', $badge->id, '/', 'f3', false);
@@ -84,7 +87,6 @@ class badges implements renderable, templatable {
                     $network->url = str_replace('{badgeyear}', date('Y', $badge->timecreated), $network->url);
                     $network->url = str_replace('{badgemonth}', date('m', $badge->timecreated), $network->url);
                     $network->url = str_replace('{badgeid}', $badge->uniquehash, $network->url);
-                    $network->url = str_replace('{expire}', date('Y', $badge->dateexpire), $network->url);
                     $socialnetworks[] = $network;
                 }
             }
@@ -93,6 +95,16 @@ class badges implements renderable, templatable {
             $badges[] = $badge;
         }
         // End Get user badges.
+
+        // Get unavialable badges
+        foreach ($allbadges as $badge) {
+            if ($badge->status == '1') {
+                $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID, 'badges', 'badgeimage', $badge->id, '/', 'f3', false);
+                $badge->unavailable = 'unavailable';
+                $badge->unavailablewarning = get_string('unavailablewarning', 'block_ludifica');
+                $badges[] = $badge;
+            }
+        }
 
         $defaultvariables = [
             'uniqueid' => $uniqueid,

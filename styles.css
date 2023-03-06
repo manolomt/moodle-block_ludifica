@@ -185,13 +185,20 @@
     display: flex;
 }
 
-.block_ludifica .tickets-box .oneticket,
-.block_ludifica .badges-box .onebadge {
+.block_ludifica .tickets-box .oneticket {
     width: 70px;
     height: 70px;
     overflow: hidden;
     position: relative;
     border: 1px solid;
+    margin: 5px;
+}
+
+.block_ludifica .badges-box .onebadge {
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+    position: relative;
     margin: 5px;
 }
 
@@ -427,3 +434,25 @@
 }
 
 /* End of criteria list */
+
+/* Unavailable badge */
+
+.unavailable {
+    filter: saturate(0);
+    pointer-events: none;
+}
+
+#page-blocks-ludifica-badges .unavailable .openshare,
+#page-blocks-ludifica-badges .unavailable .expirebadge {
+    display: none;
+}
+
+#page-blocks-ludifica-badges .unavailablewarning {
+    font-size: 15px;
+    color: #646464;
+    font-style: italic;
+    display: block;
+    margin-top: 5px;
+}
+
+/* End of unavailable badge */

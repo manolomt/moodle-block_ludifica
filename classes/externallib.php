@@ -376,4 +376,76 @@ class external extends \external_api {
         );
     }
 
+    /**
+    * Return a badge information.
+    *
+    * @return object Badges information.
+    */
+    public static function get_badge_info () {
+        global $USER;
+
+        if (isloggedin() && !isguestuser()) {
+
+            $player = new \block_ludifica\player($USER->id);
+
+            // Get user badges only in profile tab.
+            $userbadges = badges_get_user_badges($player->general->userid, null);
+            $badges = [];
+
+            foreach ($userbadges as $badge) {
+
+                // Equal symbol encode so it can work in LinkedIn URL.
+                $badge->url = (string)(new \moodle_url('/badges/badge.php', ['hash' => $badge->uniquehash]));
+                $badgeencode = str_replace('=', urlencode('='), $badge->url);
+
+                $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID, 'badges', 'badgeimage', $badge->id, '/', 'f3', false);
+
+                $networks = get_config('block_ludifica', 'networks');
+                $networkslist = explode("\n", $networks);
+                $socialnetworks = [];
+
+                foreach ($networkslist as $one) {
+
+                    $row = explode('|', $one);
+                    if (count($row) >= 2) {
+                        $network = new \stdClass();
+                        $network->icon = trim($row[0]);
+                        $network->url = trim($row[1]);
+                        $network->url = str_replace('{name}', urlencode($badge->name), $network->url);
+                        $network->url = str_replace('{url}', $badgeencode, $network->url);
+                        $network->url = str_replace('{badgeyear}', date('Y', $badge->timecreated), $network->url);
+                        $network->url = str_replace('{badgemonth}', date('m', $badge->timecreated), $network->url);
+                        $network->url = str_replace('{badgeid}', $badge->uniquehash, $network->url);
+                        $network->url = str_replace('{expire}', date('Y', $badge->dateexpire), $network->url);
+                        $socialnetworks[] = $network;
+                    }
+                }
+
+                $badge->networks = $socialnetworks;
+                $badges[] = $badge;
+            }
+
+        }
+
+        return $badges;
+    }
+
+    /**
+     * Validate the return value
+     * @return \external_single_structure
+     */
+    public static function get_badge_returns() {
+        return new \external_single_structure(
+            array(
+                'uniquehash' => new \external_value(PARAM_TEXT, 'Badge uniquehash'),
+                'name' => new \external_value(PARAM_TEXT, 'Badge name'),
+                'description' => new \external_value(PARAM_TEXT, 'Badge description'),
+                'timecreated' => new \external_value(PARAM_INT, 'Aditional time created'),
+                'url' => new \external_value(PARAM_TEXT, 'Badge url'),
+                'thumbnail' => new \external_value(PARAM_TEXT, 'Badge thumbnail')
+            ),
+            'A badge info', VALUE_DEFAULT, null
+        );
+    }
+
 }
