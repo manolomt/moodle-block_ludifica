@@ -21,8 +21,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/str', 'core/modal_factory', 'block_ludifica/alertc', 'core/log'],
-function($, str, ModalFactory, Alertc, Log) {
+define(['jquery', 'core/str', 'core/modal_factory', 'block_ludifica/alertc', 'core/log', 'core/ajax'],
+function($, str, ModalFactory, Alertc, Log, Ajax) {
 
     // Load strings.
     var strings = [];
@@ -159,7 +159,7 @@ function($, str, ModalFactory, Alertc, Log) {
         });
 
         // Share badge buttons.
-/*         Ajax.call([{
+        Ajax.call([{
             methodname: 'block_ludifica_get_badge_info',
             done: function() {
             },
@@ -167,7 +167,7 @@ function($, str, ModalFactory, Alertc, Log) {
                 Alertc.error(e.message);
                 Log.debug(e);
             }
-        }]); */
+        }]);
 
         $('.openshare').on('click', function() {
             var $content = $('.share_badge_modal');
