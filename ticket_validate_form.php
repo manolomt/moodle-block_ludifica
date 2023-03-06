@@ -48,7 +48,7 @@ class block_ludifica_ticket_validate extends moodleform {
         $mform = $this->_form;
 
         // This contains the data of this form.
-        $this->_data  = $this->_customdata['data'];
+        $this->_data = $this->_customdata['data'];
 
         $mform->addElement('header', 'general', get_string('searchticket', 'block_ludifica'));
 
