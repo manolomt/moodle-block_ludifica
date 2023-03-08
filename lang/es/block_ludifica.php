@@ -174,14 +174,14 @@ $string['recurrentlogindays_help'] = 'Días de autenticación continua para inic
 $string['requiretext'] = 'Prerequisitos';
 $string['searchticket'] = 'Buscar';
 $string['socialnetworks'] = 'Redes sociales para compartir logros';
-$string['socialnetworks_help'] = 'Una red social por línea con la siguiente estructura:<br /><br />
-<em>twitter|https://twitter.com/intent/tweet?text={name}&url={url}</em><br /><br />
-Primero escribe el nombre del sitio en minúscula y sin caractéres especiales|Las llaves {name} y {url} se pueden incluir en tu URL.
+$string['socialnetworks_help'] = '<em>Una red social por línea con la siguiente estructura:</em><br /><br />
+twitter|https://twitter.com/intent/tweet?text={name}&url={url}<br /><br />
+Primero escribe el nombre de la red social en minúscula. Las llaves <em>{name}</em> y <em>{url}</em> se pueden incluir en tu URL.
 <br /><br />
 Adicionalmente, si quieres compartir un logro como certificado de LinkedIn, puedes usar la siguiente estructura:<br /><br />
-<em>linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=<strong>91534158</strong>&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1</em><br /><br />
-<em><strong>organizationId</strong> es el único parametro del enlace que necesitas editar, este es el ID del perfil de LinkedIn de la organización que emite el certificado.</em><br /><br />
-<em>No es necesario que incluyas todas las llaves.</em>';
+linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=<em>91534158</em>&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1<br /><br />
+<em>organizationId</em> es el único parametro del enlace que necesitas editar, este es el ID del perfil de LinkedIn de la organización que emite el certificado.<br /><br />
+<em>No es necesario que incluyas todas las llaves o parámetros.</em>';
 $string['socialnetworks_default'] = 'facebook|https://www.facebook.com/sharer/sharer.php?u={url}
 twitter|https://twitter.com/intent/tweet?text={name}&url={url}
 linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=91534158&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1';

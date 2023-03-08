@@ -29,12 +29,27 @@
 $syscontext = context_system::instance();
 $hasmanage = has_capability('block/ludifica:manage', $syscontext);
 
+$networks = get_config('block_ludifica', 'networks');
+$networkslist = explode("\n", $networks);
+$socialnetworks = [];
+
+foreach ($networkslist as $one) {
+
+    $row = explode('|', $one);
+    if (count($row) >= 2) {
+        $network = new \stdClass();
+        $network->icon = trim($row[0]);
+        $network->url = trim($row[1]);
+        $socialnetworks[] = $network;
+    }
+}
+
 $PAGE->set_context($syscontext);
 $PAGE->set_url('/blocks/ludifica/badges.php');
 $PAGE->set_pagelayout('incourse');
 $PAGE->set_heading(get_string('badges', 'block_ludifica'));
 $PAGE->set_title(get_string('badges', 'block_ludifica'));
-$PAGE->requires->js_call_amd('block_ludifica/main', 'init');
+$PAGE->requires->js_call_amd('block_ludifica/badges', 'init', [$socialnetworks]);
 
 echo $OUTPUT->header();
 

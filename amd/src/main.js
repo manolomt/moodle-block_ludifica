@@ -158,38 +158,6 @@ function($, str, ModalFactory, Alertc, Log) {
             }
         });
 
-        // Share badge buttons.
-        $('.openshare').on('click', function() {
-            var $content = $('.share_badge_modal');
-            var $title = $content.attr('title');
-
-            ModalFactory.create({
-                title: $title,
-                body: $content.html(),
-            }).then(function(modal) {
-                return modal.show().then(function() {
-                    $('input[name="badgelink"]').on('click', function() {
-                        var $input = $(this);
-                        $input.select();
-                        document.execCommand("copy");
-
-                        var $msg = $('<div class="msg-badgelink-copy">' + s.badgelinkcopiedtoclipboard + '</div>');
-
-                        $input.parent().append($msg);
-                        window.setTimeout(function() {
-                            $msg.remove();
-                        }, 1600);
-                    });
-                    return true;
-                });
-            }).fail(function(e) {
-                Log.debug('Error creating modal share buttons');
-                Log.debug(e);
-            });
-            return true;
-        });
-        // End of share badge buttons.
-
         resizeobserver();
 
     };

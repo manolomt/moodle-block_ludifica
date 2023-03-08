@@ -79,22 +79,12 @@ $functions = array(
         'ajax' => true,
         'loginrequired' => true
     ),
-    'block_ludifica_get_badge_info' => array(
-        'classname' => '\block_ludifica\external',
-        'methodname' => 'get_badge_info',
-        'classpath' => 'blocks/ludifica/classes/externallib.php',
-        'description' => 'Get user badge info',
-        'type' => 'read',
-        'ajax' => true,
-        'loginrequired' => true
-    ),
 );
 
 $services = array(
     'Ludifica webservices' => array(
         'functions' => array ('block_ludifica_get_ticket', 'block_ludifica_buy_ticket', 'block_ludifica_give_ticket',
-                                'block_ludifica_buy_avatar', 'block_ludifica_use_avatar', 'block_ludifica_get_profile',
-                                'block_ludifica_get_badge_info'),
+                                'block_ludifica_buy_avatar', 'block_ludifica_use_avatar', 'block_ludifica_get_profile'),
         'restrictedusers' => 0, // If 1, the administrator must manually select which user can use this service.
         // (Administration > Plugins > Web services > Manage services > Authorised users).
         'enabled' => 0, // If 0, then token linked to this service won't work.

@@ -64,41 +64,23 @@ class badges implements renderable, templatable {
 
         foreach ($userbadges as $badge) {
 
-            // Equal symbol encode so it can work in LinkedIn URL.
-            $badge->url = (string)(new \moodle_url('/badges/badge.php', ['hash' => $badge->uniquehash]));
-            $badge->expire = date('F Y', $badge->dateexpire);
-            $badgeencode = str_replace('=', urlencode('='), $badge->url);
+            if ($badge->status == '3') {
 
-            $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID, 'badges', 'badgeimage', $badge->id, '/', 'f3', false);
-
-            $networks = get_config('block_ludifica', 'networks');
-            $networkslist = explode("\n", $networks);
-            $socialnetworks = [];
-
-            foreach ($networkslist as $one) {
-
-                $row = explode('|', $one);
-                if (count($row) >= 2) {
-                    $network = new \stdClass();
-                    $network->icon = trim($row[0]);
-                    $network->url = trim($row[1]);
-                    $network->url = str_replace('{name}', urlencode($badge->name), $network->url);
-                    $network->url = str_replace('{url}', $badgeencode, $network->url);
-                    $network->url = str_replace('{badgeyear}', date('Y', $badge->timecreated), $network->url);
-                    $network->url = str_replace('{badgemonth}', date('m', $badge->timecreated), $network->url);
-                    $network->url = str_replace('{badgeid}', $badge->uniquehash, $network->url);
-                    $socialnetworks[] = $network;
-                }
+                // Equal symbol encode so it can work in LinkedIn URL.
+                $badge->url = (string)(new \moodle_url('/badges/badge.php', ['hash' => $badge->uniquehash]));
+                $badge->expire = date('F Y', $badge->dateexpire);
+                $badge->year = date('Y', $badge->timecreated);
+                $badge->month = date('m', $badge->timecreated);
+                $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID, 'badges', 'badgeimage', $badge->id, '/', 'f3', false);
+                $badges[] = $badge;
             }
-
-            $badge->networks = $socialnetworks;
-            $badges[] = $badge;
         }
         // End Get user badges.
 
         // Get unavialable badges.
         foreach ($allbadges as $badge) {
             if ($badge->status == '1') {
+                
                 $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID, 'badges', 'badgeimage', $badge->id, '/', 'f3', false);
                 $badge->unavailable = 'unavailable';
                 $badge->unavailablewarning = get_string('unavailablewarning', 'block_ludifica');
