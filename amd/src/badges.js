@@ -71,7 +71,7 @@ function($,
      * @param {Array} networks
      *
      */
-    var init = function (networks) {
+    var init = function(networks) {
 
         $('.openshare').on('click', function() {
             var $content = $('.share_badge_modal');
@@ -115,23 +115,33 @@ function($,
                 };
             });
 
+            /**
+             * Copy badge link to clipboard
+             */
+            function copyclipboard() {
+
+                $('input[name="badgelink"]').on('click', function() {
+                    var $input = $(this);
+                    $input.select();
+                    document.execCommand("copy");
+
+                    var $msg = $('<div class="msg-badgelink-copy">' + s.badgelinkcopiedtoclipboard + '</div>');
+
+                    $input.parent().append($msg);
+                    window.setTimeout(function() {
+                        $msg.remove();
+                    }, 1600);
+                });
+            }
+
             ModalFactory.create({
                 title: $title,
                 body: Templates.render('block_ludifica/sharebadge', badgedata),
             }).then(function(modal) {
                 return modal.show().then(function() {
-                    $('input[name="badgelink"]').on('click', function() {
-                        var $input = $(this);
-                        $input.select();
-                        document.execCommand("copy");
 
-                        var $msg = $('<div class="msg-badgelink-copy">' + s.badgelinkcopiedtoclipboard + '</div>');
+                    copyclipboard();
 
-                        $input.parent().append($msg);
-                        window.setTimeout(function() {
-                            $msg.remove();
-                        }, 1600);
-                    });
                     return true;
                 });
             }).fail(function(e) {

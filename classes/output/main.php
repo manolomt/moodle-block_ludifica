@@ -217,11 +217,15 @@ class main implements renderable, templatable {
             foreach ($userbadges as $badge) {
 
                 if ($badge->status == '3') {
+
                     $badge->url = urldecode((string)(new \moodle_url('/badges/badge.php', ['hash' => $badge->uniquehash])));
-                    $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID, 'badges', 'badgeimage', $badge->id, '/', 'f3', false);
+                    $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID,
+                    'badges', 'badgeimage', $badge->id, '/', 'f3', false);
+
                     $badges[] = $badge;
                 }
             }
+            
             $defaultvariables['badges'] = $badges;
             // End Get user badges.
 

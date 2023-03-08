@@ -80,7 +80,7 @@ class badges implements renderable, templatable {
         // Get unavialable badges.
         foreach ($allbadges as $badge) {
             if ($badge->status == '1') {
-                
+
                 $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID, 'badges', 'badgeimage', $badge->id, '/', 'f3', false);
                 $badge->unavailable = 'unavailable';
                 $badge->unavailablewarning = get_string('unavailablewarning', 'block_ludifica');
