@@ -225,7 +225,7 @@ class main implements renderable, templatable {
                     $badges[] = $badge;
                 }
             }
-            
+
             $defaultvariables['badges'] = $badges;
             // End Get user badges.
 
