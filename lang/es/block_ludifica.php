@@ -31,7 +31,6 @@ $string['ludifica:manage'] = 'Manage Ludifica block settings';
 
 $string['privacy:metadata'] = 'El bloque de Ludifica no almacena datos personales de los usuarios.';
 
-$string['dynamichelps'] = 'Pestaña Ayuda';
 $string['available'] = 'Total disponible';
 $string['availabledate'] = 'Hasta';
 $string['avatar'] = 'Avatar';
@@ -52,11 +51,25 @@ $string['avatartype_user'] = 'Para usuario específico';
 $string['avataruse'] = 'Usar el avatar';
 $string['avatarused'] = 'Avatar asignado';
 $string['avatarusemessage'] = '¿Realmente desea cambiar el avatar?';
+$string['badges'] = 'Logros';
+$string['badges_help'] = '¡Obtén logros y compartelos en tus redes sociales!';
+$string['badge_info'] = 'Acerca de este logro';
+$string['badge_copy'] = 'Copiar enlace';
+$string['badge_expire'] = 'Expira: ';
+$string['badge_facebook'] = 'Compartir en Facebook';
+$string['badgemanage'] = 'Gestionar insignias';
+$string['badgelinkcopiedtoclipboard'] = 'El enlace se ha copiado al portapapeles';
+$string['badge_linkedin'] = 'Compatir como certificado en Linkedin';
+$string['badge_linkedin_bio'] = 'Compatir como publicación en Linkedin';
+$string['badge_share'] = 'Compatir';
+$string['badge_share_title'] = '¡Comparte tu logro!';
+$string['badge_twitter'] = 'Compatir en Twitter';
 $string['bought'] = 'Comprado';
 $string['buy'] = 'Comprar';
 $string['buyticket'] = 'Comprar beneficio';
 $string['buyticketmessage'] = '¿Realmente desea comprar este beneficio?';
 $string['changessaved'] = 'Cambios guardados';
+$string['criteria_emisor'] = 'Emisor: ';
 $string['coinsbypoints'] = 'Monedas por puntos';
 $string['coinsbypoints_help'] = '';
 $string['configheader_modules'] = 'Puntos por finalizar módulos del curso';
@@ -69,6 +82,7 @@ $string['defaultlevel'] = 'Nivel por defecto';
 $string['deleted'] = 'Registro borrado satisfactoriamente';
 $string['durationfield'] = 'Campo Duración';
 $string['durationfield_help'] = 'El nombre del campo para cargar la duración del curso.';
+$string['dynamichelps'] = 'Pestaña Ayuda';
 $string['dynamic_help-coinsbypoints'] = '<strong>{$a} monedas</strong>.';
 $string['dynamic_help-noactivities'] = 'No hay actividades que asignen puntos en este curso.';
 $string['dynamic_help-pointsbyendcourse'] = 'Gana <strong>{$a} puntos</strong> por finalizar un curso.';
@@ -118,6 +132,7 @@ $string['newnickname'] = 'Nuevo valor para {$a}';
 $string['newticket'] = 'Nuevo beneficio';
 $string['nicknameexists'] = 'El alias ya está siendo usado por otro usuario, por favor elige otro alias.';
 $string['nicknameunasined'] = 'Jugador {$a}';
+$string['notuserbadges'] = 'Todavía no tienes logros.';
 $string['noavatars'] = 'Aún no hay avatares disponibles.';
 $string['notavailable'] = 'No disponible para comprar.';
 $string['notavailabledate'] = 'La fecha para comprar este beneficio ya pasó.';
@@ -125,6 +140,7 @@ $string['notbuy'] = 'Error al comprar';
 $string['notcompliance'] = 'No cumple los requerimientos para comprar este beneficio.';
 $string['notcontacts'] = 'No tiene contactos actualmente';
 $string['notcostcompliance'] = 'Monedas insuficientes';
+$string['notenabledbadge'] = 'Aún no has obtenido esta insignia';
 $string['notgive'] = 'Error regalando un beneficio';
 $string['notickets'] = 'Aún no hay beneficios disponibles';
 $string['nottopyet'] = 'Aún no hay información de posiciones';
@@ -157,6 +173,18 @@ $string['recurrentlogindays'] = 'Días de autenticación recurrente';
 $string['recurrentlogindays_help'] = 'Días de autenticación continua para iniciar la asignación de puntos. 0 para no usar esta característica.';
 $string['requiretext'] = 'Prerequisitos';
 $string['searchticket'] = 'Buscar';
+$string['socialnetworks'] = 'Redes sociales para compartir logros';
+$string['socialnetworks_help'] = '<em>Una red social por línea con la siguiente estructura:</em><br /><br />
+twitter|https://twitter.com/intent/tweet?text={name}&url={url}<br /><br />
+Primero escribe el nombre de la red social en minúscula. Las llaves <em>{name}</em> y <em>{url}</em> se pueden incluir en tu URL.
+<br /><br />
+Adicionalmente, si quieres compartir un logro como certificado de LinkedIn, puedes usar la siguiente estructura:<br /><br />
+linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=<em>91534158</em>&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1<br /><br />
+<em>organizationId</em> es el único parametro del enlace que necesitas editar, este es el ID del perfil de LinkedIn de la organización que emite el certificado.<br /><br />
+<em>No es necesario que incluyas todas las llaves o parámetros.</em>';
+$string['socialnetworks_default'] = 'facebook|https://www.facebook.com/sharer/sharer.php?u={url}
+twitter|https://twitter.com/intent/tweet?text={name}&url={url}
+linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=91534158&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1';
 $string['settingsheaderpointscourse'] = 'Al finalizar un curso';
 $string['settingsheaderpointslogin'] = 'Puntos por autenticación';
 $string['settingsheaderpointsmodules'] = 'Puntos por módulos';
@@ -190,6 +218,7 @@ $string['ticketsvalidate'] = 'Validar beneficio';
 $string['ticketused'] = 'Beneficio usado';
 $string['thumbnail'] = 'Miniatura';
 $string['unlimited'] = 'Ilimitado';
+$string['unavailablewarning'] = 'Todavía no has obtenido este logro.';
 $string['use'] = 'Usar';
 $string['usedat'] = 'Usado el {$a}';
 $string['useddate'] = 'Fecha de uso';

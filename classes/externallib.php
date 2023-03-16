@@ -375,5 +375,4 @@ class external extends \external_api {
             'General current player info', VALUE_DEFAULT, null
         );
     }
-
 }

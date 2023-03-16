@@ -43,9 +43,9 @@ $PAGE->set_pagelayout('incourse');
 $PAGE->set_heading(get_string('avatars', 'block_ludifica'));
 $PAGE->set_title(get_string('avatars', 'block_ludifica'));
 
-$filemanageroptions = array('maxbytes'       => $CFG->maxbytes,
-                             'subdirs'       => 0,
-                             'maxfiles'      => 1,
+$filemanageroptions = array('maxbytes' => $CFG->maxbytes,
+                             'subdirs' => 0,
+                             'maxfiles' => 1,
                              'accepted_types' => array('.jpg', '.png', '.svg'));
 $draftitemid = file_get_submitted_draft_itemid('attachments_filemanager');
 file_prepare_draft_area($draftitemid, $syscontext->id, 'block_ludifica', 'avatarbust', $id, $filemanageroptions);

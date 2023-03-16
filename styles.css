@@ -24,29 +24,34 @@
     border-top: 2px solid #ddd;
 }
 
-#block_ludifica-store .notavailableyet,
-#block_ludifica-tickets .notavailableyet,
+#page-blocks-ludifica-avatars .notavailableyet,
+#page-blocks-ludifica-tickets .notavailableyet,
+#page-blocks-ludifica-badges .notavailableyet,
 .block_ludifica .notavailableyet {
-    color: #fff;
     font-size: 20px;
     line-height: 22px;
     text-align: center;
+    width: 100%;
 }
 
-#tickets-list .oneticket {
+#tickets-list .oneticket,
+#badges-list .onebadge {
     margin-bottom: 20px;
 }
 
-#tickets-list .oneticket .picture-box {
+#tickets-list .oneticket .picture-box,
+#badges-list .onebadge .picture-box {
     padding-right: 15px;
 }
 
-#tickets-list .oneticket .picture-box img {
+#tickets-list .oneticket .picture-box img,
+#badges-list .onebadge .picture-box img {
     max-width: 150px;
     max-height: 150px;
 }
 
-#tickets-list .oneticket .ticketcontent {
+#tickets-list .oneticket .ticketcontent,
+#badges-list .onebadge .badgecontent {
     display: flex;
 }
 
@@ -175,7 +180,8 @@
     max-width: 100%;
 }
 
-.block_ludifica .tickets-box > div {
+.block_ludifica .tickets-box > div,
+.block_ludifica .badges-box > div {
     display: flex;
 }
 
@@ -188,7 +194,16 @@
     margin: 5px;
 }
 
-.block_ludifica .tickets-box .oneticket img {
+.block_ludifica .badges-box .onebadge {
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+    position: relative;
+    margin: 5px;
+}
+
+.block_ludifica .tickets-box .oneticket img,
+.block_ludifica .badges-box .onebadge img {
     width: 100%;
 }
 
@@ -328,3 +343,119 @@
     color: #fff;
 }
 /* End dynamic help */
+
+/* Copy badge url */
+
+#page-blocks-ludifica-badges .share-container {
+    justify-items: center;
+    align-items: center;
+    border-bottom: 2px solid #e5e5e5;
+    padding: 20px 0;
+}
+
+#page-blocks-ludifica-badges .share-container .share-content {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 0 20px;
+}
+
+#page-blocks-ludifica-badges .share-container .input-container {
+    width: 100%;
+}
+
+#page-blocks-ludifica-badges .share-container input[name="badgelink"] {
+    border: 2px solid #d7d7d7;
+    font-style: italic;
+}
+
+#page-blocks-ludifica-badges .share-container .input-group-text {
+    border-color: #d7d7d7;
+    border-right: none;
+    background-color: #f5f5f5;
+}
+
+#page-blocks-ludifica-badges .share-container .input-group-text i {
+    color: #d7d7d7;
+}
+
+#page-blocks-ludifica-badges .share-container .share-icons {
+    display: flex;
+    justify-content: center;
+    padding: 0 10px;
+}
+
+#page-blocks-ludifica-badges .share-container .share-icons a {
+    border-radius: 50%;
+    color: #6ca0a5;
+    display: flex;
+    width: 34px;
+    height: 34px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 3px;
+    font-size: 22px;
+    background-color: #eaeaea;
+}
+
+#page-blocks-ludifica-badges .share-container .share-icons a i {
+    color: #6ca0a5;
+}
+
+#page-blocks-ludifica-badges .msg-badgelink-copy {
+    position: absolute;
+    background-color: #fff;
+    opacity: 0.9;
+    padding: 5px;
+    border: 1px dashed;
+    font-size: 70%;
+    left: 39px;
+    min-width: 208px;
+}
+
+#page-blocks-ludifica-badges .modal img {
+    display: block;
+    margin: auto;
+    max-width: 350px;
+    margin-bottom: 15px;
+}
+
+#page-blocks-ludifica-badges .modal .list-group-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#page-blocks-ludifica-badges .modal h5 {
+    text-align: center;
+}
+
+/* End copy badge url */
+
+/* Criteria list */
+
+.badgecontent ul {
+    list-style: none;
+}
+
+/* End of criteria list */
+
+/* Unavailable badge */
+
+.unavailable {
+    filter: saturate(0);
+}
+
+#page-blocks-ludifica-badges .unavailable .openshare,
+#page-blocks-ludifica-badges .unavailable .expirebadge {
+    display: none;
+}
+
+#page-blocks-ludifica-badges .unavailablewarning {
+    font-size: 15px;
+    color: #646464;
+    font-style: italic;
+    display: block;
+    margin-top: 5px;
+}
+
+/* End of unavailable badge */

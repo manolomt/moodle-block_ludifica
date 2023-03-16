@@ -224,8 +224,23 @@
                     </div>
                     <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="btn btn-secondary">{{#str}} tickets, block_ludifica {{/str}}</a>
                 </div>
+                <div class="badges-box mt-3">
+                    <h2> {{#str}} badges, block_ludifica {{/str}} </h2>
+                    <div>
+                    {{#badges}}
+                        <div class="onebadge">
+                            <a href="{{url}}"><img src="{{thumbnail}}" title="{{name}}" /></a>
+                        </div>
+                    {{/badges}}
+                    {{^badges}}
+                        <p class="notavailableyet">
+                            {{#str}} notuserbadges, block_ludifica {{/str}}
+                        </p>
+                    {{/badges}}
+                    </div>
+                    <a href="{{baseurl}}/blocks/ludifica/badges.php" class="btn btn-secondary">{{#str}} badges, block_ludifica {{/str}}</a>
+                </div>
             </div>
-
         </div>
     </div>
     {{/player}}
@@ -312,7 +327,7 @@
                     <td>{{nickname}}</td>
                     <td class="numeric-cel">{{points}}</td>
                 </tr>
-            {{/lastmonth}}
+            {{/lastmonth}}{{thumbnail}}
             </tbody>
         </table>
         {{/hasrowslastmonth}}

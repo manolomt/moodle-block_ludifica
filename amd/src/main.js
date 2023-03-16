@@ -21,8 +21,34 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/modal_factory', 'block_ludifica/alertc'],
-function($, ModalFactory, Alertc) {
+define(['jquery', 'core/str', 'core/modal_factory', 'block_ludifica/alertc', 'core/log'],
+function($, str, ModalFactory, Alertc, Log) {
+
+    // Load strings.
+    var strings = [];
+    strings.push({key: 'badgelinkcopiedtoclipboard', component: 'block_ludifica'});
+
+    var s = [];
+
+    if (strings.length > 0) {
+
+        strings.forEach(one => {
+            s[one.key] = one.key;
+        });
+
+        str.get_strings(strings).then(function(results) {
+            var pos = 0;
+            strings.forEach(one => {
+                s[one.key] = results[pos];
+                pos++;
+            });
+            return true;
+        }).fail(function(e) {
+            Log.debug('Error loading strings');
+            Log.debug(e);
+        });
+    }
+    // End of Load strings.
 
     // Based in https://philipwalton.com/articles/responsive-components-a-solution-to-the-container-queries-problem/
     var resizeobserver = function() {
@@ -139,4 +165,6 @@ function($, ModalFactory, Alertc) {
     return {
         init: init
     };
+
 });
+

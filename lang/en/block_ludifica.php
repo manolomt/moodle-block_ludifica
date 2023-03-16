@@ -31,7 +31,6 @@ $string['ludifica:manage'] = 'Manage Ludifica block settings';
 
 $string['privacy:metadata'] = 'The Ludifica block does not store privacy user information.';
 
-$string['dynamichelps'] = 'Tab Help';
 $string['available'] = 'Quantity available';
 $string['availabledate'] = 'Available until';
 $string['avatar'] = 'Avatar';
@@ -52,11 +51,25 @@ $string['avatartype_user'] = 'For specific user';
 $string['avataruse'] = 'Use the avatar';
 $string['avatarused'] = 'Avatar assigned';
 $string['avatarusemessage'] = 'Do you really want change the avatar?';
+$string['badges'] = 'Badges';
+$string['badges_help'] = 'Gain badges and share them on your social networks!';
+$string['badge_info'] = 'About the badge';
+$string['badge_copy'] = 'Copiar enlace';
+$string['badge_expire'] = 'Expiry date: ';
+$string['badge_facebook'] = 'Share on Facebook';
+$string['badgemanage'] = 'Manage badges';
+$string['badgelinkcopiedtoclipboard'] = 'Badge link copied to clipboard';
+$string['badge_linkedin'] = 'Share as a badge on Linkedin';
+$string['badge_linkedin_bio'] = 'Share as a publication on Linkedin';
+$string['badge_share'] = 'Share';
+$string['badge_share_title'] = 'Share your achievement!';
+$string['badge_twitter'] = 'Share badge on Twitter';
 $string['bought'] = 'Ticket bought';
 $string['buy'] = 'Buy';
 $string['buyticket'] = 'Buy ticket';
 $string['buyticketmessage'] = 'Do you really want to buy this ticket?';
 $string['changessaved'] = 'Changes saved';
+$string['criteria_emisor'] = 'Issuer name: ';
 $string['coinsbypoints'] = 'Coins by points';
 $string['coinsbypoints_help'] = '';
 $string['configheader_modules'] = 'Points by course modules completion';
@@ -69,6 +82,7 @@ $string['defaultlevel'] = 'Default level';
 $string['deleted'] = 'Record deleted successfully';
 $string['durationfield'] = 'Duration field';
 $string['durationfield_help'] = 'A course field to specify the course duration time.';
+$string['dynamichelps'] = 'Tab Help';
 $string['dynamic_help-coinsbypoints'] = 'with <strong>{$a} coins</strong>.';
 $string['dynamic_help-noactivities'] = 'There are no activities that give points in this course.';
 $string['dynamic_help-pointsbyendcourse'] = 'Earn <strong>{$a} points</strong> by completing a course.';
@@ -118,6 +132,7 @@ $string['newnickname'] = 'new value to {$a}';
 $string['newticket'] = 'New ticket';
 $string['nicknameexists'] = 'The alias is already in use by another user, please choose another alias.';
 $string['nicknameunasined'] = 'Player {$a}';
+$string['notuserbadges'] = 'Not badges yet';
 $string['noavatars'] = 'Avatars not available yet';
 $string['notavailable'] = 'No available to buy.';
 $string['notavailabledate'] = 'The date to buy this ticket has already passed.';
@@ -125,6 +140,7 @@ $string['notbuy'] = 'Error buying';
 $string['notcompliance'] = 'You don\'t compliance the requirements to buy it ticket.';
 $string['notcontacts'] = 'You don\'t have contacts yet';
 $string['notcostcompliance'] = 'Insufficient coins';
+$string['notenabledbadge'] = 'You don\'t have this badge yet.';
 $string['notgive'] = 'Error giving a ticket';
 $string['notickets'] = 'Not available tickets yet';
 $string['nottopyet'] = 'Not positions yet';
@@ -157,6 +173,18 @@ $string['recurrentlogindays'] = 'Recurrent login days';
 $string['recurrentlogindays_help'] = 'Days to start to assign points. 0 to don\'t use this.';
 $string['requiretext'] = 'Prerequisites';
 $string['searchticket'] = 'Search';
+$string['socialnetworks'] = 'Social networks to share badge';
+$string['socialnetworks_help'] = '<em>One network by line, with the next structure:</em><br /><br />
+twitter|https://twitter.com/intent/tweet?text={name}&url={url}<br /><br />
+irst write the site name lowecase. You can include {name} and {url} keys in your URL.
+<br /><br />
+Additionally, if you want to include the share link of the achievement as a LinkedIn badge, you can use the next structure:<br /><br />
+linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=<em>91534158</em>&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1<br /><br />
+<em>organizationId</em> is the only param that you will need to edit, it\'s the ID of the LinkedIn profile of the organization issuing the certificate.<br /><br />
+<em>You do not need to include all keys or parameters.</em>';
+$string['socialnetworks_default'] = 'facebook|https://www.facebook.com/sharer/sharer.php?u={url}
+twitter|https://twitter.com/intent/tweet?text={name}&url={url}
+linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=91534158&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1';
 $string['settingsheaderpointscourse'] = 'When end course';
 $string['settingsheaderpointslogin'] = 'Login points';
 $string['settingsheaderpointsmodules'] = 'Modules points';
@@ -190,6 +218,7 @@ $string['ticketsvalidate'] = 'Validate ticket';
 $string['ticketused'] = 'Ticket used';
 $string['thumbnail'] = 'Thumbnail';
 $string['unlimited'] = 'Unlimited';
+$string['unavailablewarning'] = 'You don\'t have this badge yet.';
 $string['use'] = 'Use';
 $string['usedat'] = 'Used at {$a}';
 $string['useddate'] = 'Used date';

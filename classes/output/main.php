@@ -21,7 +21,12 @@
  * @copyright 2021 David Herney @ BambuCo
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 namespace block_ludifica\output;
+
+defined('MOODLE_INTERNAL') || die();
+
+require_once($CFG->dirroot . '/lib/badgeslib.php');
 
 use renderable;
 use renderer_base;
@@ -204,6 +209,25 @@ class main implements renderable, templatable {
         ];
 
         if (in_array('profile', $this->tabs)) {
+
+            // Get user badges only in profile tab.
+            $userbadges = badges_get_user_badges($this->player->general->userid, null);
+            $badges = [];
+
+            foreach ($userbadges as $badge) {
+
+                if ($badge->status == '3') {
+
+                    $badge->url = urldecode((string)(new \moodle_url('/badges/badge.php', ['hash' => $badge->uniquehash])));
+                    $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID,
+                    'badges', 'badgeimage', $badge->id, '/', 'f3', false);
+
+                    $badges[] = $badge;
+                }
+            }
+
+            $defaultvariables['badges'] = $badges;
+            // End Get user badges.
 
             $nickname = $this->player->get_nickname();
             $ownprofile = $this->player->general->userid == $USER->id;

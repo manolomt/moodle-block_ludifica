@@ -85,6 +85,7 @@ function($, Notification, Str, Ajax, Alertc, Player, Log) {
                             $avatarbox.removeClass('usernothas');
                             $avatarbox.addClass('userhas');
                             Player.reloadStats();
+
                         } else {
                             Alertc.error(s.notbuy);
                         }

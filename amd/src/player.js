@@ -29,7 +29,6 @@ function($, Ajax, Log) {
             methodname: 'block_ludifica_get_profile',
             args: { },
             done: function(data) {
-
                 if (data && typeof data == 'object') {
 
                     $('val[key="usercoins"]').html(data.coins);

@@ -24,7 +24,7 @@
 define(['jquery'],
 function($) {
 
-    var TIME_AUTOCLOSE = 3000;
+    var TIME_AUTOCLOSE = 1500;
     var CONTAINER_SELECTOR = 'body';
 
     var show = function(type, msg, autohide) {
@@ -66,7 +66,6 @@ function($) {
         }
 
         $alert.append(msg);
-
         $(CONTAINER_SELECTOR).append($control);
     };
 
