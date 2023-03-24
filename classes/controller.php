@@ -763,4 +763,22 @@ class controller {
 
         return $cmconfig;
     }
+
+    /**
+     * Include the CSS file to its corresponding template.
+     *
+     * @return void
+     */
+    public static function include_templatecss() {
+
+        global $CFG, $PAGE;
+
+        $template = get_config('block_ludifica', 'templatetype');
+        $csspath = $CFG->dirroot . '/blocks/ludifica/templates/' . $template . '/styles.css';
+
+        if ($template != 'default' && file_exists($csspath)) {
+            $today = date("Ymd");
+            $PAGE->requires->css('/blocks/ludifica/templates/' . $template . '/styles.css?t=' . $today);
+        }
+    }
 }

@@ -41,7 +41,18 @@ class renderer extends plugin_renderer_base {
      * @return string HTML string
      */
     public function render_main(main $main) {
-        return $this->render_from_template('block_ludifica/main', $main->export_for_template($this));
+        global $CFG;
+
+        $template = get_config('block_ludifica', 'templatetype');
+        $path = $CFG->dirroot . '/blocks/ludifica/templates/' . $template . '/main.mustache';
+
+        if ($template != 'default' && file_exists($path)) {
+            $templatefile = 'block_ludifica/' . $template . '/main';
+        } else {
+            $templatefile = 'block_ludifica/main';
+        }
+
+        return $this->render_from_template($templatefile, $main->export_for_template($this));
     }
 
 }

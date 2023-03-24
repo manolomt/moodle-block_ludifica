@@ -162,6 +162,8 @@ class block_ludifica extends block_base {
 
         $this->content->text = $html;
 
+        \block_ludifica\controller::include_templatecss();
+
         return $this->content;
     }
 

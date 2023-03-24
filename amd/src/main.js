@@ -122,28 +122,47 @@ function($, str, ModalFactory, Alertc, Log) {
             ModalFactory.create(props, $('.block_ludifica-modalcontroller[data-ref-id="' + $element.attr('id') + '"]'));
         });
 
-        // Tabs.
-        $('.block_ludifica-tabs').each(function() {
-            var $tabs = $(this);
-            var tabslist = [];
+        $('.block_ludifica-content').each(function() {
 
-            $tabs.find('[data-ref]').each(function() {
-                var $tab = $(this);
-                tabslist.push($tab);
+            var $blockcontent = $(this);
 
-                $tab.on('click', function() {
-                    tabslist.forEach(one => {
-                        $(one.data('ref')).removeClass('active');
+            // Tabs.
+            $blockcontent.find('.block_ludifica-tabs').each(function() {
+                var $tabs = $(this);
+                var tabslist = [];
+
+                $tabs.find('[data-ref]').each(function() {
+                    var $tab = $(this);
+                    tabslist.push($tab);
+
+                    $tab.on('click', function() {
+                        tabslist.forEach(one => {
+                            $(one.data('ref')).removeClass('active');
+                        });
+
+                        $tabs.find('.active[data-ref]').removeClass('active');
+
+                        $tab.addClass('active');
+                        $($tab.data('ref')).addClass('active');
                     });
+                });
 
-                    $tabs.find('.active[data-ref]').removeClass('active');
+                // Load dynamic buttons.
+                $blockcontent.find('[ludifica-tab]').each(function() {
+                    var $button = $(this);
 
-                    $tab.addClass('active');
-                    $($tab.data('ref')).addClass('active');
+                    $button.on('click', function() {
+                        var key = '.tab-' + $button.attr('ludifica-tab');
+
+                        tabslist.forEach($tab => {
+                            if ($tab.data('ref').indexOf(key) >= 0) {
+                                $tab.trigger('click');
+                            }
+                        });
+                    });
                 });
 
             });
-
         });
 
         $('body').on('updatefailed', '[data-inplaceeditable]', function(e) {
