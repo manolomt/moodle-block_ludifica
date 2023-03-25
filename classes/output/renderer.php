@@ -55,4 +55,66 @@ class renderer extends plugin_renderer_base {
         return $this->render_from_template($templatefile, $main->export_for_template($this));
     }
 
+    /**
+     * Return the template content for the block.
+     *
+     * @param avatars $avatars The avatars renderable
+     * @return string HTML string
+     */
+    public function render_avatars(avatars $avatars) {
+        global $CFG;
+
+        $template = get_config('block_ludifica', 'templatetype');
+        $path = $CFG->dirroot . '/blocks/ludifica/templates/' . $template . '/avatars.mustache';
+
+        if ($template != 'default' && file_exists($path)) {
+            $templatefile = 'block_ludifica/' . $template . '/avatars';
+        } else {
+            $templatefile = 'block_ludifica/avatars';
+        }
+
+        return $this->render_from_template($templatefile, $avatars->export_for_template($this));
+    }
+
+    /**
+     * Return the template content for the block.
+     *
+     * @param badges $badges The badges renderable
+     * @return string HTML string
+     */
+    public function render_badges(badges $badges) {
+        global $CFG;
+
+        $template = get_config('block_ludifica', 'templatetype');
+        $path = $CFG->dirroot . '/blocks/ludifica/templates/' . $template . '/badges.mustache';
+
+        if ($template != 'default' && file_exists($path)) {
+            $templatefile = 'block_ludifica/' . $template . '/badges';
+        } else {
+            $templatefile = 'block_ludifica/badges';
+        }
+
+        return $this->render_from_template($templatefile, $badges->export_for_template($this));
+    }
+
+    /**
+     * Return the template content for the block.
+     *
+     * @param tickets $tickets The tickets renderable
+     * @return string HTML string
+     */
+    public function render_tickets(tickets $tickets) {
+        global $CFG;
+
+        $template = get_config('block_ludifica', 'templatetype');
+        $path = $CFG->dirroot . '/blocks/ludifica/templates/' . $template . '/tickets.mustache';
+
+        if ($template != 'default' && file_exists($path)) {
+            $templatefile = 'block_ludifica/' . $template . '/tickets';
+        } else {
+            $templatefile = 'block_ludifica/tickets';
+        }
+
+        return $this->render_from_template($templatefile, $tickets->export_for_template($this));
+    }
 }

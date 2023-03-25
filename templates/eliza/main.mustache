@@ -42,19 +42,9 @@
         </div>
     {{/hastabs}}
 
-    <div class="playerstats">
-        <div>
-            <h2>
-                <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="left"
-                data-content="{{#str}}name_help, block_ludifica{{/str}}"></button>
-                {{{nickcontent}}}
-            </h2>
-            {{>block_ludifica/eliza/playerstats}}
-        </div>
-    </div>
-
     {{#hasdynamichelps}}
     <div class="tab-dynamichelps block_ludifica-tabcontent {{dynamichelpsstate}}">
+        <h3>{{#str}} tabtitle_dynamichelps, block_ludifica {{/str}}</h3>
         {{>block_ludifica/eliza/buttonsbar}}
         <div class="pointsinfo">
             {{#insitecontext}}
@@ -201,6 +191,16 @@
 
     {{#player}}
     <div class="tab-profile block_ludifica-tabcontent {{profilestate}}">
+        <div class="playerstats">
+            <div>
+                <h2>
+                    <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="left"
+                    data-content="{{#str}}name_help, block_ludifica{{/str}}"></button>
+                    {{{nickcontent}}}
+                </h2>
+                {{>block_ludifica/eliza/playerstats}}
+            </div>
+        </div>
         {{>block_ludifica/eliza/buttonsbar}}
         <div class="player_info">
             <div class="avatar-box">
@@ -212,6 +212,7 @@
 
     {{#hastopbycourse}}
     <div class="tab-topbycourse block_ludifica-tabcontent {{topbycoursestate}}">
+        <h3>{{#str}}tabtitle_topbycourse, block_ludifica{{/str}}</h3>
         {{>block_ludifica/eliza/buttonsbar}}
         {{#hasrowstopbycourse}}
         <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right"
@@ -245,8 +246,11 @@
 
     {{#hastopbysite}}
     <div class="tab-topbysite block_ludifica-tabcontent {{topbysitestate}}">
+        <h3>{{#str}}tabtitle_topbysite, block_ludifica{{/str}}</h3>
         {{>block_ludifica/eliza/buttonsbar}}
         {{#hasrowstopbysite}}
+        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right"
+        data-content="{{#str}}site-ranking_help, block_ludifica{{/str}}"></button>
         <table class="generaltable">
             <thead>
                 <tr>
@@ -271,15 +275,16 @@
                 {{#str}} nottopyet, block_ludifica {{/str}}
             </p>
         {{/hasrowstopbysite}}
-        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right"
-        data-content="{{#str}}site-ranking_help, block_ludifica{{/str}}"></button>
     </div>
     {{/hastopbysite}}
 
     {{#haslastmonth}}
     <div class="tab-lastmonth block_ludifica-tabcontent {{lastmonthstate}}">
+        <h3>{{#str}}tabtitle_lastmonth, block_ludifica{{/str}}</h3>
         {{>block_ludifica/eliza/buttonsbar}}
         {{#hasrowslastmonth}}
+        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right"
+        data-content="{{#str}}lastmonth-ranking_help, block_ludifica{{/str}}"></button>
         <table class="generaltable">
             <thead>
                 <tr>
@@ -304,8 +309,6 @@
                 {{#str}} nottopyet, block_ludifica {{/str}}
             </p>
         {{/hasrowslastmonth}}
-        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right"
-        data-content="{{#str}}lastmonth-ranking_help, block_ludifica{{/str}}"></button>
     </div>
     {{/haslastmonth}}
 </div>

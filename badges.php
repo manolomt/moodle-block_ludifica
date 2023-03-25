@@ -51,6 +51,8 @@ $PAGE->set_heading(get_string('badges', 'block_ludifica'));
 $PAGE->set_title(get_string('badges', 'block_ludifica'));
 $PAGE->requires->js_call_amd('block_ludifica/badges', 'init', [$socialnetworks]);
 
+\block_ludifica\controller::include_templatecss();
+
 echo $OUTPUT->header();
 
 $renderable = new \block_ludifica\output\badges();
