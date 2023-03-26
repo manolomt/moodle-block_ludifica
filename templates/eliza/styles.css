@@ -336,6 +336,10 @@
     text-align: left;
 }
 
+.block_ludifica .avatar-box img {
+    max-width: 70%;
+}
+
 .block_ludifica .block_ludifica-tabs {
     display: none;
 }
@@ -943,4 +947,9 @@
 #page-blocks-ludifica-badges .alertc-control .alert-warning {
     background-color: #e59428;
     color: #7e4e0f;
+}
+
+.block_ludifica #tickets-list .ticketcontent {
+    width: 90%;
+    margin: auto;
 }
