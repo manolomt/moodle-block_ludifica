@@ -39,15 +39,13 @@
             </strong>
             <div class="avatarcontent">
                 <div class="picture-box">
-                    <img src="{{uri}}" alt="{{name}}" />
+                    <img class="thumbnail" src="{{uri}}" alt="{{name}}" />
                     <div class="cost">
                         {{#str}} numcoins, block_ludifica, {{cost}} {{/str}}</strong>
                     </div>
                 </div>
-                <div class="info-box">
-                    <p>
-                        {{{description}}}
-                    </p>
+                <div class="description">
+                    {{{description}}}
                 </div>
             </div>
             <div class="card-footer">
@@ -82,7 +80,7 @@
 </div>
 {{#canedit}}
 <div>
-    <a href="{{baseurl}}/blocks/ludifica/avatar_edit.php" class="btn btn-primary">{{#str}} avatarnew, block_ludifica {{/str}}</a>
+    <a href="{{baseurl}}/blocks/ludifica/avatar_edit.php" class="btn btn-primary btncanedit">{{#str}} avatarnew, block_ludifica {{/str}}</a>
 </div>
 {{/canedit}}
 </div>

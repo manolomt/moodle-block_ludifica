@@ -40,16 +40,13 @@
                     {{#pix}} i/info, core, {{#str}} moreinfo, block_ludifica {{/str}} {{/pix}}
                 </a>
             </h3>
+            {{#thumbnail}}
+            <div class="picture-box">
+                <img class="thumbnail" src="{{thumbnail}}" alt="{{name}}" />
+            </div>
+            {{/thumbnail}}
             <div class="card-body ticketcontent">
-                {{#thumbnail}}
-                <div class="picture-box">
-                    <img src="{{thumbnail}}" alt="{{name}}" />
-                </div>
-                {{/thumbnail}}
                 <div class="info-box">
-                    <p>
-                        {{description}}
-                    </p>
                     <p>
                         <strong>{{#str}} available, block_ludifica {{/str}}</strong> <val key="available">{{available}}</val><br />
                         <strong>{{#str}} availabledate, block_ludifica {{/str}}</strong> {{availabledateformated}}<br />
@@ -62,6 +59,9 @@
                     </p>
                 </div>
             </div>
+            <p class="description">
+                {{description}}
+            </p>
             <div id="moreinfo-ticket-{{id}}" title="{{name}}" style="display: none;">
                 <div id="moreinfo-ticket-content-{{id}}">
                     <div class="card usertickets" {{^usertickets}}style="display: none;"{{/usertickets}}>
@@ -110,7 +110,7 @@
 </div>
 {{#canedit}}
 <div>
-    <a href="{{baseurl}}/blocks/ludifica/ticket_edit.php" class="btn btn-primary">{{#str}} newticket, block_ludifica {{/str}}</a>
+    <a href="{{baseurl}}/blocks/ludifica/ticket_edit.php" class="btn btn-primary btncanedit">{{#str}} newticket, block_ludifica {{/str}}</a>
 </div>
 {{/canedit}}
 </div>
