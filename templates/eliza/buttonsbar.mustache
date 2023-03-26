@@ -31,8 +31,6 @@
 
 <div class="general-buttons">
 
-    <a href="{{baseurl}}/blocks/ludifica/badges.php" class="badges-button"><span>{{#str}} badges_button, theme_abierta {{/str}}</span></a>
-
     {{#hasranking}}
         <div class="ranking_buttons">
 
@@ -53,6 +51,8 @@
             </div>
         </div>
     {{/hasranking}}
+
+    <a href="{{baseurl}}/blocks/ludifica/badges.php" class="badges-button"><span>{{#str}} badges_button, theme_abierta {{/str}}</span></a>
 
     <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="avatars-button {{#current}}current-user{{/current}}"><span>{{#str}} avatars, block_ludifica {{/str}}</span></a>
     <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="store-button {{#current}}current-user{{/current}}"><span>{{#str}} store, block_ludifica {{/str}}</span></a>

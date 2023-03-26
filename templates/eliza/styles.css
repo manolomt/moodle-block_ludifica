@@ -32,7 +32,7 @@
     text-align: center;
     font-weight: bolder;
     box-sizing: border-box;
-    box-shadow: 2px 1px 6px 0px rgba(45,51,81,1);
+    box-shadow: 0px 0px 16px 0px rgb(0 0 0 / 32%);
     transition: 0.1s ease;
     transform: scale(1, 1);
 }
@@ -55,7 +55,7 @@
     background: url('pix/icons.png') no-repeat center center / cover;
     transform: rotate(0deg);
     transition: 0.3s ease;
-    box-shadow: 0px 0px 0px 0px #f6d052;
+    box-shadow: 0 0 0 0 #f6d052;
 }
 
 .block_ludifica .general-buttons .badges-button:hover,
@@ -63,7 +63,7 @@
 .block_ludifica .general-buttons .avatars-button:hover,
 .block_ludifica .general-buttons .store-button:hover,
 .block_ludifica [ludifica-tab="profile"]:hover {
-    box-shadow: 0px 0px 10px 0px rgba(45,51,81,1);
+    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
     transform: scale(1.2, 1.2);
     background-color: #2D3351;
     color: #fff;
@@ -76,7 +76,7 @@
 .block_ludifica .general-buttons .store-button:hover::before,
 .block_ludifica [ludifica-tab="profile"]:hover::before {
     transform: rotate(-20deg);
-    box-shadow: 0px 0px 10px 0px #F6D052;
+    box-shadow: 0 0 10px 0 #F6D052;
 }
 
 .block_ludifica .general-buttons span {
@@ -135,6 +135,7 @@
     display: inline-block;
     margin-left: 30px;
     transition: 0.1s ease;
+    box-shadow: 0px 0px 16px 0px rgb(0 0 0 / 32%);
 }
 
 .block_ludifica .playerstats h2:hover {
@@ -153,6 +154,7 @@
     border-radius: 15px;
     margin-right: 8px;
     font-size: 17px;
+    box-shadow: 0px 0px 16px 0px rgb(0 0 0 / 32%);
 }
 
 .block_ludifica .general-buttons [ludifica-tab="dynamichelps"] {
@@ -163,7 +165,7 @@
     height: 50px;
     border-radius: 30px;
     border: none;
-    box-shadow: 2px 1px 6px 0px rgba(45,51,81,1);
+    box-shadow: 0px 0px 16px 0px rgb(0 0 0 / 32%);
     transition: 0.1s ease;
     font-size: 25px;
     transform: scale(1, 1);
@@ -181,7 +183,7 @@
 
 .block_ludifica .general-buttons [ludifica-tab="dynamichelps"]:hover {
     transform: scale(1.1, 1.1);
-    box-shadow: 5px 5px 10px 0px rgba(45,51,81,1);
+    box-shadow: 5px 5px 10px 0 rgba(45,51,81,1);
     background-color: #2D3351;
 }
 
@@ -260,8 +262,8 @@
     position: absolute;
     top: 49px;
     width: 123px;
-    left: 0px;
-    box-shadow: 0px 10px 10px 0px rgba(45,51,81,1);
+    left: 0;
+    box-shadow: 0 10px 10px 0 rgba(45,51,81,1);
     border-radius: 10px 0 10px 10px;
     overflow: hidden;
 }
@@ -273,7 +275,7 @@
 
 .block_ludifica .ranking_buttons div button {
     background-color: #EAAF0A;
-    border: 0px solid #fff;
+    border: 0 solid #fff;
     border-bottom: 1px solid #ffffff;
     transition: 0.1s ease;
     font-size: 14px;
@@ -306,17 +308,27 @@
 }
 
 .block_ludifica .block_ludifica-tabs .fa,
-.block_ludifica .block-control-actions .fa {
+.block_ludifica .block-control-actions .fa,
+#page-blocks-ludifica-avatars .store-tabs > a,
+#page-blocks-ludifica-badges .store-tabs > a,
+#page-blocks-ludifica-tickets .store-tabs > a {
     color: #fff;
 }
 
 .block_ludifica-tabs > .active,
-.block_ludifica-tabs > :hover[data-ref] {
+.block_ludifica-tabs > :hover[data-ref],
+#page-blocks-ludifica-avatars .store-tabs > .active,
+#page-blocks-ludifica-badges .store-tabs > .active,
+#page-blocks-ludifica-tickets .store-tabs > .active {
     background-color: #3db1d1;
     border-color: #3db1d1;
+    border-radius: 10px;
 }
 
-.block_ludifica-tabs > .active .fa {
+.block_ludifica-tabs > .active .fa,
+#page-blocks-ludifica-avatars .store-tabs > .active,
+#page-blocks-ludifica-badges .store-tabs > .active,
+#page-blocks-ludifica-tickets .store-tabs > .active {
     color: #2D3351;
 }
 
@@ -341,7 +353,7 @@
 }
 
 .block_ludifica .tab-topbysite .general-buttons .ranking_buttons {
-    box-shadow: 0px 0px 10px 0px rgba(45,51,81,1);
+    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
     transform: scale(1.2, 1.2);
     background-color: #2D3351;
     color: #fff;
@@ -350,7 +362,7 @@
 }
 
 .block_ludifica .tab-lastmonth .general-buttons .ranking_buttons {
-    box-shadow: 0px 0px 10px 0px rgba(45,51,81,1);
+    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
     transform: scale(1.2, 1.2);
     background-color: #2D3351;
     color: #fff;
@@ -359,7 +371,7 @@
 }
 
 .block_ludifica .tab-topbycourse .general-buttons .ranking_buttons {
-    box-shadow: 0px 0px 10px 0px rgba(45,51,81,1);
+    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
     transform: scale(1.2, 1.2);
     background-color: #2D3351;
     color: #fff;
@@ -368,7 +380,7 @@
 }
 
 #page-blocks-ludifica-badges .general-buttons .badges-button {
-    box-shadow: 0px 0px 10px 0px rgba(45,51,81,1);
+    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
     transform: scale(1.2, 1.2);
     background-color: #2D3351;
     color: #fff;
@@ -378,7 +390,7 @@
 }
 
 #page-blocks-ludifica-avatars .general-buttons .avatars-button {
-    box-shadow: 0px 0px 10px 0px rgba(45,51,81,1);
+    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
     transform: scale(1.2, 1.2);
     background-color: #2D3351;
     color: #fff;
@@ -388,7 +400,7 @@
 }
 
 #page-blocks-ludifica-tickets .general-buttons .store-button {
-    box-shadow: 0px 0px 10px 0px rgba(45,51,81,1);
+    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
     transform: scale(1.2, 1.2);
     background-color: #2D3351;
     color: #fff;
@@ -398,7 +410,7 @@
 }
 
 .block_ludifica .tab-profile .general-buttons [ludifica-tab="profile"] {
-    box-shadow: 0px 0px 10px 0px rgba(45,51,81,1);
+    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
     transform: scale(1.2, 1.2);
     background-color: #2D3351;
     color: #fff;
@@ -409,44 +421,44 @@
 
 .block_ludifica .tab-dynamichelps .general-buttons [ludifica-tab="dynamichelps"] {
     transform: scale(1.1, 1.1);
-    box-shadow: 5px 5px 10px 0px rgba(45,51,81,1);
+    box-shadow: 5px 5px 10px 0 rgba(45,51,81,1);
     background-color: #2D3351;
     border: 2px solid #e59428;
     pointer-events: none;
 }
 
 .block_ludifica .tab-topbysite .general-buttons .ranking_buttons::before {
-    box-shadow: 0px 0px 10px 0px #F6D052;
+    box-shadow: 0 0 10px 0 #F6D052;
     top: -2px;
 }
 
 .block_ludifica .tab-lastmonth .general-buttons .ranking_buttons::before {
-    box-shadow: 0px 0px 10px 0px #F6D052;
+    box-shadow: 0 0 10px 0 #F6D052;
     top: -2px;
 }
 
 .block_ludifica .tab-topbycourse .general-buttons .ranking_buttons::before {
-    box-shadow: 0px 0px 10px 0px #F6D052;
+    box-shadow: 0 0 10px 0 #F6D052;
     top: -2px;
 }
 
 #page-blocks-ludifica-badges .general-buttons .badges-button::before {
-    box-shadow: 0px 0px 10px 0px #F6D052;
+    box-shadow: 0 0 10px 0 #F6D052;
     top: -2px;
 }
 
 #page-blocks-ludifica-avatars .general-buttons .avatars-button::before {
-    box-shadow: 0px 0px 10px 0px #F6D052;
+    box-shadow: 0 0 10px 0 #F6D052;
     top: -2px;
 }
 
 #page-blocks-ludifica-tickets .general-buttons .store-button::before {
-    box-shadow: 0px 0px 10px 0px #F6D052;
+    box-shadow: 0 0 10px 0 #F6D052;
     top: -2px;
 }
 
 .block_ludifica .tab-profile .general-buttons [ludifica-tab="profile"]::before {
-    box-shadow: 0px 0px 10px 0px #F6D052;
+    box-shadow: 0 0 10px 0 #F6D052;
     top: -2px;
 }
 
@@ -456,7 +468,7 @@
 .block_ludifica .tab-dynamichelps h3 {
     color: #F6D052;
     font-weight: bolder;
-    text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.531);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.531);
 }
 
 .block_ludifica .generaltable {
@@ -496,11 +508,11 @@
 }
 
 .block_ludifica .generaltable .current-user td:first-child {
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 10px 0 0 10px;
 }
 
 .block_ludifica .generaltable .current-user td:last-child {
-    border-radius: 0px 10px 10px 0px;
+    border-radius: 0 10px 10px 0;
 }
 
 .block_ludifica .generaltable tr:nth-of-type(odd) {
@@ -544,4 +556,131 @@
     background: none;
     border: none;
     margin-left: -15px;
+}
+
+.block_ludifica #avatars-list {
+    width: 80%;
+}
+
+.block_ludifica #avatars-list > div {
+  transform: perspective(1px);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  transition-duration: 0.3s;
+  transition-property: transform;
+  margin: 15px;
+}
+
+.block_ludifica #avatars-list > div:hover {
+  transform: scale(1.1) rotate(4deg);
+}
+
+#page-blocks-ludifica-avatars .store-tabs,
+#page-blocks-ludifica-tickets .store-tabs,
+#page-blocks-ludifica-badges .store-tabs {
+    display: none;
+}
+
+.editing .store-tabs {
+    display: flex !important;
+}
+
+#page-blocks-ludifica-avatars .block_ludifica,
+#page-blocks-ludifica-tickets .block_ludifica,
+#page-blocks-ludifica-badges .block_ludifica {
+    padding: 15px;
+}
+
+#page-blocks-ludifica-avatars #avatars-list .oneavatar .card {
+    box-shadow: 0px 0px 0px 0 #F6D052;
+    filter: contrast(100%) brightness(100%);
+    background: none;
+    border: 1px solid #EAAF0A;
+}
+
+#page-blocks-ludifica-avatars #avatars-list .userhas .card{
+    background-color: #F6D052;
+}
+
+
+#page-blocks-ludifica-avatars #avatars-list .userhas .card-header{
+    background-color: #F6D052;
+    color: #31345E !important;
+}
+
+#page-blocks-ludifica-avatars #avatars-list .oneavatar:hover .card {
+    box-shadow: 0px 0px 20px 0 #F6D052;
+    animation: hover-animation 0.3s forwards;
+    background-color: #F6D052;
+}
+
+#page-blocks-ludifica-avatars #avatars-list .oneavatar:hover .card-header {
+    background-color: #F6D052;
+    color: #31345E !important;
+}
+
+#page-blocks-ludifica-avatars #avatars-list .inuse .card {
+    border: 1px solid #3DB1D1;
+    background-color: #3DB1D1;
+}
+
+#page-blocks-ludifica-avatars #avatars-list .inuse:hover .card {
+    box-shadow: 0px 0px 20px 0 #3DB1D1;
+    animation: hover-animation 0.3s forwards;
+    background-color: #3DB1D1;
+}
+
+@keyframes hover-animation {
+    0%, 100% {
+      filter: contrast(100%) brightness(100%);
+    }
+    50% {
+      filter: contrast(150%) brightness(150%);
+    }
+}
+
+#page-blocks-ludifica-avatars #avatars-list .oneavatar .card .info-box {
+    background-color: #2d3351da;
+    border-radius: 10px;
+    margin: 0px 3px;
+}
+
+#page-blocks-ludifica-avatars #avatars-list .oneavatar .card .card-header {
+    color: #F6D052;
+    text-align: center;
+    background: none;
+    border: none;
+}
+
+#page-blocks-ludifica-avatars #avatars-list .inuse .card-header {
+    background-color: #3DB1D1 !important;
+    color: #31345E !important;
+}
+
+#page-blocks-ludifica-avatars #avatars-list .oneavatar .btn-primary {
+    background-color: #2D3351;
+    color: #fff;
+    margin: 5px;
+}
+
+#page-blocks-ludifica-avatars #avatars-list .oneavatar .btn-primary:hover {
+    background-color: #EAAF0A;
+    color: #2D3351;
+}
+
+#page-blocks-ludifica-avatars #avatars-list .card-footer {
+    padding: 5px;
+    margin: 10px 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#page-blocks-ludifica-avatars #avatars-list .oneavatar.inuse .used {
+    color: #F6D052;
+    filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.5));
+}
+
+#page-blocks-ludifica-tickets #tickets-list {
+    width: 75%;
 }
