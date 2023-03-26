@@ -214,7 +214,7 @@
     }
 
     .block_ludifica .avatar-box {
-        margin-top: 250px;
+        margin-top: 171px;
     }
 }
 
@@ -952,4 +952,53 @@
 .block_ludifica #tickets-list .ticketcontent {
     width: 90%;
     margin: auto;
+}
+
+.drawer .block_ludifica .general-buttons {
+    position: inherit;
+}
+
+.drawer .block_ludifica .tab-profile .general-buttons {
+    margin-top: 244px;
+}
+
+.drawer .block_ludifica .tab-profile .avatar-box {
+    margin-top: 0;
+}
+
+.drawer .block_ludifica .tab-profile .avatar-box img {
+    max-width: 100%;
+}
+
+.drawer .block_ludifica .tab-dynamichelps .pointsinfo {
+    width: 100%;
+}
+
+.drawer .block_ludifica .generaltable {
+    width: 100%;
+}
+
+.drawer .block_ludifica .playerstats h3 div:first-child {
+    margin-top: 87px;
+}
+
+.drawer .block_ludifica .playerstats h3 div:last-child {
+    margin-top: -138px;
+}
+
+.block_ludifica .nottopyet {
+    text-align: center;
+    margin-top: 15px;
+    color: #fff;
+    font-weight: bolder;
+}
+
+.block_ludifica .tab-dynamichelps .activities-list {
+    color: #2D3351;
+    background-color: #3DB1D1;
+    margin-top: 15px;
+}
+
+.block_ludifica .tab-dynamichelps .activities-list img {
+    margin-right: 10px;
 }
