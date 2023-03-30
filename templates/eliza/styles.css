@@ -337,7 +337,8 @@
 }
 
 .block_ludifica .avatar-box img {
-    max-width: 70%;
+    margin-top: -73px;
+    max-width: 100%;
 }
 
 .block_ludifica .block_ludifica-tabs {
