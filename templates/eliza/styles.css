@@ -1,18 +1,9 @@
 .block_ludifica {
     background: url('pix/bg1_ludifica.png') no-repeat center center;
     background-color: #383a70;
-    min-height: 600px;
+    min-height: 650px;
     transition: 10s ease-in;
     background-size: cover;
-}
-
-.block_ludifica .general-buttons {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 18%;
-    left: 77%;
-    align-items: flex-end;
 }
 
 .block_ludifica .general-buttons .badges-button,
@@ -108,6 +99,9 @@
 .block_ludifica .playerstats {
     position: absolute;
     right: 0;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
 }
 
 .block_ludifica .playerstats h3 div:first-child {
@@ -115,9 +109,9 @@
     color: #fff;
     position: absolute;
     transform: rotate(-90deg);
-    left: -148%;
+    margin-left: -90px;
     top: 297px;
-    display: block;
+    left: 0;
     padding: 15px;
     border-radius: 17px;
     font-size: 20px;
@@ -130,10 +124,9 @@
     color: #fff;
     padding: 10px;
     border-radius: 30px;
-    margin-right: 53px;
-    margin-bottom: 12px;
+    margin-bottom: 17px;
     display: inline-block;
-    margin-left: 30px;
+    margin-left: 39px;
     transition: 0.1s ease;
     box-shadow: 0 0 16px 0 rgb(0 0 0 / 32%);
 }
@@ -155,6 +148,7 @@
     margin-right: 8px;
     font-size: 17px;
     box-shadow: 0 0 16px 0 rgb(0 0 0 / 32%);
+    font-weight: bold;
 }
 
 .block_ludifica .general-buttons [ludifica-tab="dynamichelps"] {
@@ -187,13 +181,6 @@
     background-color: #2d3351;
 }
 
-@media (max-width: 1195px) {
-
-    .block_ludifica .playerstats h3 div:first-child {
-        left: -155%;
-    }
-}
-
 @media (max-width: 900px) {
 
     .block_ludifica .playerstats h3 div:first-child {
@@ -201,7 +188,8 @@
         transform: rotate(0deg);
         left: 50px;
         display: inline-block;
-        margin-left: 30px;
+        margin-left: 5px;
+        margin-top: 53px;
     }
 
     .block_ludifica .playerstats {
@@ -210,7 +198,7 @@
     }
 
     .block_ludifica .playerstats h3 div:last-child {
-        margin-top: -86px;
+        margin-top: -113px;
     }
 
     .block_ludifica .avatar-box {
@@ -227,16 +215,6 @@
 }
 
 @media (max-width: 650px) {
-
-    .block_ludifica .general-buttons {
-        left: 70%;
-    }
-
-    .block_ludifica .playerstats h3 div:last-child {
-        margin-top: -110px;
-        position: absolute;
-        left: 40px;
-    }
 
     .block_ludifica .playerstats h3 div:first-child {
         margin-top: 50px;
@@ -334,6 +312,7 @@
 
 .block_ludifica .avatar-box {
     text-align: left;
+    margin-top: 100px;
 }
 
 .block_ludifica .avatar-box img {
@@ -349,12 +328,19 @@
     display: flex;
 }
 
+.block_ludifica .general-buttons {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 50px;
+    margin-right: 71px;
+    align-items: flex-end;
+}
 
-.block_ludifica .tab-profile .general-buttons,
-#page-blocks-ludifica-avatars  .general-buttons,
-#page-blocks-ludifica-tickets  .general-buttons,
-#page-blocks-ludifica-badges .general-buttons {
-    top: 30%;
+.block_ludifica .tab-profile .general-buttons {
+    top: 27%;
 }
 
 .block_ludifica .tab-topbysite .general-buttons .ranking_buttons {
@@ -892,6 +878,11 @@
 
 .block_ludifica #badges-list .unavailablewarning {
     color: #e59428;
+}
+
+.block_ludifica .card,
+.block_ludifica .btn {
+    border-radius: 0.5rem;
 }
 
 .block_ludifica #avatars-list .card:hover .thumbnail,
