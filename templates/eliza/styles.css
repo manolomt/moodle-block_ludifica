@@ -960,7 +960,7 @@
 
 [data-region="blocks-column"] .block_ludifica .tab-profile .avatar-box,
 .drawer .block_ludifica .tab-profile .avatar-box {
-    margin-top: 100px;
+    margin-top: 100px !important;
 }
 
 [data-region="blocks-column"] .block_ludifica .tab-profile .avatar-box img,
