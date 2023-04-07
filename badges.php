@@ -27,7 +27,7 @@ require_once('../../config.php');
 require_login();
 
 // Redirect if the user is a guest.
-if (!isloggedin() || $USER->username === 'guest') {
+if (isguestuser()) {
     $url = new moodle_url($CFG->wwwroot);
     redirect($url);
     die();
