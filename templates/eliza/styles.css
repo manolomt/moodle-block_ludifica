@@ -338,13 +338,9 @@
     position: absolute;
     top: 0;
     right: 0;
-    margin-top: 50px;
-    margin-right: 71px;
+    margin-top: 200px;
+    margin-right: 76px;
     align-items: flex-end;
-}
-
-.block_ludifica .tab-profile .general-buttons {
-    top: 27%;
 }
 
 .block_ludifica .tab-topbysite .general-buttons .ranking_buttons {
