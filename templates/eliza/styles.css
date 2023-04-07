@@ -169,7 +169,6 @@
     margin-top: 20px;
 }
 
-
 .block_ludifica .general-buttons [ludifica-tab="dynamichelps"] span i {
     font-size: 30px;
     margin: auto;
@@ -332,13 +331,17 @@
     display: flex;
 }
 
+.block_with_controls .general-buttons {
+    margin-top: 270px !important;
+}
+
 .block_ludifica .general-buttons {
     display: flex;
     flex-direction: column;
     position: absolute;
     top: 0;
     right: 0;
-    margin-top: 200px;
+    margin-top: 240px;
     margin-right: 76px;
     align-items: flex-end;
 }
@@ -591,7 +594,6 @@
 #page-blocks-ludifica-avatars #avatars-list .userhas .card{
     background-color: #f6d052;
 }
-
 
 #page-blocks-ludifica-avatars #avatars-list .userhas .card-header{
     background-color: #f6d052;
@@ -1000,10 +1002,15 @@
 
 .block_ludifica .tab-dynamichelps .activities-list {
     color: #fff;
-    border: 1px solid #3DB1D1;
+    border: 1px solid #3db1d1;
     margin-top: 15px;
 }
 
 .block_ludifica .tab-dynamichelps .activities-list img {
     margin-right: 10px;
+}
+
+.block_ludifica h5 {
+    color: #3db1d1;
+    font-weight: bold;
 }
