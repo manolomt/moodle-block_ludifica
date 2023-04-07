@@ -219,6 +219,10 @@
     .block_ludifica .playerstats h3 div:first-child {
         margin-top: 50px;
     }
+
+    .block_ludifica .general-buttons {
+        margin-right: 13px !important;
+    }
 }
 
 .block_ludifica .ranking_buttons {
@@ -946,30 +950,37 @@
     margin: auto;
 }
 
+[data-region="blocks-column"] .block_ludifica .general-buttons,
 .drawer .block_ludifica .general-buttons {
     position: inherit;
 }
 
+[data-region="blocks-column"] .block_ludifica .tab-profile .general-buttons,
 .drawer .block_ludifica .tab-profile .general-buttons {
     margin-top: 244px;
 }
 
+[data-region="blocks-column"] .block_ludifica .tab-profile .avatar-box,
 .drawer .block_ludifica .tab-profile .avatar-box {
-    margin-top: 0;
+    margin-top: 47px;
 }
 
+[data-region="blocks-column"] .block_ludifica .tab-profile .avatar-box img,
 .drawer .block_ludifica .tab-profile .avatar-box img {
     max-width: 100%;
 }
 
+[data-region="blocks-column"] .block_ludifica .tab-dynamichelps .pointsinfo,
 .drawer .block_ludifica .tab-dynamichelps .pointsinfo {
     width: 100%;
 }
 
+[data-region="blocks-column"] .block_ludifica .generaltable,
 .drawer .block_ludifica .generaltable {
     width: 100%;
 }
 
+[data-region="blocks-column"] .block_ludifica .playerstats h3 div:first-child,
 .drawer .block_ludifica .playerstats h3 div:first-child {
     margin-top: 87px;
     position: inherit;
@@ -979,6 +990,7 @@
     margin-left: 30px;
 }
 
+[data-region="blocks-column"] .block_ludifica .playerstats h3 div:last-child,
 .drawer .block_ludifica .playerstats h3 div:last-child {
     margin-top: -138px;
 }
@@ -991,8 +1003,8 @@
 }
 
 .block_ludifica .tab-dynamichelps .activities-list {
-    color: #2D3351;
-    background-color: #3DB1D1;
+    color: #fff;
+    border: 1px solid #3DB1D1;
     margin-top: 15px;
 }
 
