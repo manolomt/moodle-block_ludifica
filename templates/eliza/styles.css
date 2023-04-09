@@ -2,7 +2,6 @@
     background: url('pix/bg1_ludifica.png') no-repeat center center;
     background-color: #383a70;
     min-height: 650px;
-    transition: 10s ease-in;
     background-size: cover;
 }
 
@@ -98,7 +97,7 @@
 
 .block_ludifica .playerstats {
     position: absolute;
-    right: 0;
+    right: 5px;
     display: flex;
     width: 100%;
     justify-content: flex-end;
@@ -109,14 +108,16 @@
     color: #fff;
     position: absolute;
     transform: rotate(-90deg);
-    margin-left: -90px;
+    margin-left: -100px;
     top: 297px;
     left: 0;
     padding: 15px;
     border-radius: 17px;
     font-size: 20px;
     font-weight: normal;
-    letter-spacing: 3px
+    letter-spacing: 3px;
+    width: 300px;
+    text-align: center;
 }
 
 .block_ludifica .playerstats h2 {
@@ -126,20 +127,15 @@
     border-radius: 30px;
     margin-bottom: 17px;
     display: inline-block;
-    margin-left: 39px;
     transition: 0.1s ease;
     box-shadow: 0 0 16px 0 rgb(0 0 0 / 32%);
     font-weight: bold;
+    max-width: 334px;
+    text-align: center;
 }
 
 .block_ludifica .playerstats h2:hover {
     background-color: #e59428;
-}
-
-.block_ludifica .playerstats .playerinfo div:last-child {
-    display: flex;
-    justify-content: end;
-    margin-right: 67px;
 }
 
 .block_ludifica .playerstats .playerinfo div:last-child > span {
@@ -150,6 +146,12 @@
     font-size: 17px;
     box-shadow: 0 0 16px 0 rgb(0 0 0 / 32%);
     font-weight: bold;
+}
+
+.block_ludifica .playerstats .playerinfo div:last-child {
+    position: absolute;
+    margin-top: 7px;
+    right: 5px;
 }
 
 .block_ludifica .general-buttons [ludifica-tab="dynamichelps"] {
@@ -179,50 +181,6 @@
     transform: scale(1.1, 1.1);
     box-shadow: 5px 5px 10px 0 rgba(45,51,81,1);
     background-color: #2d3351;
-}
-
-@media (max-width: 900px) {
-
-    .block_ludifica .playerstats .playerinfo div:first-child {
-        position: inherit;
-        transform: rotate(0deg);
-        left: 50px;
-        display: inline-block;
-        margin-left: 5px;
-        margin-top: 53px;
-    }
-
-    .block_ludifica .playerstats {
-        position: absolute;
-        left: 0;
-    }
-
-    .block_ludifica .playerstats .playerinfo div:last-child {
-        margin-top: -120px;
-    }
-
-    .block_ludifica .avatar-box {
-        margin-top: 171px;
-    }
-}
-
-
-@media (max-width: 700px) {
-
-    .block_ludifica .general-buttons {
-        left: 70%;
-    }
-}
-
-@media (max-width: 650px) {
-
-    .block_ludifica .playerstats .playerinfo div:first-child {
-        margin-top: 50px;
-    }
-
-    .block_ludifica .general-buttons {
-        margin-right: 13px !important;
-    }
 }
 
 .block_ludifica .ranking_buttons {
@@ -315,8 +273,7 @@
 }
 
 .block_ludifica .avatar-box {
-    text-align: left;
-    margin-top: 100px;
+    margin-top: 62px;
 }
 
 .block_ludifica .avatar-box img {
@@ -341,10 +298,20 @@
     flex-direction: column;
     position: absolute;
     top: 0;
-    right: 0;
-    margin-top: 240px;
-    margin-right: 76px;
+    right: 5px;
+    margin-top: 126px;
+    margin-right: 13px;
     align-items: flex-end;
+}
+
+.block_ludifica .tab-profile .general-buttons {
+    margin-top: 252px;
+}
+
+#page-blocks-ludifica-tickets .block_ludifica .general-buttons,
+#page-blocks-ludifica-avatars .block_ludifica .general-buttons,
+#page-blocks-ludifica-badges .block_ludifica .general-buttons {
+    right: 26px;
 }
 
 .block_ludifica .tab-topbysite .general-buttons .ranking_buttons {
@@ -520,6 +487,11 @@
 
 .block_ludifica .ludifica_help {
     color: #3db1d1;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.8));
+}
+
+.block_ludifica .ludifica_help:hover {
+    color: #e59428;
 }
 
 .block_ludifica .pointsinfo {
@@ -894,6 +866,12 @@
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
 }
 
+#page-blocks-ludifica-tickets .alertc-control .close,
+#page-blocks-ludifica-avatars .alertc-control .close,
+#page-blocks-ludifica-badges .alertc-control .close {
+    display: none;
+}
+
 #page-blocks-ludifica-tickets .alertc-control,
 #page-blocks-ludifica-avatars .alertc-control,
 #page-blocks-ludifica-badges .alertc-control {
@@ -952,11 +930,12 @@
 [data-region="blocks-column"] .block_ludifica .general-buttons,
 .drawer .block_ludifica .general-buttons {
     position: inherit;
+    margin-top: inherit;
 }
 
 [data-region="blocks-column"] .block_ludifica .tab-profile .general-buttons,
 .drawer .block_ludifica .tab-profile .general-buttons {
-    margin-top: 244px;
+    margin-top: 235px;
 }
 
 [data-region="blocks-column"] .block_ludifica .tab-profile .avatar-box,
@@ -981,17 +960,14 @@
 
 [data-region="blocks-column"] .block_ludifica .playerstats .playerinfo div:first-child,
 .drawer .block_ludifica .playerstats .playerinfo div:first-child {
-    margin-top: 87px;
-    position: inherit;
     transform: rotate(0deg);
-    left: 50px;
-    display: inline-block;
-    margin-left: 30px;
+    left: 42%;
+    top: 168px;
 }
 
-[data-region="blocks-column"] .block_ludifica .playerstats .playerinfo div:last-child,
-.drawer .block_ludifica .playerstats .playerinfo div:last-child {
-    margin-top: -138px;
+[data-region="blocks-column"] .block_ludifica .playerstats,
+.drawer .block_ludifica .playerstats {
+    right: 17px;
 }
 
 .block_ludifica .nottopyet {
@@ -1014,4 +990,12 @@
 .block_ludifica h5 {
     color: #3db1d1;
     font-weight: bold;
+}
+
+@media (max-width: 600px) {
+
+    .block_ludifica .avatar-box {
+        text-align: left;
+        margin-top: 235px;
+    }
 }
