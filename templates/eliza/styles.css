@@ -116,7 +116,7 @@
     font-size: 20px;
     font-weight: normal;
     letter-spacing: 3px;
-    width: 300px;
+    width: 279px;
     text-align: center;
 }
 
@@ -130,7 +130,7 @@
     transition: 0.1s ease;
     box-shadow: 0 0 16px 0 rgb(0 0 0 / 32%);
     font-weight: bold;
-    max-width: 334px;
+    max-width: 267px;
     text-align: center;
 }
 
@@ -311,7 +311,7 @@
 #page-blocks-ludifica-tickets .block_ludifica .general-buttons,
 #page-blocks-ludifica-avatars .block_ludifica .general-buttons,
 #page-blocks-ludifica-badges .block_ludifica .general-buttons {
-    right: 26px;
+    right: 62px;
 }
 
 .block_ludifica .tab-topbysite .general-buttons .ranking_buttons {
@@ -997,5 +997,15 @@
     .block_ludifica .avatar-box {
         text-align: left;
         margin-top: 235px;
+    }
+
+    #page-blocks-ludifica-tickets .block_ludifica .general-buttons,
+    #page-blocks-ludifica-avatars .block_ludifica .general-buttons,
+    #page-blocks-ludifica-badges .block_ludifica .general-buttons {
+        right: 0px;
+    }
+
+    .block_ludifica #avatars-list {
+        width: 70%;
     }
 }
