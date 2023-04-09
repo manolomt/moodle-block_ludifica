@@ -289,10 +289,6 @@
     display: flex;
 }
 
-.block_with_controls .general-buttons {
-    margin-top: 270px !important;
-}
-
 .block_ludifica .general-buttons {
     display: flex;
     flex-direction: column;
