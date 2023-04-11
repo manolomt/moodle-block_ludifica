@@ -64,13 +64,13 @@ module.exports = function(grunt) {
     grunt.initConfig({
         eslint: {
             options: {quiet: !grunt.option("show-lint-warnings")},
-            amd: {src: "**/amd/src/*.js"}
+            amd: {src: "amd/src/*.js"}
         },
         uglify: {
             amd: {
                 files: [{
                     expand: true,
-                    src: "**/amd/src/*.js",
+                    src: "amd/src/*.js",
                     rename: uglifyRename
                 }],
                 options: {
@@ -85,7 +85,7 @@ module.exports = function(grunt) {
                 livereload: true
             },
             amd: {
-                files: ["amd/src/**/*.js"],
+                files: ["amd/src/*.js"],
                 tasks: ["amd"]
             },
             css: {
