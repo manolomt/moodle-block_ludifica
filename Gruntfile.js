@@ -63,6 +63,7 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         eslint: {
+            options: {quiet: !grunt.option("show-lint-warnings")},
             amd: {src: "**/amd/src/*.js"}
         },
         uglify: {
