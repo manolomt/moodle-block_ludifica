@@ -6,5 +6,11 @@
     "name": "David Herney",
     "url": "https://bambuco.co"
   },
-  "license": "GPL-3.0+"
+  "license": "GPL-3.0+",
+  "devDependencies": {
+    "grunt-contrib-uglify": "^5.2.2",
+    "grunt-eslint": "^24.0.1",
+    "grunt-load-gruntfile": "^0.0.2",
+    "grunt-stylelint": "^0.18.0"
+  }
 }
