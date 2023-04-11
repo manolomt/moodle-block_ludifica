@@ -89,18 +89,18 @@ module.exports = function(grunt) {
             },
             css: {
                 files: ["templates/*/styles.css", "styles.css"],
-                tasks: ["stylelint:css"]
+                tasks: ["stylelint"]
             }
         },
         stylelint: {
             css: {
-                src: ["templates/*/styles.css"]
+                src: ["templates/*/styles.css", "styles.css"]
             }
         },
     });
 
     // Register tasks.
-    grunt.registerTask("css", ["stylelint:css"]);
+    grunt.registerTask("css", ["stylelint"]);
     grunt.registerTask("default", ["watch"]);
     grunt.registerTask('amd', ['eslint:amd', 'uglify:amd']);
 
