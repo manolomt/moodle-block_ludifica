@@ -22,9 +22,16 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- require_once('../../config.php');
+require_once('../../config.php');
 
- require_login();
+require_login();
+
+// Redirect if the user is a guest.
+if (isguestuser()) {
+    $url = new moodle_url($CFG->wwwroot);
+    redirect($url);
+    die();
+}
 
 $syscontext = context_system::instance();
 $hasmanage = has_capability('block/ludifica:manage', $syscontext);
