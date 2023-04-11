@@ -1,0 +1,10 @@
+{
+  "name": "moodle-block_ludifica",
+  "description": "Grunt tasks for Moodle ludifica block.",
+  "main": "Gruntfile.js",
+  "author": {
+    "name": "David Herney",
+    "url": "https://bambuco.co"
+  },
+  "license": "GPL-3.0+"
+}
