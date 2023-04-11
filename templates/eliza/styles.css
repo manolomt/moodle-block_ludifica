@@ -560,11 +560,11 @@
     border: 1px solid #eaaf0a;
 }
 
-#page-blocks-ludifica-avatars #avatars-list .userhas .card{
+#page-blocks-ludifica-avatars #avatars-list .userhas .card {
     background-color: #f6d052;
 }
 
-#page-blocks-ludifica-avatars #avatars-list .userhas .card-header{
+#page-blocks-ludifica-avatars #avatars-list .userhas .card-header {
     background-color: #f6d052;
     color: #31345e !important;
     border: none;
@@ -926,17 +926,26 @@
 [data-region="blocks-column"] .block_ludifica .general-buttons,
 .drawer .block_ludifica .general-buttons {
     position: inherit;
-    margin-top: inherit;
+    margin: auto;
+    margin-top: 20px;
+    flex-direction: inherit;
+    max-width: 300px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-[data-region="blocks-column"] .block_ludifica .tab-profile .general-buttons,
-.drawer .block_ludifica .tab-profile .general-buttons {
-    margin-top: 235px;
+[data-region="blocks-column"] .block_ludifica .general-buttons > a,
+[data-region="blocks-column"] .block_ludifica .general-buttons > div,
+[data-region="blocks-column"] .block_ludifica .general-buttons > button,
+.drawer .block_ludifica .general-buttons > a,
+.drawer .block_ludifica .general-buttons > div,
+.drawer .block_ludifica .general-buttons > button {
+    margin: 10px;
 }
 
 [data-region="blocks-column"] .block_ludifica .tab-profile .avatar-box,
 .drawer .block_ludifica .tab-profile .avatar-box {
-    margin-top: 100px !important;
+    margin-top: 315px !important;
 }
 
 [data-region="blocks-column"] .block_ludifica .tab-profile .avatar-box img,
@@ -998,7 +1007,7 @@
 
     .block_ludifica .avatar-box {
         text-align: left;
-        margin-top: 235px;
+        margin-top: 82px;
     }
 
     #page-blocks-ludifica-tickets .block_ludifica .general-buttons,
