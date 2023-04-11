@@ -64,6 +64,7 @@ jobs:
         env:
           DB: ${{ matrix.database }}
           MOODLE_BRANCH: ${{ matrix.moodle-branch }}
+          IGNORE_PATHS: 'node_modules'
 
       - name: PHP Lint
         if: ${{ always() }}
