@@ -35,6 +35,11 @@ module.exports = function(grunt) {
     var path = require('path'),
         PWD = process.env.PWD || process.cwd();
 
+    var inAMD = path.basename(PWD) == 'amd';
+
+    // Globbing pattern for matching all AMD JS source files.
+    var amdSrc = [inAMD ? PWD + "/src/*.js" : "**/amd/src/*.js"];
+
     // We need to include the core Moodle grunt file too, otherwise we can't run tasks like "amd".
     require("grunt-load-gruntfile")(grunt);
     grunt.loadGruntfile("../../Gruntfile.js");
@@ -64,13 +69,13 @@ module.exports = function(grunt) {
     grunt.initConfig({
         eslint: {
             options: {quiet: !grunt.option("show-lint-warnings")},
-            amd: {src: "amd/src/*.js"}
+            amd: {src: amdSrc}
         },
         uglify: {
             amd: {
                 files: [{
                     expand: true,
-                    src: "amd/src/*.js",
+                    src: amdSrc,
                     rename: uglifyRename
                 }],
                 options: {
@@ -85,7 +90,7 @@ module.exports = function(grunt) {
                 livereload: true
             },
             amd: {
-                files: ["amd/src/*.js"],
+                files: ["**/amd/src/**/*.js"],
                 tasks: ["amd"]
             },
             css: {
