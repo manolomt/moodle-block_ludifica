@@ -11,6 +11,6 @@
     "grunt-contrib-uglify": "^5.2.2",
     "grunt-eslint": "^24.0.1",
     "grunt-load-gruntfile": "^0.0.2",
-    "grunt-stylelint": "^0.18.0"
+    "grunt-stylelint": "^0.15.0"
   }
 }
