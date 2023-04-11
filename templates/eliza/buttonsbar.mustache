@@ -34,45 +34,45 @@
     {{#hasranking}}
         <div class="ranking_buttons">
 
-            <a><span>{{#str}} ranking_button, theme_abierta {{/str}}</span></a>
+            <a><span>{{#str}} ranking_button, block_ludifica {{/str}}</span></a>
 
             <div>
                 {{#haslastmonth}}
-                    <button ludifica-tab="lastmonth"><span>{{#str}} ranking_last, theme_abierta {{/str}}</span></button>
+                    <button ludifica-tab="lastmonth"><span>{{#str}} ranking_last, block_ludifica {{/str}}</span></button>
                 {{/haslastmonth}}
 
                 {{#hastopbycourse}}
-                    <button ludifica-tab="topbycourse"><span>{{#str}} ranking_course, theme_abierta {{/str}}</span></button>
+                    <button ludifica-tab="topbycourse"><span>{{#str}} ranking_course, block_ludifica {{/str}}</span></button>
                 {{/hastopbycourse}}
 
                 {{#hastopbysite}}
-                    <button ludifica-tab="topbysite"><span>{{#str}} ranking_site, theme_abierta {{/str}}</span></button>
+                    <button ludifica-tab="topbysite"><span>{{#str}} ranking_site, block_ludifica {{/str}}</span></button>
                 {{/hastopbysite}}
             </div>
         </div>
     {{/hasranking}}
 
-    <a href="{{baseurl}}/blocks/ludifica/badges.php" class="badges-button"><span>{{#str}} badges_button, theme_abierta {{/str}}</span></a>
+    <a href="{{baseurl}}/blocks/ludifica/badges.php" class="badges-button"><span>{{#str}} badges, block_ludifica {{/str}}</span></a>
 
     <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="avatars-button {{#current}}current-user{{/current}}"><span>{{#str}} avatars, block_ludifica {{/str}}</span></a>
     <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="store-button {{#current}}current-user{{/current}}"><span>{{#str}} store, block_ludifica {{/str}}</span></a>
 
 
     {{#layoutavatars}}
-        <a href="{{baseurl}}" ludifica-tab="profile"><span>{{#str}} home, theme_abierta {{/str}}</span></a>
+        <a href="{{baseurl}}" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
     {{/layoutavatars}}
 
     {{#layouttickets}}
-        <a href="{{baseurl}}" ludifica-tab="profile"><span>{{#str}} home, theme_abierta {{/str}}</span></a>
+        <a href="{{baseurl}}" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
     {{/layouttickets}}
 
     {{#layoutbadges}}
-        <a href="{{baseurl}}" ludifica-tab="profile"><span>{{#str}} home, theme_abierta {{/str}}</span></a>
+        <a href="{{baseurl}}" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
     {{/layoutbadges}}
 
 
     {{#ownprofile}}
-        <button ludifica-tab="profile"><span>{{#str}} home, theme_abierta {{/str}}</span></button>
+        <button ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></button>
     {{/ownprofile}}
 
     {{#hasdynamichelps}}

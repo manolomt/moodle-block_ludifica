@@ -5,10 +5,8 @@
     background-size: cover;
 }
 
-.block_ludifica .general-buttons .badges-button,
-.block_ludifica .general-buttons .ranking_buttons,
-.block_ludifica .general-buttons .avatars-button,
-.block_ludifica .general-buttons .store-button,
+.block_ludifica .general-buttons > a,
+.block_ludifica .general-buttons > div,
 .block_ludifica [ludifica-tab="profile"] {
     width: 123px;
     height: 44px;
@@ -27,15 +25,14 @@
     transform: scale(1, 1);
 }
 
-.block_ludifica .general-buttons .badges-button::before,
-.block_ludifica .general-buttons .ranking_buttons::before,
-.block_ludifica .general-buttons .avatars-button::before,
-.block_ludifica .general-buttons .store-button::before,
+.block_ludifica .general-buttons > a::before,
+.block_ludifica .general-buttons > div::before,
 .block_ludifica [ludifica-tab="profile"]::before {
     height: 44px;
     min-width: 44px;
     position: relative;
     left: 0;
+     /* stylelint-disable-next-line declaration-no-important */
     background-color: #eaaf0a !important;
     content: '';
     border-radius: 30px;
@@ -48,10 +45,8 @@
     box-shadow: 0 0 0 0 #f6d052;
 }
 
-.block_ludifica .general-buttons .badges-button:hover,
-.block_ludifica .general-buttons .ranking_buttons:hover,
-.block_ludifica .general-buttons .avatars-button:hover,
-.block_ludifica .general-buttons .store-button:hover,
+.block_ludifica .general-buttons > a:hover,
+.block_ludifica .general-buttons > div:hover,
 .block_ludifica [ludifica-tab="profile"]:hover {
     box-shadow: 0 0 10px 0 rgba(45,51,81,1);
     transform: scale(1.2, 1.2);
@@ -60,10 +55,8 @@
     text-decoration: none;
 }
 
-.block_ludifica .general-buttons .badges-button:hover::before,
-.block_ludifica .general-buttons .ranking_buttons:hover::before,
-.block_ludifica .general-buttons .avatars-button:hover::before,
-.block_ludifica .general-buttons .store-button:hover::before,
+.block_ludifica .general-buttons > a:hover::before,
+.block_ludifica .general-buttons > div:hover::before,
 .block_ludifica [ludifica-tab="profile"]:hover::before {
     transform: rotate(-20deg);
     box-shadow: 0 0 10px 0 #f6d052;
@@ -92,7 +85,8 @@
 }
 
 .block_ludifica [ludifica-tab="profile"]::before {
-    background-position-x: -640px;
+     /* stylelint-disable-next-line declaration-no-important */
+    background-position-x: -640px !important;
 }
 
 .block_ludifica .playerstats {
@@ -310,63 +304,12 @@
     right: 62px;
 }
 
-.block_ludifica .tab-topbysite .general-buttons .ranking_buttons {
-    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
-    transform: scale(1.2, 1.2);
-    background-color: #2d3351;
-    color: #fff;
-    text-decoration: none;
-    border: 2px solid #eaaf0a;
-}
-
-.block_ludifica .tab-lastmonth .general-buttons .ranking_buttons {
-    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
-    transform: scale(1.2, 1.2);
-    background-color: #2d3351;
-    color: #fff;
-    text-decoration: none;
-    border: 2px solid #eaaf0a;
-}
-
-.block_ludifica .tab-topbycourse .general-buttons .ranking_buttons {
-    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
-    transform: scale(1.2, 1.2);
-    background-color: #2d3351;
-    color: #fff;
-    text-decoration: none;
-    border: 2px solid #eaaf0a;
-}
-
-#page-blocks-ludifica-badges .general-buttons .badges-button {
-    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
-    transform: scale(1.2, 1.2);
-    background-color: #2d3351;
-    color: #fff;
-    text-decoration: none;
-    border: 2px solid #eaaf0a;
-    pointer-events: none;
-}
-
-#page-blocks-ludifica-avatars .general-buttons .avatars-button {
-    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
-    transform: scale(1.2, 1.2);
-    background-color: #2d3351;
-    color: #fff;
-    text-decoration: none;
-    border: 2px solid #eaaf0a;
-    pointer-events: none;
-}
-
-#page-blocks-ludifica-tickets .general-buttons .store-button {
-    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
-    transform: scale(1.2, 1.2);
-    background-color: #2d3351;
-    color: #fff;
-    text-decoration: none;
-    border: 2px solid #eaaf0a;
-    pointer-events: none;
-}
-
+.block_ludifica .tab-topbysite .general-buttons .ranking_buttons,
+.block_ludifica .tab-lastmonth .general-buttons .ranking_buttons,
+.block_ludifica .tab-topbycourse .general-buttons .ranking_buttons,
+#page-blocks-ludifica-badges .general-buttons .badges-button,
+#page-blocks-ludifica-avatars .general-buttons .avatars-button,
+#page-blocks-ludifica-tickets .general-buttons .store-button,
 .block_ludifica .tab-profile .general-buttons [ludifica-tab="profile"] {
     box-shadow: 0 0 10px 0 rgba(45,51,81,1);
     transform: scale(1.2, 1.2);
@@ -377,6 +320,12 @@
     pointer-events: none;
 }
 
+.block_ludifica .tab-topbysite .general-buttons .ranking_buttons,
+.block_ludifica .tab-lastmonth .general-buttons .ranking_buttons,
+.block_ludifica .tab-topbycourse .general-buttons .ranking_buttons {
+    pointer-events: inherit;
+}
+
 .block_ludifica .tab-dynamichelps .general-buttons [ludifica-tab="dynamichelps"] {
     transform: scale(1.1, 1.1);
     box-shadow: 5px 5px 10px 0 rgba(45,51,81,1);
@@ -385,36 +334,12 @@
     pointer-events: none;
 }
 
-.block_ludifica .tab-topbysite .general-buttons .ranking_buttons::before {
-    box-shadow: 0 0 10px 0 #f6d052;
-    top: -2px;
-}
-
-.block_ludifica .tab-lastmonth .general-buttons .ranking_buttons::before {
-    box-shadow: 0 0 10px 0 #f6d052;
-    top: -2px;
-}
-
-.block_ludifica .tab-topbycourse .general-buttons .ranking_buttons::before {
-    box-shadow: 0 0 10px 0 #f6d052;
-    top: -2px;
-}
-
-#page-blocks-ludifica-badges .general-buttons .badges-button::before {
-    box-shadow: 0 0 10px 0 #f6d052;
-    top: -2px;
-}
-
-#page-blocks-ludifica-avatars .general-buttons .avatars-button::before {
-    box-shadow: 0 0 10px 0 #f6d052;
-    top: -2px;
-}
-
-#page-blocks-ludifica-tickets .general-buttons .store-button::before {
-    box-shadow: 0 0 10px 0 #f6d052;
-    top: -2px;
-}
-
+.block_ludifica .tab-topbysite .general-buttons .ranking_buttons::before,
+.block_ludifica .tab-lastmonth .general-buttons .ranking_buttons::before,
+.block_ludifica .tab-topbycourse .general-buttons .ranking_buttons::before,
+#page-blocks-ludifica-badges .general-buttons .badges-button::before,
+#page-blocks-ludifica-avatars .general-buttons .avatars-button::before,
+#page-blocks-ludifica-tickets .general-buttons .store-button::before,
 .block_ludifica .tab-profile .general-buttons [ludifica-tab="profile"]::before {
     box-shadow: 0 0 10px 0 #f6d052;
     top: -2px;
@@ -544,6 +469,7 @@
 }
 
 .editing .store-tabs {
+     /* stylelint-disable-next-line declaration-no-important */
     display: flex !important;
 }
 
@@ -566,6 +492,7 @@
 
 #page-blocks-ludifica-avatars #avatars-list .userhas .card-header {
     background-color: #f6d052;
+     /* stylelint-disable-next-line declaration-no-important */
     color: #31345e !important;
     border: none;
 }
@@ -587,6 +514,7 @@
 
 #page-blocks-ludifica-avatars #avatars-list .oneavatar:hover .card-header {
     background-color: #f6d052;
+     /* stylelint-disable-next-line declaration-no-important */
     color: #31345e !important;
 }
 
@@ -618,7 +546,9 @@
 }
 
 #page-blocks-ludifica-avatars #avatars-list .inuse .card-header {
+     /* stylelint-disable-next-line declaration-no-important */
     background-color: #3db1d1 !important;
+     /* stylelint-disable-next-line declaration-no-important */
     color: #31345e !important;
 }
 
@@ -945,6 +875,7 @@
 
 [data-region="blocks-column"] .block_ludifica .tab-profile .avatar-box,
 .drawer .block_ludifica .tab-profile .avatar-box {
+     /* stylelint-disable-next-line declaration-no-important */ 
     margin-top: 315px !important;
 }
 
