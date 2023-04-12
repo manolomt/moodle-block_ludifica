@@ -829,6 +829,7 @@
 }
 
 [data-region="blocks-column"] .block_ludifica .eliza-btns .eliza-btn,
+[data-region="blocks-column"] .block_ludifica .eliza-btns [ludifica-tab="dynamichelps"],
 .drawer .block_ludifica .eliza-btns .eliza-btn,
 .drawer .block_ludifica .eliza-btns [ludifica-tab="dynamichelps"] {
     margin: 10px;
