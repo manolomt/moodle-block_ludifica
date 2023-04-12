@@ -29,10 +29,10 @@
     }
 }}
 
-<div class="general-buttons">
+<div class="eliza-btns">
 
     {{#hasranking}}
-        <div class="ranking_buttons">
+        <div class="top-btn eliza-btn">
 
             <a><span>{{#str}} ranking_button, block_ludifica {{/str}}</span></a>
 
@@ -52,27 +52,27 @@
         </div>
     {{/hasranking}}
 
-    <a href="{{baseurl}}/blocks/ludifica/badges.php" class="badges-button"><span>{{#str}} badges, block_ludifica {{/str}}</span></a>
+    <a href="{{baseurl}}/blocks/ludifica/badges.php" class="badges-btn eliza-btn"><span>{{#str}} badges, block_ludifica {{/str}}</span></a>
 
-    <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="avatars-button {{#current}}current-user{{/current}}"><span>{{#str}} avatars, block_ludifica {{/str}}</span></a>
-    <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="store-button {{#current}}current-user{{/current}}"><span>{{#str}} store, block_ludifica {{/str}}</span></a>
+    <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="avatars-btn eliza-btn {{#current}}current-user{{/current}}"><span>{{#str}} avatars, block_ludifica {{/str}}</span></a>
+    <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="store-btn eliza-btn {{#current}}current-user{{/current}}"><span>{{#str}} store, block_ludifica {{/str}}</span></a>
 
 
     {{#layoutavatars}}
-        <a href="{{baseurl}}" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
+        <a href="{{baseurl}}" class="eliza-btn" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
     {{/layoutavatars}}
 
     {{#layouttickets}}
-        <a href="{{baseurl}}" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
+        <a href="{{baseurl}}" class="eliza-btn" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
     {{/layouttickets}}
 
     {{#layoutbadges}}
-        <a href="{{baseurl}}" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
+        <a href="{{baseurl}}" class="eliza-btn" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
     {{/layoutbadges}}
 
 
     {{#ownprofile}}
-        <button ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></button>
+        <button class="eliza-btn" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></button>
     {{/ownprofile}}
 
     {{#hasdynamichelps}}
