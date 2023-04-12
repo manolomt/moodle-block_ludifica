@@ -1,4 +1,7 @@
-.block_ludifica {
+.block_ludifica,
+#page-blocks-ludifica-avatars #region-main,
+#page-blocks-ludifica-tickets #region-main,
+#page-blocks-ludifica-badges #region-main {
     background: url('pix/bg1_ludifica.png') no-repeat center center;
     background-color: #383a70;
     min-height: 650px;
@@ -75,8 +78,7 @@
 }
 
 .block_ludifica [ludifica-tab="profile"]::before {
-    /* stylelint-disable-next-line declaration-no-important */
-    background-position-x: -640px !important;
+    background-position-x: -640px;
 }
 
 .block_ludifica .playerstats {
@@ -110,7 +112,6 @@
     padding: 10px;
     border-radius: 30px;
     margin-bottom: 17px;
-    display: inline-block;
     transition: 0.1s ease;
     box-shadow: 0 0 16px 0 rgb(0 0 0 / 32%);
     font-weight: bold;
@@ -122,6 +123,12 @@
     background-color: #e59428;
 }
 
+.block_ludifica .playerstats .playerinfo div:last-child {
+    position: absolute;
+    margin-top: 7px;
+    right: 5px;
+}
+
 .block_ludifica .playerstats .playerinfo div:last-child > span {
     background-color: #3db1d1;
     padding: 15px;
@@ -130,12 +137,6 @@
     font-size: 17px;
     box-shadow: 0 0 16px 0 rgb(0 0 0 / 32%);
     font-weight: bold;
-}
-
-.block_ludifica .playerstats .playerinfo div:last-child {
-    position: absolute;
-    margin-top: 7px;
-    right: 5px;
 }
 
 .block_ludifica .eliza-btns [ludifica-tab="dynamichelps"] {
@@ -162,7 +163,7 @@
 }
 
 .block_ludifica .eliza-btns [ludifica-tab="dynamichelps"]:hover {
-    transform: scale(1.1, 1.1);
+    transform: scale(1.3, 1.3);
     box-shadow: 5px 5px 10px 0 rgb(45, 51, 81);
     background-color: #2d3351;
 }
@@ -222,21 +223,18 @@
     text-align: right;
 }
 
-#page-blocks-ludifica-avatars #region-main,
-#page-blocks-ludifica-tickets #region-main,
-#page-blocks-ludifica-badges #region-main {
-    min-height: 600px;
-    background: url('pix/bg2_ludifica.png') no-repeat center center;
-    background-color: #383a70;
-    background-blend-mode: multiply;
-}
-
 .block_ludifica .block_ludifica-tabs .fa,
 .block_ludifica .block-control-actions .fa,
+.block_ludifica .block-control-actions .fa,
+.block_ludifica .block-control-actions .dropdown-toggle::after,
 #page-blocks-ludifica-avatars .store-tabs > a,
 #page-blocks-ludifica-badges .store-tabs > a,
 #page-blocks-ludifica-tickets .store-tabs > a {
     color: #fff;
+}
+
+.block_ludifica .block-control-actions .dropdown-menu .fa {
+    color: #1d2125;
 }
 
 .block_ludifica-tabs > .active,
@@ -292,6 +290,7 @@
 #page-blocks-ludifica-avatars .block_ludifica .eliza-btns,
 #page-blocks-ludifica-badges .block_ludifica .eliza-btns {
     right: 62px;
+    margin-top: 200px;
 }
 
 .block_ludifica .tab-topbysite .eliza-btns .top-btn,
@@ -335,10 +334,7 @@
     top: -2px;
 }
 
-.block_ludifica .tab-topbycourse h3,
-.block_ludifica .tab-topbysite h3,
-.block_ludifica .tab-lastmonth h3,
-.block_ludifica .tab-dynamichelps h3 {
+.block_ludifica .block_ludifica-tabcontent h3 {
     color: #f6d052;
     font-weight: bolder;
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.531);
@@ -436,16 +432,12 @@
     margin-left: -15px;
 }
 
-.block_ludifica #avatars-list {
-    width: 80%;
-}
-
 .block_ludifica #avatars-list > div {
     transform: perspective(1px);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     transition-duration: 0.3s;
     transition-property: transform;
-    margin: 15px;
+    margin: 10px;
 }
 
 .block_ludifica #avatars-list > div:hover {
@@ -456,11 +448,6 @@
 #page-blocks-ludifica-tickets .store-tabs,
 #page-blocks-ludifica-badges .store-tabs {
     display: none;
-}
-
-.editing .store-tabs {
-    /* stylelint-disable-next-line declaration-no-important */
-    display: flex !important;
 }
 
 #page-blocks-ludifica-avatars .block_ludifica,
@@ -481,19 +468,17 @@
 }
 
 #page-blocks-ludifica-avatars #avatars-list .userhas .card-header {
-    background-color: #f6d052;
     /* stylelint-disable-next-line declaration-no-important */
     color: #31345e !important;
-    border: none;
 }
 
 #page-blocks-ludifica-avatars #avatars-list .oneavatar {
-    width: 320px;
+    width: 300px;
 }
 
 #page-blocks-ludifica-badges #badges-list .onebadge,
 #page-blocks-ludifica-tickets #tickets-list .oneticket {
-    max-width: 320px;
+    max-width: 300px;
 }
 
 #page-blocks-ludifica-avatars #avatars-list .oneavatar:hover .card {
@@ -534,13 +519,6 @@
     text-align: center;
     background: none;
     border: none;
-}
-
-#page-blocks-ludifica-avatars #avatars-list .inuse .card-header {
-    /* stylelint-disable-next-line declaration-no-important */
-    background-color: #3db1d1 !important;
-    /* stylelint-disable-next-line declaration-no-important */
-    color: #31345e !important;
 }
 
 #page-blocks-ludifica-avatars #avatars-list .oneavatar .btn-primary,
@@ -590,14 +568,15 @@
     border-top: 1px solid #2d3351;
 }
 
-
 .block_ludifica #avatars-list .inuse .description p,
 .block_ludifica #avatars-list .userhas .description p {
     color: #2d3351;
     border-top: 1px solid #2d3351;
 }
 
-#page-blocks-ludifica-tickets #tickets-list {
+#page-blocks-ludifica-tickets #tickets-list,
+#page-blocks-ludifica-badges #badges-list,
+#page-blocks-ludifica-avatars #avatars-list {
     width: 75%;
 }
 
@@ -681,10 +660,6 @@
 
 .block_ludifica p {
     font-size: 14px;
-}
-
-#page-blocks-ludifica-badges #badges-list {
-    width: 75%;
 }
 
 .block_ludifica #badges-list .card {
@@ -854,19 +829,14 @@
 }
 
 [data-region="blocks-column"] .block_ludifica .eliza-btns .eliza-btn,
-.drawer .block_ludifica .eliza-btns .eliza-btn {
+.drawer .block_ludifica .eliza-btns .eliza-btn,
+.drawer .block_ludifica .eliza-btns [ludifica-tab="dynamichelps"] {
     margin: 10px;
 }
 
 [data-region="blocks-column"] .block_ludifica .tab-profile .avatar-box,
 .drawer .block_ludifica .tab-profile .avatar-box {
-    /* stylelint-disable-next-line declaration-no-important */
-    margin-top: 315px !important;
-}
-
-[data-region="blocks-column"] .block_ludifica .tab-profile .avatar-box img,
-.drawer .block_ludifica .tab-profile .avatar-box img {
-    max-width: 100%;
+    margin-top: 315px;
 }
 
 [data-region="blocks-column"] .block_ludifica .tab-dynamichelps .pointsinfo,

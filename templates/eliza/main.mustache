@@ -51,7 +51,6 @@
                 <div class="card-header">
                     {{#str}} dynamic_help_title, block_ludifica {{/str}}
                 </div>
-
                 {{#helpvars}}
                 <div class="card-body">
                     <ul class="list-group">
@@ -179,11 +178,8 @@
                 <h3>{{#str}} dynamic_help-noactivities, block_ludifica {{/str}}</h3>
             </div>
             {{/hasactivities}}
-
             {{/pointsbyallmodules}}
-
             {{/insitecontext}}
-
         </div>
         {{>block_ludifica/eliza/buttonsbar}}
     </div>
@@ -234,13 +230,13 @@
             {{/topbycourse}}
             </tbody>
         </table>
-        {{>block_ludifica/eliza/buttonsbar}}
         {{/hasrowstopbycourse}}
         {{^hasrowstopbycourse}}
-            <p class="nottopyet">
-                {{#str}} nottopyet, block_ludifica {{/str}}
-            </p>
+        <p class="nottopyet">
+            {{#str}} nottopyet, block_ludifica {{/str}}
+        </p>
         {{/hasrowstopbycourse}}
+        {{>block_ludifica/eliza/buttonsbar}}
     </div>
     {{/hastopbycourse}}
 
@@ -268,13 +264,13 @@
             {{/topbysite}}
             </tbody>
         </table>
-        {{>block_ludifica/eliza/buttonsbar}}
         {{/hasrowstopbysite}}
         {{^hasrowstopbysite}}
-            <p class="nottopyet">
-                {{#str}} nottopyet, block_ludifica {{/str}}
-            </p>
+        <p class="nottopyet">
+            {{#str}} nottopyet, block_ludifica {{/str}}
+        </p>
         {{/hasrowstopbysite}}
+        {{>block_ludifica/eliza/buttonsbar}}
     </div>
     {{/hastopbysite}}
 
@@ -302,13 +298,13 @@
             {{/lastmonth}}{{thumbnail}}
             </tbody>
         </table>
-        {{>block_ludifica/eliza/buttonsbar}}
         {{/hasrowslastmonth}}
         {{^hasrowslastmonth}}
-            <p class="nottopyet">
-                {{#str}} nottopyet, block_ludifica {{/str}}
-            </p>
+        <p class="nottopyet">
+            {{#str}} nottopyet, block_ludifica {{/str}}
+        </p>
         {{/hasrowslastmonth}}
+        {{>block_ludifica/eliza/buttonsbar}}
     </div>
     {{/haslastmonth}}
 </div>
