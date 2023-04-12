@@ -32,14 +32,12 @@
     min-width: 44px;
     position: relative;
     left: 0;
-     /* stylelint-disable-next-line declaration-no-important */
-    background-color: #eaaf0a !important;
     content: '';
     border-radius: 30px;
     padding: 10px;
     margin-top: -10px;
     margin-left: -13px;
-    background: url('pix/icons.png') no-repeat center center / cover;
+    background: #eaaf0a url('pix/icons.png') no-repeat center center / cover;
     transform: rotate(0deg);
     transition: 0.3s ease;
     box-shadow: 0 0 0 0 #f6d052;
@@ -48,7 +46,7 @@
 .block_ludifica .general-buttons > a:hover,
 .block_ludifica .general-buttons > div:hover,
 .block_ludifica [ludifica-tab="profile"]:hover {
-    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
+    box-shadow: 0 0 10px 0 rgb(45, 51, 81);
     transform: scale(1.2, 1.2);
     background-color: #2d3351;
     color: #fff;
@@ -85,7 +83,7 @@
 }
 
 .block_ludifica [ludifica-tab="profile"]::before {
-     /* stylelint-disable-next-line declaration-no-important */
+    /* stylelint-disable-next-line declaration-no-important */
     background-position-x: -640px !important;
 }
 
@@ -173,7 +171,7 @@
 
 .block_ludifica .general-buttons [ludifica-tab="dynamichelps"]:hover {
     transform: scale(1.1, 1.1);
-    box-shadow: 5px 5px 10px 0 rgba(45,51,81,1);
+    box-shadow: 5px 5px 10px 0 rgb(45, 51, 81);
     background-color: #2d3351;
 }
 
@@ -197,7 +195,7 @@
     top: 49px;
     width: 123px;
     left: 0;
-    box-shadow: 0 10px 10px 0 rgba(45,51,81,1);
+    box-shadow: 0 10px 10px 0 rgb(45, 51, 81);
     border-radius: 10px 0 10px 10px;
     overflow: hidden;
 }
@@ -210,7 +208,7 @@
 .block_ludifica .ranking_buttons div button {
     background-color: #eaaf0a;
     border: 0 solid #fff;
-    border-bottom: 1px solid #ffffff;
+    border-bottom: 1px solid #fff;
     transition: 0.1s ease;
     font-size: 14px;
     font-weight: bolder;
@@ -311,7 +309,7 @@
 #page-blocks-ludifica-avatars .general-buttons .avatars-button,
 #page-blocks-ludifica-tickets .general-buttons .store-button,
 .block_ludifica .tab-profile .general-buttons [ludifica-tab="profile"] {
-    box-shadow: 0 0 10px 0 rgba(45,51,81,1);
+    box-shadow: 0 0 10px 0 rgb(45, 51, 81);
     transform: scale(1.2, 1.2);
     background-color: #2d3351;
     color: #fff;
@@ -328,7 +326,7 @@
 
 .block_ludifica .tab-dynamichelps .general-buttons [ludifica-tab="dynamichelps"] {
     transform: scale(1.1, 1.1);
-    box-shadow: 5px 5px 10px 0 rgba(45,51,81,1);
+    box-shadow: 5px 5px 10px 0 rgb(45, 51, 81);
     background-color: #2d3351;
     border: 2px solid #e59428;
     pointer-events: none;
@@ -381,7 +379,7 @@
 }
 
 .block_ludifica .generaltable .current-user {
-    background-color: none;
+    background: none;
     color: #2d3351;
 }
 
@@ -451,15 +449,15 @@
 }
 
 .block_ludifica #avatars-list > div {
-  transform: perspective(1px);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  transition-duration: 0.3s;
-  transition-property: transform;
-  margin: 15px;
+    transform: perspective(1px);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    transition-duration: 0.3s;
+    transition-property: transform;
+    margin: 15px;
 }
 
 .block_ludifica #avatars-list > div:hover {
-  transform: scale(1.1) rotate(2deg);
+    transform: scale(1.1) rotate(2deg);
 }
 
 #page-blocks-ludifica-avatars .store-tabs,
@@ -469,7 +467,7 @@
 }
 
 .editing .store-tabs {
-     /* stylelint-disable-next-line declaration-no-important */
+    /* stylelint-disable-next-line declaration-no-important */
     display: flex !important;
 }
 
@@ -492,7 +490,7 @@
 
 #page-blocks-ludifica-avatars #avatars-list .userhas .card-header {
     background-color: #f6d052;
-     /* stylelint-disable-next-line declaration-no-important */
+    /* stylelint-disable-next-line declaration-no-important */
     color: #31345e !important;
     border: none;
 }
@@ -514,7 +512,7 @@
 
 #page-blocks-ludifica-avatars #avatars-list .oneavatar:hover .card-header {
     background-color: #f6d052;
-     /* stylelint-disable-next-line declaration-no-important */
+    /* stylelint-disable-next-line declaration-no-important */
     color: #31345e !important;
 }
 
@@ -530,11 +528,12 @@
 }
 
 @keyframes hover-animation {
-    0%, 100% {
-      filter: contrast(100%) brightness(100%);
+    0%,
+    100% {
+        filter: contrast(100%) brightness(100%);
     }
     50% {
-      filter: contrast(150%) brightness(150%);
+        filter: contrast(150%) brightness(150%);
     }
 }
 
@@ -546,9 +545,9 @@
 }
 
 #page-blocks-ludifica-avatars #avatars-list .inuse .card-header {
-     /* stylelint-disable-next-line declaration-no-important */
+    /* stylelint-disable-next-line declaration-no-important */
     background-color: #3db1d1 !important;
-     /* stylelint-disable-next-line declaration-no-important */
+    /* stylelint-disable-next-line declaration-no-important */
     color: #31345e !important;
 }
 
@@ -565,7 +564,7 @@
 #page-blocks-ludifica-badges #badges-list .openshare:hover {
     background-color: #eaaf0a;
     color: #2d3351;
-    border: 1px solid #2d3351;;
+    border: 1px solid #2d3351;
 }
 
 #page-blocks-ludifica-avatars #avatars-list .card-footer,
@@ -629,7 +628,6 @@
     box-shadow: 0 0 0 0 #3db1d1;
     filter: contrast(100%) brightness(100%);
     transform: perspective(1px);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     transition-duration: 0.3s;
     transition-property: transform;
 }
@@ -704,7 +702,6 @@
     box-shadow: 0 0 0 0 #f6d052;
     filter: contrast(100%) brightness(100%);
     transform: perspective(1px);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     transition-duration: 0.3s;
     transition-property: transform;
 }
@@ -751,7 +748,7 @@
     margin-top: 15px;
 }
 
-.block_ludifica #badges-list .picture-box img{
+.block_ludifica #badges-list .picture-box img {
     display: block;
     margin: auto;
     margin-bottom: 15px;
@@ -875,7 +872,7 @@
 
 [data-region="blocks-column"] .block_ludifica .tab-profile .avatar-box,
 .drawer .block_ludifica .tab-profile .avatar-box {
-     /* stylelint-disable-next-line declaration-no-important */ 
+    /* stylelint-disable-next-line declaration-no-important */
     margin-top: 315px !important;
 }
 
@@ -944,7 +941,7 @@
     #page-blocks-ludifica-tickets .block_ludifica .general-buttons,
     #page-blocks-ludifica-avatars .block_ludifica .general-buttons,
     #page-blocks-ludifica-badges .block_ludifica .general-buttons {
-        right: 0px;
+        right: 0;
     }
 
     .block_ludifica #avatars-list {
