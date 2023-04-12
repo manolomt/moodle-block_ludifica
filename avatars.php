@@ -34,6 +34,13 @@ $confirm = optional_param('confirm', '', PARAM_ALPHANUM);   // Md5 confirmation 
 
 require_login();
 
+// Redirect if the user is a guest.
+if (isguestuser()) {
+    $url = new moodle_url($CFG->wwwroot);
+    redirect($url);
+    die();
+}
+
 $syscontext = context_system::instance();
 $hasmanage = has_capability('block/ludifica:manage', $syscontext);
 
