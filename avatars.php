@@ -54,6 +54,8 @@ $PAGE->set_title(get_string('avatars', 'block_ludifica'));
 $PAGE->requires->js_call_amd('block_ludifica/main', 'init');
 $PAGE->requires->js_call_amd('block_ludifica/avatars', 'init', [$USER->id, $player->general->avatarid]);
 
+\block_ludifica\controller::include_templatecss();
+
 $sortavailable = array('name', 'available', 'availabledate', 'cost');
 if (!in_array($sort, $sortavailable)) {
     $sort = 'name';

@@ -39,7 +39,7 @@ $string['avatarbust'] = 'Busto';
 $string['avatarbuy'] = 'Comprar';
 $string['avatarbuymessage'] = '¿Realmente desea comprar este avatar?';
 $string['avatardelete'] = 'Borrar avatar';
-$string['avatar_help'] = 'Acá podrás adquirir un avatar, algunos son gratuitos y otros se pueden comprar usando las monedas ganadas. Para usar un avatar que hayas adquirido debes dar clic en el botón Usar, este te identificará en tu área personal. El Avatar que esté en uso se indica con un ícono.';
+$string['avatar_help'] = 'Acá podrás adquirir un avatar, algunos son gratuitos y otros se pueden comprar usando las monedas ganadas. Para usar un avatar que hayas adquirido debes dar clic en el botón Usar, este te identificará en tu área personal.';
 $string['avatarnew'] = 'Nuevo avatar';
 $string['avatarnotuse'] = 'No puede usar este avatar';
 $string['avatarsources'] = 'Orígenes';
@@ -64,6 +64,7 @@ $string['badge_linkedin_bio'] = 'Compatir como publicación en Linkedin';
 $string['badge_share'] = 'Compatir';
 $string['badge_share_title'] = '¡Comparte tu logro!';
 $string['badge_twitter'] = 'Compatir en Twitter';
+$string['benefits'] = 'Beneficios';
 $string['bought'] = 'Comprado';
 $string['buy'] = 'Comprar';
 $string['buyticket'] = 'Comprar beneficio';
@@ -88,7 +89,7 @@ $string['dynamic_help-noactivities'] = 'No hay actividades que asignen puntos en
 $string['dynamic_help-pointsbyendcourse'] = 'Gana <strong>{$a} puntos</strong> por finalizar un curso.';
 $string['dynamic_help-pointsbyendcourseduration_site'] = 'Gana <strong>{$a}*X puntos</strong> al finalizar un curso, donde <strong>X</strong> es la duración recomendada del curso.';
 $string['dynamic_help-pointsbyendcourseduration'] = 'Gana <strong>{$a} puntos</strong> al finalizar este curso.';
-$string['dynamic_help-pointsrecurrentlogin'] = 'y gana <strong>{$a} puntos</strong>.';
+$string['dynamic_help-pointsrecurrentlogin'] = 'y ganar <strong>{$a} puntos</strong>.';
 $string['dynamic_help-pointsbyday'] = '¡Cuida tu racha! después de que inicies una, ganarás <strong>{$a} puntos cada día</strong>.';
 $string['dynamic_help-pointstocoins'] = 'Cada que consigas <strong>{$a} puntos</strong> se te otorgarán ';
 $string['dynamic_help-pointsbyendmodule'] = 'Obtén <strong>{$a} puntos</strong> por cada recurso que finalices en este curso.';
@@ -114,6 +115,7 @@ $string['given'] = 'Beneficio regalado';
 $string['giveticket'] = 'Regalar un beneficio';
 $string['giveticketmessage'] = 'Elija el contacto destino';
 $string['helptitle_pointsbycoursemodule'] = 'Este curso da puntos por completar los siguientes recursos:';
+$string['home'] = 'Inicio';
 $string['infodata'] = 'Datos relacionados (formato JSON)';
 $string['labellevel'] = 'Nivel {$a}';
 $string['lastmonth-ranking_help'] = 'Listado de los mejores jugadores del mes actual.';
@@ -126,7 +128,7 @@ El número de línea indica el orden del nivel.';
 $string['moreinfo'] = 'Más información';
 $string['maxtickets'] = 'Actualmente tiene la cantidad máxima de este beneficio.';
 $string['missingfield'] = 'El campo es requerido';
-$string['name_help'] = 'Personaliza el nombre que aparece en tu inicio dando clic ícono del lápiz. Una vez finalices presiona la tecla Enter para guardar los cambios. El nombre que definas aparecerá en la tabla de posiciones del sitio.';
+$string['name_help'] = 'Personaliza el nombre que aparece en tu inicio dando clic sobre el nombre. Una vez finalices presiona la tecla Enter para guardar los cambios. El nombre que definas aparecerá en la tabla de posiciones del sitio.';
 $string['newblocktitle'] = 'Ludifica';
 $string['newnickname'] = 'Nuevo valor para {$a}';
 $string['newticket'] = 'Nuevo beneficio';
@@ -168,6 +170,10 @@ $string['points_help'] = 'A medida que ganes puntos se te irán otorgando moneda
 $string['pointstocoins'] = 'Puntos para dar monedas';
 $string['pointstocoins_help'] = '';
 $string['positionhead'] = 'Pos';
+$string['ranking_button'] = 'Ranking';
+$string['ranking_course'] = 'Curso';
+$string['ranking_last'] = 'Último mes';
+$string['ranking_site'] = 'Sitio';
 $string['recorddeleted'] = 'Registro eliminado';
 $string['recurrentlogindays'] = 'Días de autenticación recurrente';
 $string['recurrentlogindays_help'] = 'Días de autenticación continua para iniciar la asignación de puntos. 0 para no usar esta característica.';
@@ -176,23 +182,23 @@ $string['searchticket'] = 'Buscar';
 $string['socialnetworks'] = 'Redes sociales para compartir logros';
 $string['socialnetworks_help'] = '<em>Una red social por línea con la siguiente estructura:</em><br /><br />
 twitter|https://twitter.com/intent/tweet?text={name}&url={url}<br /><br />
-Primero escribe el nombre de la red social en minúscula. Las llaves <em>{name}</em> y <em>{url}</em> se pueden incluir en tu URL.
-<br /><br />
+El nombre de la red social debe ser en minúscula.<br /><br />
 Adicionalmente, si quieres compartir un logro como certificado de LinkedIn, puedes usar la siguiente estructura:<br /><br />
-linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=<em>91534158</em>&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1<br /><br />
-<em>organizationId</em> es el único parametro del enlace que necesitas editar, este es el ID del perfil de LinkedIn de la organización que emite el certificado.<br /><br />
+linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&<strong>organizationId=<em>ID DE LA ORGANIZACIÓN</strong></em>&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1<br /><br />
+<em><strong>organizationId</strong></em> es el único parametro del enlace que necesitas editar, este es el ID del perfil de LinkedIn de la organización que emite el certificado, mira cómo obtenerlo <a href="https://bambuco.co/ludifica/ludifica-configuracion-general/#network" target="_blank">aquí</a>.<br /><br />
 <em>No es necesario que incluyas todas las llaves o parámetros.</em>';
 $string['socialnetworks_default'] = 'facebook|https://www.facebook.com/sharer/sharer.php?u={url}
 twitter|https://twitter.com/intent/tweet?text={name}&url={url}
-linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=91534158&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1';
+linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=ID DE LA ORGANIZACIÓN&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1';
 $string['settingsheaderpointscourse'] = 'Al finalizar un curso';
 $string['settingsheaderpointslogin'] = 'Puntos por autenticación';
 $string['settingsheaderpointsmodules'] = 'Puntos por módulos';
 $string['settingsheaderpointsother'] = 'Otros puntos';
 $string['settingsheadercoins'] = 'Monedas';
 $string['settingsheaderlevels'] = 'Niveles';
+$string['settingsheaderappearance'] = 'Apariencia';
+$string['settingsheaderbadges'] = 'Logros';
 $string['site-ranking_help'] = '¡Gana puntos y posiciónate en el ranking del sitio!';
-$string['store'] = 'Tienda';
 $string['tablastmonth'] = 'Pestaña Posiciones en el último mes';
 $string['tabprofile'] = 'Pestaña Perfil';
 $string['tabtitle_lastmonth'] = 'Posiciones en el último mes';
@@ -202,6 +208,8 @@ $string['tabtitle_topbysite'] = 'Posiciones en el sitio';
 $string['tabtitle_dynamichelps'] = 'Ayuda';
 $string['tabtopbycourse'] = 'Pestaña Posiciones en el curso';
 $string['tabtopbysite'] = 'Pestaña Posiciones en el sitio';
+$string['templatetype'] = 'Tema';
+$string['templatetype_help'] = 'Elige un tema para cambiar el aspecto del bloque.';
 $string['ticket'] = 'Beneficio';
 $string['ticketdelete'] = 'Borrar beneficio';
 $string['tickets'] = 'Beneficios';
@@ -211,7 +219,7 @@ $string['ticketcode'] = 'Código';
 $string['ticketcode_help'] = 'Si está vacío el sistema asigna un código aleatorio a cada usuario.';
 $string['ticketavailabledate'] = 'Fecha disponible';
 $string['ticketavailable'] = 'Cantidad disponible';
-$string['tickets_help'] = 'Adquiere un beneficio usando las monedas ganadas, estos pueden ser incentivos virtuales o del mundo real. El beneficio lo puedes conservar para uso personal y en caso de que así lo desees, tienes la opción de compartirlo con una persona de tu lista de contactos.';
+$string['tickets_help'] = 'Adquiere un beneficio usando las monedas ganadas, estos pueden ser incentivos virtuales o del mundo real. El beneficio lo puedes conservar para uso personal o si lo deseas, puedes compartirlo con una persona de tu lista de contactos.';
 $string['ticketnotavailable'] = 'The beneficio no está disponible ya, quizá fue usado en otra sesión.';
 $string['ticketbyuser'] = 'Cantidad máxima por usuario';
 $string['ticketsvalidate'] = 'Validar beneficio';

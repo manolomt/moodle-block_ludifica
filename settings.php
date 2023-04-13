@@ -155,12 +155,42 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtextarea($name, $title, $help, '');
     $generalsettings->add($setting);
 
+    // Badges section.
+    $name = 'block_ludifica/settingsheaderbadges';
+    $heading = get_string('settingsheaderbadges', 'block_ludifica');
+    $setting = new admin_setting_heading($name, $heading, '');
+    $generalsettings->add($setting);
+
     // Social networks.
     $name = 'block_ludifica/networks';
     $title = get_string('socialnetworks', 'block_ludifica');
     $help = get_string('socialnetworks_help', 'block_ludifica');
     $default = get_string('socialnetworks_default', 'block_ludifica');
     $setting = new admin_setting_configtextarea($name, $title, $help, $default);
+    $generalsettings->add($setting);
+
+    // Templates section.
+    $name = 'block_ludifica/settingsheaderappearance';
+    $heading = get_string('settingsheaderappearance', 'block_ludifica');
+    $setting = new admin_setting_heading($name, $heading, '');
+    $generalsettings->add($setting);
+
+     // Template type.
+    $options = ['default' => ''];
+
+    $path = $CFG->dirroot . '/blocks/ludifica/templates/';
+    $files = array_diff(scandir($path), array('..', '.'));
+
+    foreach ($files as $file) {
+        if (is_dir($path . $file)) {
+            $options[$file] = $file;
+        }
+    }
+
+    $name = 'block_ludifica/templatetype';
+    $title = get_string('templatetype', 'block_ludifica');
+    $help = get_string('templatetype_help', 'block_ludifica');
+    $setting = new admin_setting_configselect($name, $title, $help, 'default', $options);
     $generalsettings->add($setting);
 }
 

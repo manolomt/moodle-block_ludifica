@@ -1,0 +1,82 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template block_ludifica/eliza/buttonsbar
+
+    This template renders the template content area for a resource.
+
+    Example context (json):
+    {
+        "player": {
+            "fullname": "Pepito Perez",
+            "avatarurl": "https://moodle_wwwroot_url/some_image"
+        },
+        "baseurl": "https://moodle_wwwroot_url"
+    }
+}}
+
+<div class="eliza-btns">
+
+    {{#hasranking}}
+        <div class="top-btn eliza-btn">
+
+            <a><span>{{#str}} ranking_button, block_ludifica {{/str}}</span></a>
+
+            <div>
+                {{#haslastmonth}}
+                    <button ludifica-tab="lastmonth"><span>{{#str}} ranking_last, block_ludifica {{/str}}</span></button>
+                {{/haslastmonth}}
+
+                {{#hastopbycourse}}
+                    <button ludifica-tab="topbycourse"><span>{{#str}} ranking_course, block_ludifica {{/str}}</span></button>
+                {{/hastopbycourse}}
+
+                {{#hastopbysite}}
+                    <button ludifica-tab="topbysite"><span>{{#str}} ranking_site, block_ludifica {{/str}}</span></button>
+                {{/hastopbysite}}
+            </div>
+        </div>
+    {{/hasranking}}
+
+    <a href="{{baseurl}}/blocks/ludifica/badges.php" class="badges-btn eliza-btn"><span>{{#str}} badges, block_ludifica {{/str}}</span></a>
+
+    <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="avatars-btn eliza-btn {{#current}}current-user{{/current}}"><span>{{#str}} avatars, block_ludifica {{/str}}</span></a>
+    <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="store-btn eliza-btn {{#current}}current-user{{/current}}"><span>{{#str}} benefits, block_ludifica {{/str}}</span></a>
+
+
+    {{#layoutavatars}}
+        <a href="{{baseurl}}" class="eliza-btn" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
+    {{/layoutavatars}}
+
+    {{#layouttickets}}
+        <a href="{{baseurl}}" class="eliza-btn" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
+    {{/layouttickets}}
+
+    {{#layoutbadges}}
+        <a href="{{baseurl}}" class="eliza-btn" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
+    {{/layoutbadges}}
+
+
+    {{#ownprofile}}
+        <button class="eliza-btn" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></button>
+    {{/ownprofile}}
+
+    {{#hasdynamichelps}}
+    <button title="{{#str}} tabtitle_dynamichelps, block_ludifica {{/str}}" ludifica-tab="dynamichelps"><span>{{#pix}} e/row_props, core {{/pix}}</span></button>
+    {{/hasdynamichelps}}
+
+</div>
