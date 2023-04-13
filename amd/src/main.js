@@ -186,4 +186,3 @@ function($, str, ModalFactory, Alertc, Log) {
     };
 
 });
-

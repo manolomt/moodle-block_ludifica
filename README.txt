@@ -2,7 +2,7 @@ BLOCK Ludifica
 ============================
 A block to implement a gamification strategy in site level.
 
-Package tested in: 3.11+
+Package tested in: 3.11+, 4.0+, 4.1+
 
 QUICK INSTALL
 ==============
@@ -12,9 +12,13 @@ ABOUT
 =============
 Developed by: David Herney - david dot bernal at bambuco dot co
 GIT: https://github.com/bambuco/moodle-block_ludifica
+Documentation: https://bambuco.co/ludifica/
 
 IN VERSION
 =============
+2021031205:
+New feature: configurable templates
+
 2021031204:
 New points type: new user
 
