@@ -39,7 +39,7 @@ $string['avatarbust'] = 'Bust';
 $string['avatarbuy'] = 'Buy the avatar';
 $string['avatarbuymessage'] = 'Do you really want to buy this avatar?';
 $string['avatardelete'] = 'Delete Avatar';
-$string['avatar_help'] = 'Here you will be able to get an avatar, some of them are free and others can be purchased using the coins earned. To use an avatar you acquired you must click on the Use button, this will identify you in your personal area. The avatar in use is indicated with an icon.';
+$string['avatar_help'] = 'Here you will be able to get an avatar, some of them are free and others can be purchased using the coins earned. To use an avatar you acquired you must click on the Use button, this will identify you in your personal area.';
 $string['avatarnew'] = 'New avatar';
 $string['avatarnotuse'] = 'Not can use this avatar';
 $string['avatarsources'] = 'Sources';
@@ -127,7 +127,7 @@ The line number indicate the level order.';
 $string['moreinfo'] = 'More information';
 $string['maxtickets'] = 'You currently have the maximum quantity of this ticket.';
 $string['missingfield'] = 'This field is required';
-$string['name_help'] = 'Personalize the name that appears on your home page by clicking on the pencil icon. Once you have finished, press the Enter key to save the changes. The name that you define will appear in the site\'s position table.';
+$string['name_help'] = 'Personalize the name that appears on your home page by clicking on the name. Once you have finished, press the Enter key to save the changes. The name that you define will appear in the site\'s position table.';
 $string['newblocktitle'] = 'Gamification';
 $string['newnickname'] = 'new value to {$a}';
 $string['newticket'] = 'New ticket';
@@ -181,15 +181,14 @@ $string['searchticket'] = 'Search';
 $string['socialnetworks'] = 'Social networks to share badge';
 $string['socialnetworks_help'] = '<em>One network by line, with the next structure:</em><br /><br />
 twitter|https://twitter.com/intent/tweet?text={name}&url={url}<br /><br />
-irst write the site name lowecase. You can include {name} and {url} keys in your URL.
-<br /><br />
+Write the site name in lowecase.<br /><br />
 Additionally, if you want to include the share link of the achievement as a LinkedIn badge, you can use the next structure:<br /><br />
-linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=<em>91534158</em>&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1<br /><br />
-<em>organizationId</em> is the only param that you will need to edit, it\'s the ID of the LinkedIn profile of the organization issuing the certificate.<br /><br />
+linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&<strong>organizationId=<em>ORGANIZATION ID</strong></em>&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1<br /><br />
+<em><strong>organizationId</strong></em> is the only param that you will need to edit, it\'s the ID of the LinkedIn profile of the organization issuing the certificate, look how to get it <a href="https://bambuco.co/ludifica/ludifica-configuracion-general/#network" target="_blank">here</a>.<br /><br />
 <em>You do not need to include all keys or parameters.</em>';
 $string['socialnetworks_default'] = 'facebook|https://www.facebook.com/sharer/sharer.php?u={url}
 twitter|https://twitter.com/intent/tweet?text={name}&url={url}
-linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=91534158&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1';
+linkedin|https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name={name}&organizationId=ORGANIZATION ID&issueYear={badgeyear}&issueMonth={badgemonth}&certUrl={url}&certId={badgeid}&credentialDoesNotExpire=1';
 $string['settingsheaderpointscourse'] = 'When end course';
 $string['settingsheaderpointslogin'] = 'Login points';
 $string['settingsheaderpointsmodules'] = 'Modules points';
@@ -199,7 +198,7 @@ $string['settingsheaderlevels'] = 'Levels';
 $string['settingsheaderappearance'] = 'Appearance';
 $string['settingsheaderbadges'] = 'Badges';
 $string['site-ranking_help'] = 'Earn points and climb the site\'s ranking!';
-$string['store'] = 'Store';
+$string['benefits'] = 'Benefits';
 $string['tablastmonth'] = 'Tab Top on the last month';
 $string['tabprofile'] = 'Tab Profile';
 $string['tabtitle_lastmonth'] = 'Last month top';

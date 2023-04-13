@@ -1,15 +1,13 @@
-.block_ludifica,
-#page-blocks-ludifica-avatars #region-main,
-#page-blocks-ludifica-tickets #region-main,
-#page-blocks-ludifica-badges #region-main {
+.block_ludifica {
     background: url('pix/bg1_ludifica.png') no-repeat center center;
     background-color: #383a70;
     min-height: 650px;
     background-size: cover;
+    padding: 15px;
 }
 
 .block_ludifica .eliza-btn {
-    width: 123px;
+    width: 130px;
     height: 44px;
     margin-top: 15px;
     background-color: #f6d052;
@@ -225,11 +223,7 @@
 
 .block_ludifica .block_ludifica-tabs .fa,
 .block_ludifica .block-control-actions .fa,
-.block_ludifica .block-control-actions .fa,
-.block_ludifica .block-control-actions .dropdown-toggle::after,
-#page-blocks-ludifica-avatars .store-tabs > a,
-#page-blocks-ludifica-badges .store-tabs > a,
-#page-blocks-ludifica-tickets .store-tabs > a {
+.block_ludifica .block-control-actions .dropdown-toggle::after {
     color: #fff;
 }
 
@@ -238,19 +232,12 @@
 }
 
 .block_ludifica-tabs > .active,
+.block_ludifica-tabs > .active .fa,
 .block_ludifica-tabs > :hover[data-ref],
-#page-blocks-ludifica-avatars .store-tabs > .active,
-#page-blocks-ludifica-badges .store-tabs > .active,
-#page-blocks-ludifica-tickets .store-tabs > .active {
+.ludifica-page .store-tabs > .active {
     background-color: #3db1d1;
     border-color: #3db1d1;
     border-radius: 10px;
-}
-
-.block_ludifica-tabs > .active .fa,
-#page-blocks-ludifica-avatars .store-tabs > .active,
-#page-blocks-ludifica-badges .store-tabs > .active,
-#page-blocks-ludifica-tickets .store-tabs > .active {
     color: #2d3351;
 }
 
@@ -286,9 +273,7 @@
     margin-top: 252px;
 }
 
-#page-blocks-ludifica-tickets .block_ludifica .eliza-btns,
-#page-blocks-ludifica-avatars .block_ludifica .eliza-btns,
-#page-blocks-ludifica-badges .block_ludifica .eliza-btns {
+.ludifica-page .eliza-btns {
     right: 62px;
     margin-top: 200px;
 }
@@ -448,12 +433,6 @@
 #page-blocks-ludifica-tickets .store-tabs,
 #page-blocks-ludifica-badges .store-tabs {
     display: none;
-}
-
-#page-blocks-ludifica-avatars .block_ludifica,
-#page-blocks-ludifica-tickets .block_ludifica,
-#page-blocks-ludifica-badges .block_ludifica {
-    padding: 15px;
 }
 
 #page-blocks-ludifica-avatars #avatars-list .oneavatar .card {
@@ -897,9 +876,7 @@
         margin-top: 82px;
     }
 
-    #page-blocks-ludifica-tickets .block_ludifica .eliza-btns,
-    #page-blocks-ludifica-avatars .block_ludifica .eliza-btns,
-    #page-blocks-ludifica-badges .block_ludifica .eliza-btns {
+    .ludifica-page .eliza-btns {
         right: 0;
     }
 
