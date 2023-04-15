@@ -148,11 +148,11 @@ function($, str, ModalFactory, Alertc, Log) {
                 });
 
                 // Load dynamic buttons.
-                $blockcontent.find('[ludifica-tab]').each(function() {
+                $blockcontent.find('[data-ludifica-tab]').each(function() {
                     var $button = $(this);
 
                     $button.on('click', function() {
-                        var key = '.tab-' + $button.attr('ludifica-tab');
+                        var key = '.tab-' + $button.attr('data-ludifica-tab');
 
                         tabslist.forEach($tab => {
                             if ($tab.data('ref').indexOf(key) >= 0) {
