@@ -190,6 +190,14 @@ class main implements renderable, templatable {
             $pointsbycomplete = null;
         }
 
+        $pubicprofileid = optional_param('id', null, PARAM_INT);
+
+        if ($pubicprofileid === null || $pubicprofileid == $USER->id) {
+            $myprofile = true;
+        } else {
+            $myprofile = false;
+        }
+
         $defaultvariables = [
             'uniqueid' => $uniqueid,
             'hastabs' => count($this->tabs) > 1,
@@ -205,7 +213,8 @@ class main implements renderable, templatable {
             'haslevels' => count($levels) > 0,
             'hasranking' => $hasranking,
             'hasduration' => !empty($globalconfig->duration),
-            'pointsbycomplete' => $pointsbycomplete
+            'pointsbycomplete' => $pointsbycomplete,
+            'myprofile' => $myprofile
         ];
 
         if (in_array('profile', $this->tabs)) {

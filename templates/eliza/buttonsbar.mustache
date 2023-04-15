@@ -52,28 +52,13 @@
         </div>
     {{/hasranking}}
 
-    <a href="{{baseurl}}/blocks/ludifica/badges.php" class="badges-btn eliza-btn"><span>{{#str}} badges, block_ludifica {{/str}}</span></a>
+    {{#myprofile}}
+        <a href="{{baseurl}}/blocks/ludifica/badges.php" class="badges-btn eliza-btn"><span>{{#str}} badges, block_ludifica {{/str}}</span></a>
+        <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="avatars-btn eliza-btn {{#current}}current-user{{/current}}"><span>{{#str}} avatars, block_ludifica {{/str}}</span></a>
+        <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="store-btn eliza-btn {{#current}}current-user{{/current}}"><span>{{#str}} benefits, block_ludifica {{/str}}</span></a>
+    {{/myprofile}}
 
-    <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="avatars-btn eliza-btn {{#current}}current-user{{/current}}"><span>{{#str}} avatars, block_ludifica {{/str}}</span></a>
-    <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="store-btn eliza-btn {{#current}}current-user{{/current}}"><span>{{#str}} benefits, block_ludifica {{/str}}</span></a>
-
-
-    {{#layoutavatars}}
-        <a href="{{baseurl}}" class="eliza-btn" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
-    {{/layoutavatars}}
-
-    {{#layouttickets}}
-        <a href="{{baseurl}}" class="eliza-btn" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
-    {{/layouttickets}}
-
-    {{#layoutbadges}}
-        <a href="{{baseurl}}" class="eliza-btn" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
-    {{/layoutbadges}}
-
-
-    {{#ownprofile}}
-        <button class="eliza-btn" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></button>
-    {{/ownprofile}}
+    <a href="{{baseurl}}" class="eliza-btn" ludifica-tab="profile"><span>{{#str}} home, block_ludifica {{/str}}</span></a>
 
     {{#hasdynamichelps}}
     <button title="{{#str}} tabtitle_dynamichelps, block_ludifica {{/str}}" ludifica-tab="dynamichelps"><span>{{#pix}} e/row_props, core {{/pix}}</span></button>

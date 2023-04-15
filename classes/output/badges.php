@@ -96,7 +96,8 @@ class badges implements renderable, templatable {
             'sesskey' => sesskey(),
             'player' => $player->get_profile(),
             'layoutbadges' => true,
-            'badges' => $badges
+            'badges' => $badges,
+            'myprofile' => true
         ];
 
         return $defaultvariables;

@@ -192,9 +192,10 @@
         <div class="player_info">
             <div class="avatar-box">
                 <img src="{{avatarurl}}" alt="{{nickname}}" /><br />
-                <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right"
-                data-content="{{#str}}level_help, block_ludifica{{/str}}"></button><br />
-                <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="btn btn-secondary">{{#str}} avatars, block_ludifica {{/str}}</a>
+                {{#myprofile}}
+                    <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}level_help, block_ludifica{{/str}}"></button><br />
+                    <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="btn btn-secondary">{{#str}} avatars, block_ludifica {{/str}}</a>
+                {{/myprofile}}
             </div>
             <div>
                 <div>
@@ -222,7 +223,9 @@
                         </p>
                     {{/tickets}}
                     </div>
-                    <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="btn btn-secondary">{{#str}} tickets, block_ludifica {{/str}}</a>
+                    {{#myprofile}}
+                        <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="btn btn-secondary">{{#str}} tickets, block_ludifica {{/str}}</a>
+                    {{/myprofile}}
                 </div>
                 <div class="badges-box mt-3">
                     <h2> {{#str}} badges, block_ludifica {{/str}} </h2>
@@ -238,7 +241,9 @@
                         </p>
                     {{/badges}}
                     </div>
-                    <a href="{{baseurl}}/blocks/ludifica/badges.php" class="btn btn-secondary">{{#str}} badges, block_ludifica {{/str}}</a>
+                    {{#myprofile}}
+                        <a href="{{baseurl}}/blocks/ludifica/badges.php" class="btn btn-secondary">{{#str}} badges, block_ludifica {{/str}}</a>
+                    {{/myprofile}}
                 </div>
             </div>
         </div>
