@@ -190,6 +190,7 @@ class main implements renderable, templatable {
             $pointsbycomplete = null;
         }
 
+        //Hide buttons when it's not the current public user profile
         $pubicprofileid = optional_param('id', null, PARAM_INT);
 
         if ($pubicprofileid === null || $pubicprofileid == $USER->id) {
