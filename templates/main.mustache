@@ -32,15 +32,18 @@
 }}
 
 <div id="{{uniqueid}}" class="block_ludifica-content" data-observe-resizes>
-    {{#hastabs}}
-        <div class="block_ludifica-tabs">
-        {{#tabs}}
-            <div data-ref="#{{uniqueid}} .tab-{{key}}" title="{{title}}" class="{{state}}">
-                <i class="fa fa-{{icon}}"></i>
-            </div>
-        {{/tabs}}
-        </div>
-    {{/hastabs}}
+
+        {{#myprofile}}
+            {{#hastabs}}
+                <div class="block_ludifica-tabs">
+                {{#tabs}}
+                    <div data-ref="#{{uniqueid}} .tab-{{key}}" title="{{title}}" class="{{state}}">
+                        <i class="fa fa-{{icon}}"></i>
+                    </div>
+                {{/tabs}}
+                </div>
+            {{/hastabs}}
+        {{/myprofile}}
 
     {{#hasdynamichelps}}
     <div class="tab-dynamichelps block_ludifica-tabcontent {{dynamichelpsstate}}">
@@ -208,25 +211,27 @@
                     {{>block_ludifica/playerstats}}
 
                 </div>
-                <div class="tickets-box">
-                    <h2> {{#str}} tickets, block_ludifica {{/str}} </h2>
-                    <div>
-                    {{#tickets}}
-                        <div class="oneticket">
-                            <img src="{{thumbnail}}" title="{{name}}" />
-                            <div class="count">{{count}}</div>
+                {{#myprofile}}
+                    <div class="tickets-box">
+                        <h2> {{#str}} tickets, block_ludifica {{/str}} </h2>
+                        <div>
+                        {{#tickets}}
+                            <div class="oneticket">
+                                <img src="{{thumbnail}}" title="{{name}}" />
+                                <div class="count">{{count}}</div>
+                            </div>
+                        {{/tickets}}
+                        {{^tickets}}
+                            <p class="notavailableyet">
+                                {{#str}} notusertickets, block_ludifica {{/str}}
+                            </p>
+                        {{/tickets}}
                         </div>
-                    {{/tickets}}
-                    {{^tickets}}
-                        <p class="notavailableyet">
-                            {{#str}} notusertickets, block_ludifica {{/str}}
-                        </p>
-                    {{/tickets}}
+                        {{#myprofile}}
+                            <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="btn btn-secondary">{{#str}} tickets, block_ludifica {{/str}}</a>
+                        {{/myprofile}}
                     </div>
-                    {{#myprofile}}
-                        <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="btn btn-secondary">{{#str}} tickets, block_ludifica {{/str}}</a>
-                    {{/myprofile}}
-                </div>
+                {{/myprofile}}
                 <div class="badges-box mt-3">
                     <h2> {{#str}} badges, block_ludifica {{/str}} </h2>
                     <div>

@@ -32,15 +32,18 @@
 }}
 
 <div id="{{uniqueid}}" class="block_ludifica-content" data-observe-resizes>
-    {{#hastabs}}
-        <div class="block_ludifica-tabs">
-        {{#tabs}}
-            <div data-ref="#{{uniqueid}} .tab-{{key}}" title="{{title}}" class="{{state}}">
-                <i class="fa fa-{{icon}}"></i>
+
+    {{#myprofile}}
+        {{#hastabs}}
+            <div class="block_ludifica-tabs">
+            {{#tabs}}
+                <div data-ref="#{{uniqueid}} .tab-{{key}}" title="{{title}}" class="{{state}}">
+                    <i class="fa fa-{{icon}}"></i>
+                </div>
+            {{/tabs}}
             </div>
-        {{/tabs}}
-        </div>
-    {{/hastabs}}
+        {{/hastabs}}
+    {{/myprofile}}
 
     {{#hasdynamichelps}}
     <div class="tab-dynamichelps block_ludifica-tabcontent {{dynamichelpsstate}}">

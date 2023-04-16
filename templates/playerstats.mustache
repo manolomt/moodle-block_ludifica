@@ -31,7 +31,11 @@
 {{#player}}
 <h3>
     <span>{{#str}} numpoints, block_ludifica, {{points}} {{/str}}</span>
-    <span>{{#str}} numcoins, block_ludifica, {{coins}} {{/str}}</span>
+
+    {{#myprofile}}
+        <span>{{#str}} numcoins, block_ludifica, {{coins}} {{/str}}</span>
+    {{/myprofile}}
+
     <span>{{#str}} labellevel, block_ludifica, {{#level}}{{name}}{{/level}} {{/str}}</span>
     <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}points_help, block_ludifica{{/str}}"></button>
 </h3>
