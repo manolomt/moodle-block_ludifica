@@ -134,7 +134,8 @@ class tickets implements renderable, templatable {
             'storetabs' => \block_ludifica\controller::get_storetabs('tickets'),
             'sesskey' => sesskey(),
             'player' => $player->get_profile(),
-            'layouttickets' => true
+            'layouttickets' => true,
+            'myprofile' => true
         ];
 
         return $defaultvariables;

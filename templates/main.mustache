@@ -32,15 +32,18 @@
 }}
 
 <div id="{{uniqueid}}" class="block_ludifica-content" data-observe-resizes>
-    {{#hastabs}}
-        <div class="block_ludifica-tabs">
-        {{#tabs}}
-            <div data-ref="#{{uniqueid}} .tab-{{key}}" title="{{title}}" class="{{state}}">
-                <i class="fa fa-{{icon}}"></i>
+
+    {{#myprofile}}
+        {{#hastabs}}
+            <div class="block_ludifica-tabs">
+            {{#tabs}}
+                <div data-ref="#{{uniqueid}} .tab-{{key}}" title="{{title}}" class="{{state}}">
+                    <i class="fa fa-{{icon}}"></i>
+                </div>
+            {{/tabs}}
             </div>
-        {{/tabs}}
-        </div>
-    {{/hastabs}}
+        {{/hastabs}}
+    {{/myprofile}}
 
     {{#hasdynamichelps}}
     <div class="tab-dynamichelps block_ludifica-tabcontent {{dynamichelpsstate}}">
@@ -192,38 +195,44 @@
         <div class="player_info">
             <div class="avatar-box">
                 <img src="{{avatarurl}}" alt="{{nickname}}" /><br />
-                <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right"
-                data-content="{{#str}}level_help, block_ludifica{{/str}}"></button><br />
-                <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="btn btn-secondary">{{#str}} avatars, block_ludifica {{/str}}</a>
+                {{#myprofile}}
+                    <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}level_help, block_ludifica{{/str}}"></button><br />
+                    <a href="{{baseurl}}/blocks/ludifica/avatars.php" class="btn btn-secondary">{{#str}} avatars, block_ludifica {{/str}}</a>
+                {{/myprofile}}
             </div>
             <div>
                 <div>
                     <h2>
                         {{{nickcontent}}}
-                        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right"
-                        data-content="{{#str}}name_help, block_ludifica{{/str}}"></button>
+                        {{#myprofile}}
+                            <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}name_help, block_ludifica{{/str}}"></button>
+                        {{/myprofile}}
                     </h2>
 
                     {{>block_ludifica/playerstats}}
 
                 </div>
-                <div class="tickets-box">
-                    <h2> {{#str}} tickets, block_ludifica {{/str}} </h2>
-                    <div>
-                    {{#tickets}}
-                        <div class="oneticket">
-                            <img src="{{thumbnail}}" title="{{name}}" />
-                            <div class="count">{{count}}</div>
+                {{#myprofile}}
+                    <div class="tickets-box">
+                        <h2> {{#str}} tickets, block_ludifica {{/str}} </h2>
+                        <div>
+                        {{#tickets}}
+                            <div class="oneticket">
+                                <img src="{{thumbnail}}" title="{{name}}" />
+                                <div class="count">{{count}}</div>
+                            </div>
+                        {{/tickets}}
+                        {{^tickets}}
+                            <p class="notavailableyet">
+                                {{#str}} notusertickets, block_ludifica {{/str}}
+                            </p>
+                        {{/tickets}}
                         </div>
-                    {{/tickets}}
-                    {{^tickets}}
-                        <p class="notavailableyet">
-                            {{#str}} notusertickets, block_ludifica {{/str}}
-                        </p>
-                    {{/tickets}}
+                        {{#myprofile}}
+                            <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="btn btn-secondary">{{#str}} tickets, block_ludifica {{/str}}</a>
+                        {{/myprofile}}
                     </div>
-                    <a href="{{baseurl}}/blocks/ludifica/tickets.php" class="btn btn-secondary">{{#str}} tickets, block_ludifica {{/str}}</a>
-                </div>
+                {{/myprofile}}
                 <div class="badges-box mt-3">
                     <h2> {{#str}} badges, block_ludifica {{/str}} </h2>
                     <div>
@@ -238,7 +247,9 @@
                         </p>
                     {{/badges}}
                     </div>
-                    <a href="{{baseurl}}/blocks/ludifica/badges.php" class="btn btn-secondary">{{#str}} badges, block_ludifica {{/str}}</a>
+                    {{#myprofile}}
+                        <a href="{{baseurl}}/blocks/ludifica/badges.php" class="btn btn-secondary">{{#str}} badges, block_ludifica {{/str}}</a>
+                    {{/myprofile}}
                 </div>
             </div>
         </div>

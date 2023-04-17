@@ -103,7 +103,8 @@ class avatars implements renderable, templatable {
             'storetabs' => \block_ludifica\controller::get_storetabs('avatars'),
             'sesskey' => sesskey(),
             'player' => $player->get_profile(),
-            'layoutavatars' => true
+            'layoutavatars' => true,
+            'myprofile' => true
         ];
 
         return $defaultvariables;
