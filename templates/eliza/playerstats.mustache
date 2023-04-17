@@ -35,8 +35,12 @@ along with Moodle. If not, see
         <span>{{#str}} labellevel, block_ludifica, {{#level}}{{name}}{{/level}} {{/str}}</span>
     </div>
     <div>
-        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="left" data-content="{{#str}}points_help, block_ludifica{{/str}}"></button>
+        {{#myprofile}}
+            <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="left" data-content="{{#str}}points_help, block_ludifica{{/str}}"></button>
+        {{/myprofile}}
+
         <span>{{#str}} numpoints, block_ludifica, {{points}} {{/str}}</span>
+
         {{#myprofile}}
             <span>{{#str}} numcoins, block_ludifica, {{coins}} {{/str}}</span>
         {{/myprofile}}

@@ -193,8 +193,9 @@
         <div class="playerstats">
             <div>
                 <h2>
-                    <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="left"
-                    data-content="{{#str}}name_help, block_ludifica{{/str}}"></button>
+                    {{#myprofile}}
+                        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="left" data-content="{{#str}}name_help, block_ludifica{{/str}}"></button>
+                    {{/myprofile}}
                     {{{nickcontent}}}
                 </h2>
                 {{>block_ludifica/eliza/playerstats}}

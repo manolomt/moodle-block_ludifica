@@ -33,17 +33,17 @@
 
 <div id="{{uniqueid}}" class="block_ludifica-content" data-observe-resizes>
 
-        {{#myprofile}}
-            {{#hastabs}}
-                <div class="block_ludifica-tabs">
-                {{#tabs}}
-                    <div data-ref="#{{uniqueid}} .tab-{{key}}" title="{{title}}" class="{{state}}">
-                        <i class="fa fa-{{icon}}"></i>
-                    </div>
-                {{/tabs}}
+    {{#myprofile}}
+        {{#hastabs}}
+            <div class="block_ludifica-tabs">
+            {{#tabs}}
+                <div data-ref="#{{uniqueid}} .tab-{{key}}" title="{{title}}" class="{{state}}">
+                    <i class="fa fa-{{icon}}"></i>
                 </div>
-            {{/hastabs}}
-        {{/myprofile}}
+            {{/tabs}}
+            </div>
+        {{/hastabs}}
+    {{/myprofile}}
 
     {{#hasdynamichelps}}
     <div class="tab-dynamichelps block_ludifica-tabcontent {{dynamichelpsstate}}">
@@ -204,8 +204,9 @@
                 <div>
                     <h2>
                         {{{nickcontent}}}
-                        <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right"
-                        data-content="{{#str}}name_help, block_ludifica{{/str}}"></button>
+                        {{#myprofile}}
+                            <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}name_help, block_ludifica{{/str}}"></button>
+                        {{/myprofile}}
                     </h2>
 
                     {{>block_ludifica/playerstats}}
