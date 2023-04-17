@@ -16,6 +16,9 @@ Documentation: https://bambuco.co/ludifica/
 
 IN VERSION
 =============
+2021031206:
+Change visualization in not own profile
+
 2021031205:
 New feature: configurable templates
 
