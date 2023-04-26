@@ -302,6 +302,66 @@ class controller {
         return true;
     }
 
+    public static function points_userupdated($userid) {
+
+            global $DB;
+
+            $points = get_config('block_ludifica', 'pointsbychangemail');
+            $pattern = get_config('block_ludifica', 'initialemailpattern');
+
+            if(empty($points) || empty($pattern))
+	           return false;
+
+            $conditions = [
+            	'userid' => $userid,
+                'courseid' => SITEID,
+            	'type' => player::POINTS_TYPE_EMAILCHANGED
+            ];
+
+	    if($DB->record_exists('block_ludifica_userpoints', $conditions)) 
+	       return false;
+
+	    $user_email = $DB->get_field('user', 'email', array('id' => $userid));
+	    
+	    if(strpos($user_email, $pattern) !== FALSE)
+	       return false;	    
+
+            $player = new player($userid);
+            //$totalpoints = $points + $player->general->points;
+            
+	    $infodata = new \stdClass();
+	    $infodata->userid = $userid;
+	    $infodata->email = $user_email;
+
+            $player->add_points($points, SITEID, player::POINTS_TYPE_EMAILCHANGED, $infodata, $userid);
+	    
+	    // Save specific course points.
+/*
+            $userpoints = new \stdClass();
+            $userpoints->courseid = SITEID;
+	    $userpoints->userid = $relateduserid;
+            $userpoints->type = controller::POINTS_TYPE_EMAILCHANGED;
+            $userpoints->points = $points;
+            $userpoints->timecreated = time();
+            $userpoints->infodata = json_encode($infodata);
+
+            $userpoints->id = $DB->insert_record('block_ludifica_userpoints', $userpoints, true);
+	    $userpoints->infodata = $infodata;
+
+            $player = new player($relateduserid);
+            $totalpoints = $points + $player->general->points;
+
+            // We need put coins before points because current points are used to calc the coins earned.
+            self::coinsbypoints($userid, SITEID, $points);
+
+            // Save the global/total points.
+            $DB->update_record('block_ludifica_general', ['id' => $player->general->id,
+                                                          'points' => $totalpoints,
+							  'timeupdated' => time()]);
+ */
+	    return true;
+    }
+
     /**
      * Calc current level according the points.
      *
