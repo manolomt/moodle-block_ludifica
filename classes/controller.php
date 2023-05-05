@@ -302,6 +302,12 @@ class controller {
         return true;
     }
 
+    /**
+     * Add points when a user changes the initial asigned email and sets a valid email address.
+     *
+     * @param int $userid
+     * @return bool True if points was assigned, false in other case.
+    */
     public static function points_userupdated($userid) {
 
             global $DB;
@@ -323,11 +329,11 @@ class controller {
 
 	    $user_email = $DB->get_field('user', 'email', array('id' => $userid));
 	    
-	    if(strpos($user_email, $pattern) !== FALSE)
+	    if(strpos($user_email, $pattern) !== false) {
 	       return false;	    
+	    }
 
             $player = new player($userid);
-            //$totalpoints = $points + $player->general->points;
             
 	    $infodata = new \stdClass();
 	    $infodata->userid = $userid;
@@ -335,30 +341,6 @@ class controller {
 
             $player->add_points($points, SITEID, player::POINTS_TYPE_EMAILCHANGED, $infodata, $userid);
 	    
-	    // Save specific course points.
-/*
-            $userpoints = new \stdClass();
-            $userpoints->courseid = SITEID;
-	    $userpoints->userid = $relateduserid;
-            $userpoints->type = controller::POINTS_TYPE_EMAILCHANGED;
-            $userpoints->points = $points;
-            $userpoints->timecreated = time();
-            $userpoints->infodata = json_encode($infodata);
-
-            $userpoints->id = $DB->insert_record('block_ludifica_userpoints', $userpoints, true);
-	    $userpoints->infodata = $infodata;
-
-            $player = new player($relateduserid);
-            $totalpoints = $points + $player->general->points;
-
-            // We need put coins before points because current points are used to calc the coins earned.
-            self::coinsbypoints($userid, SITEID, $points);
-
-            // Save the global/total points.
-            $DB->update_record('block_ludifica_general', ['id' => $player->general->id,
-                                                          'points' => $totalpoints,
-							  'timeupdated' => time()]);
- */
 	    return true;
     }
 
