@@ -98,6 +98,10 @@ $string['dynamic_help-recurrentlogindays'] = 'Ingresa <strong>{$a} días</strong
 $string['dynamic_help_title'] = 'Obtén puntos por los siguientes criterios';
 $string['edit'] = 'Editar';
 $string['editnickname'] = 'Editar el alias';
+$string['emailinvalidpattern'] ='Regla para correo inválido';
+$string['emailinvalidpattern_help'] = 'Para que al cambiar el correo un usuario obtenga puntos, el nuevo correo <strong>no puede coincidir</strong> con el patrón regular que acá se configure. Por ejemplo: con el patrón <em>@([^@]*\\\\.)?(pruebas\\\\.mail)</em> no obtendrán puntos quienes definan un correo <em>@pruebas.mail</em>.';
+$string['emailvalidpattern'] ='Regla para correo válido';
+$string['emailvalidpattern_help'] = 'Para que al cambiar el correo un usuario obtenga puntos, el nuevo correo <strong>debe cumplir</strong> con el patrón regular que acá se configure. Por ejemplo: con el patrón <em>@([^@]*\\\\.)?(pruebas\\\\.mail)</em> solamente obtendrán puntos quienes definan un correo <em>@pruebas.mail</em>.';
 $string['enabled'] = 'Activado';
 $string['errornotavatardata'] = 'No hay datos del avatar';
 $string['errornotticketdata'] = 'No hay datos del beneficio';
@@ -154,6 +158,11 @@ $string['overcomelevel'] = 'Obten <strong>{$a->maxpoints} puntos</strong> para a
 $string['owner'] = 'Dueño';
 $string['playerhead'] = 'Jugador';
 $string['pointshead'] = 'Puntos';
+$string['pointsbychangemail'] = 'Puntos por actualizar el correo';
+$string['pointsbychangemail_help'] = 'Puntos asignados al usuario cuando modifica su perfil y establece una dirección de correo válida.
+Solamente se da puntos una vez por usuario.
+Si no se configura ninguna regla, se dará puntos por este concepto sin importar el nuevo correo.
+Se pueden configurar las dos o una única regla (válido o no válido) y se darán puntos por este concepto si el correo cumple con la regla configurada.';
 $string['pointsbyendcourse'] = 'Puntos por completar un curso';
 $string['pointsbyendcourse_help'] = '';
 $string['pointsbyendcoursemodule'] = 'Puntos por completar un módulo';

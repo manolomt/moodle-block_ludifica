@@ -122,6 +122,27 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtext($name, $title, $help, 0, PARAM_INT);
     $generalsettings->add($setting);
 
+    // Change to valid email points.
+    $name = 'block_ludifica/pointsbychangemail';
+    $title = get_string('pointsbychangemail', 'block_ludifica');
+    $help = get_string('pointsbychangemail_help', 'block_ludifica');
+    $setting = new admin_setting_configtext($name, $title, $help, 0, PARAM_INT);
+    $generalsettings->add($setting);
+
+    // Email valid pattern.
+    $name = 'block_ludifica/emailvalidpattern';
+    $title = get_string('emailvalidpattern', 'block_ludifica');
+    $help = get_string('emailvalidpattern_help', 'block_ludifica');
+    $setting = new admin_setting_configtext($name, $title, $help, '', PARAM_TEXT);
+    $generalsettings->add($setting);
+
+    // Email invalid pattern.
+    $name = 'block_ludifica/emailinvalidpattern';
+    $title = get_string('emailinvalidpattern', 'block_ludifica');
+    $help = get_string('emailinvalidpattern_help', 'block_ludifica');
+    $setting = new admin_setting_configtext($name, $title, $help, '', PARAM_TEXT);
+    $generalsettings->add($setting);
+
     // Coins section.
     $name = 'block_ludifica/settingsheadercoins';
     $heading = get_string('settingsheadercoins', 'block_ludifica');

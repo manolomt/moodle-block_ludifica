@@ -303,6 +303,63 @@ class controller {
     }
 
     /**
+     * Add points when a user changes the initial asigned email and sets a valid email address.
+     *
+     * @param int $userid
+     * @return bool True if points was assigned, false in other case.
+    */
+    public static function points_userupdated($userid) {
+        global $DB;
+
+        $points = get_config('block_ludifica', 'pointsbychangemail');
+        $validpattern = get_config('block_ludifica', 'emailvalidpattern');
+        $invalidpattern = get_config('block_ludifica', 'emailinvalidpattern');
+
+        if(empty($points)) {
+            return false;
+        }
+
+        $conditions = [
+            'userid' => $userid,
+            'courseid' => SITEID,
+            'type' => player::POINTS_TYPE_EMAILCHANGED
+        ];
+
+        // If exists not add points again.
+	    if ($DB->record_exists('block_ludifica_userpoints', $conditions)) {
+            return false;
+        }
+
+	    $useremail = $DB->get_field('user', 'email', ['id' => $userid]);
+
+        // If the email address is not valid, do not assign points.
+        // Validate useremail with pattern as a regular expresion.
+        if (!empty($invalidpattern)) {
+            $pattern = '/' . $invalidpattern . '$/';
+            if (preg_match($pattern, $useremail) === 1) {
+                return false;
+            }
+        }
+
+        if (!empty($validpattern)) {
+            $pattern = '/' . $validpattern . '$/';
+            if (preg_match($pattern, $useremail) !== 1) {
+                return false;
+            }
+        }
+
+        $player = new player($userid);
+
+	    $infodata = new \stdClass();
+	    $infodata->userid = $userid;
+	    $infodata->email = $useremail;
+
+        $player->add_points($points, SITEID, player::POINTS_TYPE_EMAILCHANGED, $infodata, $userid);
+
+	    return true;
+    }
+
+    /**
      * Calc current level according the points.
      *
      * @param int $points
