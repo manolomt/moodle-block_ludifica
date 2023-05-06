@@ -88,13 +88,13 @@ class observer {
     /**
      * Calculate points when changes his profile with a valid email.
      *
-     * @param \core\event\base $event
+     * @param \core\event\user_updated $event
      */
     public static function user_updated(\core\event\user_updated $event) {
 
-	   // Only if a user changes his own profile...
-	   if($event->userid == $event->relateduserid)
-	      controller::points_userupdated($event->userid);
-
+        // Only if a user changes his own profile.
+        if ($event->userid == $event->relateduserid) {
+            controller::points_userupdated($event->userid);
+        }
     }
 }

@@ -307,7 +307,7 @@ class controller {
      *
      * @param int $userid
      * @return bool True if points was assigned, false in other case.
-    */
+     */
     public static function points_userupdated($userid) {
         global $DB;
 
@@ -315,7 +315,7 @@ class controller {
         $validpattern = get_config('block_ludifica', 'emailvalidpattern');
         $invalidpattern = get_config('block_ludifica', 'emailinvalidpattern');
 
-        if(empty($points)) {
+        if (empty($points)) {
             return false;
         }
 
@@ -326,11 +326,11 @@ class controller {
         ];
 
         // If exists not add points again.
-	    if ($DB->record_exists('block_ludifica_userpoints', $conditions)) {
+        if ($DB->record_exists('block_ludifica_userpoints', $conditions)) {
             return false;
         }
 
-	    $useremail = $DB->get_field('user', 'email', ['id' => $userid]);
+        $useremail = $DB->get_field('user', 'email', ['id' => $userid]);
 
         // If the email address is not valid, do not assign points.
         // Validate useremail with pattern as a regular expresion.
@@ -350,13 +350,13 @@ class controller {
 
         $player = new player($userid);
 
-	    $infodata = new \stdClass();
-	    $infodata->userid = $userid;
-	    $infodata->email = $useremail;
+        $infodata = new \stdClass();
+        $infodata->userid = $userid;
+        $infodata->email = $useremail;
 
         $player->add_points($points, SITEID, player::POINTS_TYPE_EMAILCHANGED, $infodata, $userid);
 
-	    return true;
+        return true;
     }
 
     /**
