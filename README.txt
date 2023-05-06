@@ -16,6 +16,9 @@ Documentation: https://bambuco.co/ludifica/
 
 IN VERSION
 =============
+2021031207:
+New point allocation criteria: valid / invalid mail change
+
 2021031206:
 Change visualization in not own profile
 
