@@ -178,7 +178,7 @@ class main implements renderable, templatable {
         // Check if duration is defined and configured.
         if (!empty($globalconfig->duration)) {
             if (!empty($pointsbycomplete->courseduration) && !empty($globalconfig->pointsbyendcourse)) {
-                $pointsbycomplete->totalpoints = $globalconfig->pointsbyendcourse * $pointsbycomplete->courseduration;
+                $pointsbycomplete->totalpoints = $globalconfig->pointsbyendcourse * (int)$pointsbycomplete->courseduration;
             } else {
                 // Not points for this course.
                 $pointsbycomplete = null;
