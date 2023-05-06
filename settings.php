@@ -44,7 +44,7 @@ if ($ADMIN->fulltree) {
     if (is_array($fields) && count($fields) > 0) {
 
         foreach ($customfields as $k => $v) {
-            $fields[$k] = $v;
+            $fields[$k] = format_string($v, true);
         }
     }
 
