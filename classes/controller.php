@@ -309,38 +309,53 @@ class controller {
      * @return bool True if points was assigned, false in other case.
     */
     public static function points_userupdated($userid) {
+        global $DB;
 
-            global $DB;
+        $points = get_config('block_ludifica', 'pointsbychangemail');
+        $validpattern = get_config('block_ludifica', 'emailvalidpattern');
+        $invalidpattern = get_config('block_ludifica', 'emailinvalidpattern');
 
-            $points = get_config('block_ludifica', 'pointsbychangemail');
-            $pattern = get_config('block_ludifica', 'initialemailpattern');
+        if(empty($points)) {
+            return false;
+        }
 
-            if(empty($points) || empty($pattern))
-	           return false;
+        $conditions = [
+            'userid' => $userid,
+            'courseid' => SITEID,
+            'type' => player::POINTS_TYPE_EMAILCHANGED
+        ];
 
-            $conditions = [
-            	'userid' => $userid,
-                'courseid' => SITEID,
-            	'type' => player::POINTS_TYPE_EMAILCHANGED
-            ];
+        // If exists not add points again.
+	    if ($DB->record_exists('block_ludifica_userpoints', $conditions)) {
+            return false;
+        }
 
-	    if($DB->record_exists('block_ludifica_userpoints', $conditions)) 
-	       return false;
+	    $useremail = $DB->get_field('user', 'email', ['id' => $userid]);
 
-	    $user_email = $DB->get_field('user', 'email', array('id' => $userid));
-	    
-	    if(strpos($user_email, $pattern) !== false) {
-	       return false;	    
-	    }
+        // If the email address is not valid, do not assign points.
+        // Validate useremail with pattern as a regular expresion.
+        if (!empty($invalidpattern)) {
+            $pattern = '/' . $invalidpattern . '$/';
+            if (preg_match($pattern, $useremail) === 1) {
+                return false;
+            }
+        }
 
-            $player = new player($userid);
-            
+        if (!empty($validpattern)) {
+            $pattern = '/' . $validpattern . '$/';
+            if (preg_match($pattern, $useremail) !== 1) {
+                return false;
+            }
+        }
+
+        $player = new player($userid);
+
 	    $infodata = new \stdClass();
 	    $infodata->userid = $userid;
-	    $infodata->email = $user_email;
+	    $infodata->email = $useremail;
 
-            $player->add_points($points, SITEID, player::POINTS_TYPE_EMAILCHANGED, $infodata, $userid);
-	    
+        $player->add_points($points, SITEID, player::POINTS_TYPE_EMAILCHANGED, $infodata, $userid);
+
 	    return true;
     }
 
