@@ -86,15 +86,15 @@ class observer {
     }
 
     /**
-     * Calculate points when changes his profile with a valid email.
+     * Calculate points when a user answers an embed question.
      *
      * @param \core\event\base $event
      */
-    public static function user_updated(\core\event\user_updated $event) {
+    public static function question_attempted(\filter_embedquestion\event\question_attempted $event) {
 
-	   // Only if a user changes his own profile...
-	   if($event->userid == $event->relateduserid)
-	      controller::points_userupdated($event->userid);
-
+        controller::points_embedquestion($event->userid,
+                                         $event->courseid,
+                                         $event->contextid,
+                                         $event->objectid);
     }
 }

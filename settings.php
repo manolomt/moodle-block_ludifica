@@ -54,6 +54,33 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configselect($name, $title, $help, '', $fields);
     $generalsettings->add($setting);
 
+    // Embed question points.
+    $name = 'block_ludifica/pointsbyembedquestion';
+    $title = get_string('pointsbyembedquestion', 'block_ludifica');
+    $help = get_string('pointsbyembedquestion_help', 'block_ludifica');
+    $setting = new admin_setting_configtext($name, $title, $help, 0, PARAM_INT);
+    $generalsettings->add($setting);
+
+    // Points when answer correctly any embed question?
+    $name = 'block_ludifica/pointsbyembedquestion_all';
+    $title = get_string('pointsbyembedquestion_all', 'block_ludifica');
+    $help = get_string('pointsbyembedquestion_all_help', 'block_ludifica');
+    $setting = new admin_setting_configcheckbox($name, $title, $help, 0);
+    $generalsettings->add($setting);
+
+    // List of question idnumber.
+    $name = 'block_ludifica/pointsbyembedquestion_ids';
+    $title = get_string('pointsbyembedquestion_ids', 'block_ludifica');
+    $help = get_string('pointsbyembedquestion_ids_help', 'block_ludifica');
+    $setting = new admin_setting_configtext($name, $title, $help, '', PARAM_TEXT);
+    $generalsettings->add($setting);
+
+    // Points when answer partialy an embed question?
+    $name = 'block_ludifica/pointsbyembedquestion_partial';
+    $title = get_string('pointsbyembedquestion_partial', 'block_ludifica');
+    $help = get_string('pointsbyembedquestion_partial_help', 'block_ludifica');
+    $setting = new admin_setting_configcheckbox($name, $title, $help, 0);
+
     // Complete course points.
     $name = 'block_ludifica/pointsbyendcourse';
     $title = get_string('pointsbyendcourse', 'block_ludifica');
@@ -120,20 +147,6 @@ if ($ADMIN->fulltree) {
     $title = get_string('pointsbynewuser', 'block_ludifica');
     $help = get_string('pointsbynewuser_help', 'block_ludifica');
     $setting = new admin_setting_configtext($name, $title, $help, 0, PARAM_INT);
-    $generalsettings->add($setting);
-
-    // Change to valid email points.
-    $name = 'block_ludifica/pointsbychangemail';
-    $title = get_string('pointsbychangemail', 'block_ludifica');
-    $help = get_string('pointsbychangemail_help', 'block_ludifica');
-    $setting = new admin_setting_configtext($name, $title, $help, 0, PARAM_INT);
-    $generalsettings->add($setting);
-
-    // Initial email pattern.
-    $name = 'block_ludifica/initialemailpattern';
-    $title = get_string('initialemailpattern', 'block_ludifica');
-    $help = get_string('initialemailpattern_help', 'block_ludifica');
-    $setting = new admin_setting_configtext($name, $title, $help, 'noreply', PARAM_TEXT);
     $generalsettings->add($setting);
 
     // Coins section.
