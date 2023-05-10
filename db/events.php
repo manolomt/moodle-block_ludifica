@@ -43,7 +43,11 @@ $observers = [
         'callback' => 'block_ludifica\observer::course_module_completion_updated'
     ],
     [
-        'eventname'   => '\filter_embedquestion\event\question_attempted',
-        'callback'    => 'block_ludifica\observer::question_attempted'
+        'eventname' => '\core\event\user_updated',
+        'callback' => 'block_ludifica\observer::user_updated'
+    ],
+    [
+        'eventname' => '\filter_embedquestion\event\question_attempted',
+        'callback' => 'block_ludifica\observer::question_attempted'
     ]
 ];

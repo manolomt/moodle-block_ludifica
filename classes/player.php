@@ -67,6 +67,11 @@ class player extends entity {
     const POINTS_TYPE_EMBEDQUESTION = 'embedquestion';
 
     /**
+     * var string Points by change email.
+     */
+    const POINTS_TYPE_EMAILCHANGED = 'emailchanged';
+
+    /**
      * @var string Points by recurrent login.
      */
     const COINS_TYPE_BYPOINTS = 'bypoints';

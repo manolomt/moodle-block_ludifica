@@ -97,6 +97,10 @@ $string['dynamic_help-recurrentlogindays'] = 'Login <strong>{$a} days</strong> t
 $string['dynamic_help_title'] = 'Obtain points for the following items';
 $string['edit'] = 'Edit';
 $string['editnickname'] = 'Edit the nickname';
+$string['emailinvalidpattern'] = 'Invalid email pattern';
+$string['emailinvalidpattern_help'] = 'For a user to get points by changing email, the new email <strong>cannot meet</strong> the regular pattern that is set here. For example: with the pattern <em>@([^@]*\\\\.)?(tests\\\\.mail)</em>, those who define an email <em>@tests.mail</em> will not get points.';
+$string['emailvalidpattern'] = 'Valid email pattern';
+$string['emailvalidpattern_help'] = 'In order for a user to obtain points when changing the email, the new email <strong>must comply</strong> with the regular pattern that is configured here. For example: with the pattern <em>@([^@]*\\\\.)?(tests\\\\.mail)</em> only those who define an email <em>@tests.mail</em> will get points.';
 $string['enabled'] = 'Enabled';
 $string['errornotavatardata'] = 'Not avatar data';
 $string['errornotticketdata'] = 'Not ticket data';
@@ -161,6 +165,11 @@ $string['pointsbyembedquestion_ids'] = 'Idnumber of "<i>Embed question</i>" that
 $string['pointsbyembedquestion_ids_help'] = 'Comma separated list of idnumbers';
 $string['pointsbyembedquestion_partial'] = 'Points if embed question is answered partially correct?';
 $string['pointsbyembedquestion_partial_help'] = 'If the question is answered only partially correct, give points?';
+$string['pointsbychangemail'] = 'Points by change email';
+$string['pointsbychangemail_help'] = 'Points assigned to the user when he modifies his profile and establishes a valid email address.
+Points are only awarded once per user.
+If no rule is configured, points will be given for this concept regardless of new mail.
+You can configure both or a single rule (valid or invalid) and points will be given for this concept if the email complies with the configured rule.';
 $string['pointsbyendcourse'] = 'Points by complete a course';
 $string['pointsbyendcourse_help'] = '';
 $string['pointsbyendcoursemodule'] = 'Points by complete a course module';
