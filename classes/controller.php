@@ -387,12 +387,17 @@ class controller {
         $iscorrect = false;
         $ispartialcorrect = false;
         $questionidnumber = $DB->get_field('question', 'idnumber', array('id' => $objectid));
-        $questionusagequery = "SELECT questionusageid FROM {report_embedquestion_attempt} WHERE userid = $userid AND contextid = $contextid AND embedid LIKE '%/$questionidnumber'";
+        $questionusagequery = "SELECT questionusageid FROM {report_embedquestion_attempt}
+                               WHERE userid = $userid AND
+                                     contextid = $contextid AND
+                                     embedid LIKE '%/$questionidnumber'";
         $questionusageresult = $DB->get_record_sql($questionusagequery);
         $questionusageid = $questionusageresult->questionusageid;
 
         // We check first response only.
-        $questionattemptsquery = "SELECT MIN(id) as minid FROM {question_attempts} WHERE questionusageid = $questionusageid AND responsesummary IS NOT NULL";
+        $questionattemptsquery = "SELECT MIN(id) as minid FROM {question_attempts}
+                                  WHERE questionusageid = $questionusageid AND
+                                        responsesummary IS NOT NULL";
         $questionattemptsresult = $DB->get_record_sql($questionattemptsquery);
         $questionattemptid = $questionattemptsresult->minid;
 
@@ -411,32 +416,32 @@ class controller {
         $allembedquestions = get_config('block_ludifica', 'pointsbyembedquestion_all');
         $partialquestions = get_config('block_ludifica', 'pointsbyembedquestion_partial');
 
-        //All embed questions in site or only a list of them give points to users?
+        // All embed questions in site or only a list of them give points to users?
         if ($allembedquestions) {
             if ($iscorrect || $ispartialcorrect) {
                 $points = get_config('block_ludifica', 'pointsbyembedquestion');
             } else {
                    $points = 0;
             }
-        } else  {
-                $questionlist = get_config('block_ludifica', 'pointsbyembedquestion_ids');
+        } else {
+               $questionlist = get_config('block_ludifica', 'pointsbyembedquestion_ids');
 
-                if (!empty($questionlist)) {
-                    $questionsarray = array();
-                    $questionlistwithoutspaces = str_replace(' ', '', $questionlist);
-                    $questionlistasarray = explode(',', $questionlistwithoutspaces);
-                    foreach ($questionlistasarray as $questionitem) {
-                             $questionsarray[] = $questionitem;
-                    }
+               if (!empty($questionlist)) {
+                   $questionsarray = array();
+                   $questionlistwithoutspaces = str_replace(' ', '', $questionlist);
+                   $questionlistasarray = explode(',', $questionlistwithoutspaces);
+                   foreach ($questionlistasarray as $questionitem) {
+                            $questionsarray[] = $questionitem;
+                   }
 
-                    if (in_array($questionidnumber, $questionsarray)) {
-                        if ($iscorrect || $ispartialcorrect) {
-                            $points = get_config('block_ludifica', 'pointsbyembedquestion');
+                   if (in_array($questionidnumber, $questionsarray)) {
+                       if ($iscorrect || $ispartialcorrect) {
+                           $points = get_config('block_ludifica', 'pointsbyembedquestion');
                         } else {
                                $points = 0;
                         }
-                    } // question is in given list.
-                } // there is question list. 
+                   } // question is in given list.
+               } // there is question list.
         } // not all questiona give points.
 
         if ($points != -1) {
