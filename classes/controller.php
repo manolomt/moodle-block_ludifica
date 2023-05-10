@@ -405,12 +405,12 @@ class controller {
                                array('questionattemptid' => $questionattemptid, 'state' => 'gradedright'))) {
             $iscorrect = true;
         }
-        
+
         if ($DB->record_exists('question_attempt_steps',
                                   array('questionattemptid' => $questionattemptid, 'state' => 'gradedpartial'))) {
             $ispartialcorrect = true;
         }
-        
+
         $points = -1;
 
         $allembedquestions = get_config('block_ludifica', 'pointsbyembedquestion_all');
@@ -421,27 +421,27 @@ class controller {
             if ($iscorrect || $ispartialcorrect) {
                 $points = get_config('block_ludifica', 'pointsbyembedquestion');
             } else {
-                   $points = 0;
+                $points = 0;
             }
         } else {
-               $questionlist = get_config('block_ludifica', 'pointsbyembedquestion_ids');
+            $questionlist = get_config('block_ludifica', 'pointsbyembedquestion_ids');
 
-               if (!empty($questionlist)) {
-                   $questionsarray = array();
-                   $questionlistwithoutspaces = str_replace(' ', '', $questionlist);
-                   $questionlistasarray = explode(',', $questionlistwithoutspaces);
-                   foreach ($questionlistasarray as $questionitem) {
-                            $questionsarray[] = $questionitem;
-                   }
+            if (!empty($questionlist)) {
+                $questionsarray = array();
+                $questionlistwithoutspaces = str_replace(' ', '', $questionlist);
+                $questionlistasarray = explode(',', $questionlistwithoutspaces);
+                foreach ($questionlistasarray as $questionitem) {
+                        $questionsarray[] = $questionitem;
+                }
 
-                   if (in_array($questionidnumber, $questionsarray)) {
-                       if ($iscorrect || $ispartialcorrect) {
-                           $points = get_config('block_ludifica', 'pointsbyembedquestion');
-                        } else {
-                               $points = 0;
-                        }
-                   } // question is in given list.
-               } // there is question list.
+                if (in_array($questionidnumber, $questionsarray)) {
+                    if ($iscorrect || $ispartialcorrect) {
+                        $points = get_config('block_ludifica', 'pointsbyembedquestion');
+                    } else {
+                        $points = 0;
+                    }
+                } // question is in given list.
+            } // there is question list.
         } // not all questiona give points.
 
         if ($points != -1) {
@@ -454,7 +454,7 @@ class controller {
 
             return true;
         } else {
-               return false;
+            return false;
         }
     }
 
