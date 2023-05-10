@@ -101,7 +101,7 @@ class observer {
     /**
      * Calculate points when a user answers an embed question.
      *
-     * @param \core\event\base $event
+     * @param \filter_embedquestion\event\question_attempted $event
      */
     public static function question_attempted(\filter_embedquestion\event\question_attempted $event) {
 

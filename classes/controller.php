@@ -373,8 +373,8 @@ class controller {
 
         $conditions = [
                       'userid' => $userid,
-                          'courseid' => $courseid,
-                          'objectid' => $objectid,
+                      'courseid' => $courseid,
+                      'objectid' => $objectid,
                       'type' => player::POINTS_TYPE_EMBEDQUESTION
         ];
         $record = $DB->get_record('block_ludifica_userpoints', $conditions);
@@ -384,61 +384,60 @@ class controller {
             return false;
         }
 
-        ///////////////////////////////////
-        //Check: is there a better way to do this? 
-        $is_correct = false;
-        $is_partial_correct = false;
-        $question_idnumber = $DB->get_field('question','idnumber', array('id' => $objectid));
-        $question_usage_query = "SELECT questionusageid FROM {report_embedquestion_attempt} WHERE userid = $userid AND contextid = $contextid AND embedid LIKE '%/$question_idnumber'";
-        $question_usage_result = $DB->get_record_sql($question_usage_query);
-        $question_usage_id = $question_usage_result->questionusageid;
+        $iscorrect = false;
+        $ispartialcorrect = false;
+        $questionidnumber = $DB->get_field('question', 'idnumber', array('id' => $objectid));
+        $questionusagequery = "SELECT questionusageid FROM {report_embedquestion_attempt} WHERE userid = $userid AND contextid = $contextid AND embedid LIKE '%/$questionidnumber'";
+        $questionusageresult = $DB->get_record_sql($questionusagequery);
+        $questionusageid = $questionusageresult->questionusageid;
 
-        // We check first response only
-        $question_attempts_query = "SELECT MIN(id) as minid FROM {question_attempts} WHERE questionusageid = $question_usage_id AND responsesummary IS NOT NULL";
-        $question_attempts_result = $DB->get_record_sql($question_attempts_query);
-        $question_attempt_id = $question_attempts_result->minid;
+        // We check first response only.
+        $questionattemptsquery = "SELECT MIN(id) as minid FROM {question_attempts} WHERE questionusageid = $questionusageid AND responsesummary IS NOT NULL";
+        $questionattemptsresult = $DB->get_record_sql($questionattemptsquery);
+        $questionattemptid = $questionattemptsresult->minid;
 
-        if ($DB->record_exists('question_attempt_steps', array('questionattemptid' => $question_attempt_id, 'state' => 'gradedright')))
-            $is_correct = true;
-           if ($DB->record_exists('question_attempt_steps', array('questionattemptid' => $question_attempt_id, 'state' => 'gradedpartial')))
-               $is_partial_correct = true;
-        ///////////////////////////////////
-
+        if ($DB->record_exists('question_attempt_steps',
+                               array('questionattemptid' => $questionattemptid, 'state' => 'gradedright'))) {
+            $iscorrect = true;
+        }
+        
+        if ($DB->record_exists('question_attempt_steps',
+                                  array('questionattemptid' => $questionattemptid, 'state' => 'gradedpartial'))) {
+            $ispartialcorrect = true;
+        }
+        
         $points = -1;
 
-        $all_embed_questions = get_config('block_ludifica', 'pointsbyembedquestion_all');
-        $partial_questions = get_config('block_ludifica', 'pointsbyembedquestion_partial');
+        $allembedquestions = get_config('block_ludifica', 'pointsbyembedquestion_all');
+        $partialquestions = get_config('block_ludifica', 'pointsbyembedquestion_partial');
 
         //All embed questions in site or only a list of them give points to users?
-        if ($all_embed_questions) {
-            if ($is_correct || $is_partial_correct) {
+        if ($allembedquestions) {
+            if ($iscorrect || $ispartialcorrect) {
                 $points = get_config('block_ludifica', 'pointsbyembedquestion');
+            } else {
+                   $points = 0;
             }
-            else {
-                 $points = 0;
-            }
-        } // all embed questions give points
-        else  {
-              $question_list = get_config('block_ludifica', 'pointsbyembedquestion_ids');
+        } else  {
+                $questionlist = get_config('block_ludifica', 'pointsbyembedquestion_ids');
 
-              if (!empty($question_list)) {
-                  $questions_array = array();
-                  $question_list_without_spaces = str_replace(' ', '', $question_list);
-                  $question_list_as_array = explode(',', $question_list_without_spaces);
-                  foreach ($question_list_as_array as $question_item) {
-                           $questions_array[] = $question_item;
-                  }
+                if (!empty($questionlist)) {
+                    $questionsarray = array();
+                    $questionlistwithoutspaces = str_replace(' ', '', $questionlist);
+                    $questionlistasarray = explode(',', $questionlistwithoutspaces);
+                    foreach ($questionlistasarray as $questionitem) {
+                             $questionsarray[] = $questionitem;
+                    }
 
-                  if (in_array($question_idnumber, $questions_array)) {
-                     if ($is_correct || $is_partial_correct) {
-                         $points = get_config('block_ludifica', 'pointsbyembedquestion');
-                     } // is_correct
-                     else {
-                          $points = 0;
-                     }
-                  } // question in array
-              } // There is question list 
-        } // Not all questiona give points
+                    if (in_array($questionidnumber, $questionsarray)) {
+                        if ($iscorrect || $ispartialcorrect) {
+                            $points = get_config('block_ludifica', 'pointsbyembedquestion');
+                        } else {
+                               $points = 0;
+                        }
+                    } // question is in given list.
+                } // there is question list. 
+        } // not all questiona give points.
 
         if ($points != -1) {
             // Save specific course points.
@@ -449,9 +448,8 @@ class controller {
             $player->add_points($points, $courseid, player::POINTS_TYPE_EMBEDQUESTION, $infodata, $objectid);
 
             return true;
-        }
-        else {
-              return false;
+        } else {
+               return false;
         }
     }
 
