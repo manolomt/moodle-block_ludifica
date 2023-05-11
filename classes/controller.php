@@ -389,9 +389,10 @@ class controller {
         $questionidnumber = $DB->get_field('question', 'idnumber', array('id' => $objectid));
         $questionusagequery = "SELECT questionusageid FROM {report_embedquestion_attempt}
                                WHERE userid = $userid AND
-                                     contextid = $contextid AND
-                                     embedid LIKE '%/$questionidnumber'";
-        $questionusageresult = $DB->get_record_sql($questionusagequery);
+                                     contextid = $contextid AND ".
+                                     $DB->sql_like('embedid', ':questionidnumber');
+        $questionusageresult = $DB->get_record_sql($questionusagequery,
+                                                   ['questionidnumber' => "%/$questionidnumber"]);
         $questionusageid = $questionusageresult->questionusageid;
 
         // We check first response only.
@@ -440,9 +441,9 @@ class controller {
                     } else {
                         $points = 0;
                     }
-                } // question is in given list.
-            } // there is question list.
-        } // not all questiona give points.
+                } // Question is in given list.
+            } // There is question list.
+        } // Not all questions give points.
 
         if ($points != -1) {
             // Save specific course points.
