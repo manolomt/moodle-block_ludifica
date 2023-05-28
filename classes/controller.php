@@ -900,7 +900,7 @@ class controller {
     public static function trigger(string $eventname, \core\event\base $event) : void {
 
         // Get available criteria to improve.
-        $availablecriteria = \block_ludifica\controller::badges_improvecriteria();
+        $availablecriteria = self::badges_improvecriteria();
 
         foreach ($availablecriteria as $criteria) {
             $method = 'event_' . $eventname;

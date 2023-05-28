@@ -69,8 +69,8 @@ abstract class base {
     /**
      * Decode the improve criteria settings.
      *
-     * @param object $data Form data.
-     * @return string
+     * @param string $settings Criteria encode settings.
+     * @return object|null
      */
     public function decode_settings(string $settings) : ?object {
         return @json_decode($settings);
