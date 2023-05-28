@@ -24,6 +24,8 @@
 
 require_once('../../config.php');
 
+$msg = optional_param('msg', '', PARAM_TEXT);
+
 require_login();
 
 // Redirect if the user is a guest.
@@ -65,6 +67,11 @@ echo $OUTPUT->header();
 $renderable = new \block_ludifica\output\badges();
 
 $renderer = $PAGE->get_renderer('block_ludifica');
+
+if (!empty($msg)) {
+    $msg = get_string($msg, 'block_ludifica');
+    echo $OUTPUT->notification($msg, 'notifysuccess');
+}
 
 echo $renderer->render($renderable);
 

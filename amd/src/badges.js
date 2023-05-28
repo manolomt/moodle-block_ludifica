@@ -22,24 +22,15 @@
  */
 
 define(['jquery',
-        'core/notification',
         'core/str',
-        'core/ajax',
-        'block_ludifica/alertc',
-        'block_ludifica/player',
         'core/modal_factory',
         'core/log',
         'core/templates'],
 function($,
-        Notification,
         Str,
-        Ajax,
-        Alertc,
-        Player,
         ModalFactory,
         Log,
         Templates) {
-
 
     // Load used strings.
     var strings = [
@@ -83,7 +74,7 @@ function($,
 
             var $badge = $('#badge-' + badge.id);
 
-            badge.thumbnail = $badge.find('.thumbnail').attr('src');
+            badge.thumbnail = $badge.find('.picture-box .shareurl img').attr('src');
             badge.url = $badge.find('.shareurl').attr('href');
             badge.name = $badge.data('name');
             badge.year = $badge.data('year');
@@ -115,38 +106,32 @@ function($,
                 };
             });
 
-            /**
-             * Copy badge link to clipboard
-             */
-            function copyclipboard() {
+            Templates.render('block_ludifica/sharebadge', badgedata).then(function(content) {
+                ModalFactory.create({
+                    title: $title,
+                    body: content
+                }).done(function(modal) {
+                    var $modalBody = modal.getBody();
 
-                $('input[name="badgelink"]').on('click', function() {
-                    var $input = $(this);
-                    $input.select();
-                    document.execCommand("copy");
+                    $modalBody.find('input[name="badgelink"]').on('click', function() {
 
-                    var $msg = $('<div class="msg-badgelink-copy">' + s.badgelinkcopiedtoclipboard + '</div>');
+                        var $input = $(this);
+                        $input.select();
+                        document.execCommand("copy");
 
-                    $input.parent().append($msg);
-                    window.setTimeout(function() {
-                        $msg.remove();
-                    }, 1600);
+                        var $msg = $('<div class="msg-badgelink-copy">' + s.badgelinkcopiedtoclipboard + '</div>');
+
+                        $input.parent().append($msg);
+                        window.setTimeout(function() {
+                            $msg.remove();
+                        }, 1600);
+                    });
+
+                    return modal.show();
+                }).fail(function(e) {
+                    Log.debug('Error creating modal share buttons');
+                    Log.debug(e);
                 });
-            }
-
-            ModalFactory.create({
-                title: $title,
-                body: Templates.render('block_ludifica/sharebadge', badgedata),
-            }).then(function(modal) {
-                return modal.show().then(function() {
-
-                    copyclipboard();
-
-                    return true;
-                });
-            }).fail(function(e) {
-                Log.debug('Error creating modal share buttons');
-                Log.debug(e);
             });
             return true;
         });

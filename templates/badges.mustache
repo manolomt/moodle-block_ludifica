@@ -30,20 +30,26 @@
 <button class="ludifica_help icon fa fa-question-circle" data-toggle="popover" data-container="body" data-placement="right" data-content="{{#str}}badges_help, block_ludifica{{/str}}"></button>
 <div id="badges-list" class="row">
     {{#badges}}
-    <div id="badge-{{id}}" class="col-lg-6 onebadge" data-name="{{name}}" data-uniquehash="{{uniquehash}}" data-year="{{year}}" data-month="{{month}}">
+    <div id="badge-{{id}}" class="col-lg-6 onebadge {{#inactive}}notactive{{/inactive}}" data-name="{{name}}" data-uniquehash="{{uniquehash}}" data-year="{{year}}" data-month="{{month}}">
         <div class="card">
-            <h3 class="card-header">{{name}} <span class="unavailablewarning">{{unavailablewarning}}</span></h3>
+            <h3 class="card-header">
+                {{name}}
+                {{#unavailablewarning}}<span class="unavailablewarning">{{unavailablewarning}}</span>{{/unavailablewarning}}
+            </h3>
             <div class="card-body badgecontent {{unavailable}}">
                 <div class="picture-box">
-                    <a href="{{url}}" class="shareurl">
-                        <img src="{{thumbnail}}" class="thumbnail" alt="{{name}}" />
-                    </a>
+                    {{#url}}<a href="{{url}}" class="shareurl">{{/url}}
+                        {{{thumbnail}}}
+                    {{#url}}</a>{{/url}}
                 </div>
                 <div class="info-box">
                     <p><em>{{description}}</em></p>
-                    <button class="btn btn-secondary openshare" data-badgeid="{{id}}">{{#pix}} i/publish, core {{/pix}} {{#str}} badge_share, block_ludifica {{/str}}</button>
-                    <div class="share_badge_modal block_ludifica-modal" title="{{#str}} badge_share_title, block_ludifica {{/str}}">
-                    </div>
+                    {{^inactive}}
+                        <button class="btn btn-secondary openshare" data-badgeid="{{id}}">
+                            {{#pix}} i/publish, core {{/pix}} {{#str}} badge_share, block_ludifica {{/str}}
+                        </button>
+                    {{/inactive}}
+                    <div class="share_badge_modal block_ludifica-modal" title="{{#str}} badge_share_title, block_ludifica {{/str}}"></div>
                     <div class="expirebadge">
                         {{#dateexpire}}
                         <hr>
@@ -52,6 +58,22 @@
                     </div>
                 </div>
             </div>
+            {{#canedit}}
+                <div class="card-footer improvecriteria">
+                    <h5>{{#str}} improvecriteria, block_ludifica {{/str}}</h5>
+                    {{#currentcriteria}}
+                        <span class="badge bg-primary rounded-pill" data-type="{{type}}">{{label}}</span>
+                    {{/currentcriteria}}
+                    {{^hascriteria}}
+                        {{#str}} improvecriterianot, block_ludifica {{/str}}
+                    {{/hascriteria}}
+                    {{#inactive}}
+                        <a class="btn btn-link" href="{{baseurl}}/blocks/ludifica/improvecriteria.php?badgeid={{id}}">
+                            {{#pix}} i/settings, core {{/pix}}
+                        </a>
+                    {{/inactive}}
+                </div>
+            {{/canedit}}
         </div>
     </div>
     {{/badges}}

@@ -44,6 +44,7 @@ class observer {
 
         controller::points_completecourse($event->relateduserid, $event->courseid, $event->objectid);
 
+        controller::trigger('course_completed', $event);
     }
 
     /**
@@ -55,6 +56,8 @@ class observer {
 
         controller::points_recurrentlogin($event->userid);
 
+        controller::trigger('user_loggedin', $event);
+
     }
 
     /**
@@ -65,6 +68,8 @@ class observer {
     public static function user_created(\core\event\base $event) {
 
         controller::points_usercreated($event->relateduserid);
+
+        controller::trigger('user_created', $event);
 
     }
 
@@ -83,6 +88,8 @@ class observer {
                                                 $event->objectid,
                                                 $eventdata->coursemoduleid);
         }
+
+        controller::trigger('course_module_completion_updated', $event);
     }
 
     /**
@@ -96,5 +103,7 @@ class observer {
         if ($event->userid == $event->relateduserid) {
             controller::points_userupdated($event->userid);
         }
+
+        controller::trigger('user_updated', $event);
     }
 }

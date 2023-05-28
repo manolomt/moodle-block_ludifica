@@ -61,30 +61,73 @@ class badges implements renderable, templatable {
         $allbadges = badges_get_badges(BADGE_TYPE_SITE);
         $userbadges = badges_get_user_badges($player->general->userid, null);
         $badges = [];
+        $userbadgesids = [];
 
         foreach ($userbadges as $badge) {
+            if ($badge->status == BADGE_STATUS_ACTIVE_LOCKED || $badge->status == BADGE_STATUS_INACTIVE_LOCKED) {
 
-            if ($badge->status == '3') {
+                // The badge object from badges_get_user_badges is a stdClass instance.
+                $badgeinstance = new \badge($badge->id);
 
                 // Equal symbol encode so it can work in LinkedIn URL.
                 $badge->url = (string)(new \moodle_url('/badges/badge.php', ['hash' => $badge->uniquehash]));
                 $badge->expire = date('F Y', $badge->dateexpire);
                 $badge->year = date('Y', $badge->timecreated);
                 $badge->month = date('m', $badge->timecreated);
-                $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID, 'badges', 'badgeimage', $badge->id, '/', 'f3', false);
+                $badge->thumbnail = print_badge_image($badgeinstance, $badgeinstance->get_context(), 'normal');
                 $badges[] = $badge;
+                $userbadgesids[] = $badge->id;
             }
         }
         // End Get user badges.
 
         // Get unavialable badges.
         foreach ($allbadges as $badge) {
-            if ($badge->status == '1') {
 
-                $badge->thumbnail = \moodle_url::make_pluginfile_url(SITEID, 'badges', 'badgeimage', $badge->id, '/', 'f3', false);
+            $badge->thumbnail = $badge->thumbnail = print_badge_image($badge, $badge->get_context(), 'normal');
+
+            if (in_array($badge->status, [BADGE_STATUS_ACTIVE_LOCKED, BADGE_STATUS_ACTIVE]) &&
+                    !in_array($badge->id, $userbadgesids)
+                ) {
+
                 $badge->unavailable = 'unavailable';
                 $badge->unavailablewarning = get_string('unavailablewarning', 'block_ludifica');
                 $badges[] = $badge;
+
+            } else if ($hasmanage && $badge->status == BADGE_STATUS_INACTIVE) {
+
+                // Only can improve the criteria of cohort type.
+                $improvecriteria = false;
+                foreach ($badge->criteria as $criteria) {
+                    if ($criteria->criteriatype == BADGE_CRITERIA_TYPE_COHORT) {
+                        $improvecriteria = true;
+                    }
+                }
+
+                if (!$improvecriteria) {
+                    continue;
+                }
+
+                $badge->inactive = true;
+                $badge->url = (string)(new \moodle_url('/badges/overview.php', ['id' => $badge->id]));
+                $badges[] = $badge;
+
+            } else {
+                continue;
+            }
+
+            if ($hasmanage) {
+                // Load current criteria.
+                $currentcriteria = $DB->get_records('block_ludifica_criteria', ['badgeid' => $badge->id]);
+
+                if (count($currentcriteria) > 0) {
+                    $badge->currentcriteria = array_values($currentcriteria);
+                    $badge->hascriteria = true;
+
+                    foreach ($badge->currentcriteria as $criteria) {
+                        $criteria->label = get_string('improvecriteria_' . $criteria->type, 'block_ludifica');
+                    }
+                }
             }
         }
 

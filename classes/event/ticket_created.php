@@ -65,7 +65,7 @@ class ticket_created extends \core\event\base {
      * @return \moodle_url
      */
     public function get_url() {
-        return new \moodle_url('/blocks/ludifica/ticket_edit.php', array('id' => $this->objectid));
+        return new \moodle_url('/blocks/ludifica/ticket_edit.php', ['id' => $this->objectid]);
     }
 
 }

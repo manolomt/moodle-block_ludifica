@@ -18,7 +18,7 @@
  * Class containing event manage.
  *
  * @package   block_ludifica
- * @copyright 2021 David Herney @ BambuCo
+ * @copyright 2023 David Herney @ BambuCo
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 namespace block_ludifica\event;
@@ -26,18 +26,18 @@ namespace block_ludifica\event;
 /**
  * Class definition.
  *
- * @copyright 2022 David Herney @ BambuCo
+ * @copyright 2023 David Herney @ BambuCo
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
  */
-class avatar_created extends \core\event\base {
+class criteria_updated extends \core\event\base {
 
     /**
      * Init method.
      */
     protected function init() {
-        $this->data['objecttable'] = 'block_ludifica_avatars';
-        $this->data['crud'] = 'c';
+        $this->data['objecttable'] = 'block_ludifica_criteria';
+        $this->data['crud'] = 'u';
         $this->data['edulevel'] = self::LEVEL_OTHER;
     }
 
@@ -47,7 +47,7 @@ class avatar_created extends \core\event\base {
      * @return string
      */
     public static function get_name() {
-        return get_string('eventavatar_created', 'block_ludifica');
+        return get_string('eventcriteria_updated', 'block_ludifica');
     }
 
     /**
@@ -56,7 +56,8 @@ class avatar_created extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return "The user with id '$this->userid' created the avatar with id '$this->objectid'.";
+        return "The user with id '$this->userid' update the improve criteria with id '$this->objectid' "
+                . "from the bagde with id '{$this->other['badgeid']}'.";
     }
 
     /**
@@ -65,7 +66,7 @@ class avatar_created extends \core\event\base {
      * @return \moodle_url
      */
     public function get_url() {
-        return new \moodle_url('/blocks/ludifica/avatar_edit.php', ['id' => $this->objectid]);
+        return new \moodle_url('/blocks/ludifica/improvecriteria.php', ['badgeid' => $this->other['badgeid']]);
     }
 
 }

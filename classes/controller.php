@@ -32,6 +32,11 @@ namespace block_ludifica;
 class controller {
 
     /**
+     * @var array Available criteria list.
+     */
+    private static $improvecriteria;
+
+    /**
      * @var int Instances includes in page request.
      */
     private static $instancescounter = 0;
@@ -837,5 +842,72 @@ class controller {
             $today = date("Ymd");
             $PAGE->requires->css('/blocks/ludifica/templates/' . $template . '/styles.css?t=' . $today);
         }
+    }
+
+    /**
+     * Get the available improve criteria for badges.
+     */
+    public static function badges_improvecriteria() : array {
+        global $CFG;
+        $criteria = [];
+
+        if (!self::$improvecriteria) {
+            $directories = glob($CFG->dirroot . '/blocks/ludifica/classes/improvecriteria/*', GLOB_ONLYDIR);
+
+            foreach ($directories as $dir) {
+                $slices = explode('/', $dir);
+                $name = end($slices);
+
+                if (file_exists($dir . '/manager.php')) {
+                    $class = '\\block_ludifica\\improvecriteria\\' . $name . '\\manager';
+                    $criteria[$name] = new $class();
+                }
+            }
+
+            self::$improvecriteria = $criteria;
+        } else {
+            $criteria = self::$improvecriteria;
+        }
+
+        return $criteria;
+    }
+
+    /**
+     * Get an improve criteria instance by type.
+     *
+     * @param string $type
+     * @return \block_ludifica\improvecriteria\base
+     */
+    public static function get_badges_improvecriteria(string $type) : \block_ludifica\improvecriteria\base {
+        global $CFG;
+
+        $criteria = null;
+        $classfile = $CFG->dirroot . '/blocks/ludifica/classes/improvecriteria/' . $type . '/manager.php';
+        if (file_exists($classfile)) {
+            $class = '\\block_ludifica\\improvecriteria\\' . $type . '\\manager';
+            $criteria = new $class();
+        }
+
+        return $criteria;
+    }
+
+    /**
+     * Check if any improve criteria require the event and trigger it.
+     *
+     * @param string $eventname
+     * @param \core\event\base $event
+     */
+    public static function trigger(string $eventname, \core\event\base $event) : void {
+
+        // Get available criteria to improve.
+        $availablecriteria = \block_ludifica\controller::badges_improvecriteria();
+
+        foreach ($availablecriteria as $criteria) {
+            $method = 'event_' . $eventname;
+            if (method_exists($criteria, $method)) {
+                $criteria->{$method}($event);
+            }
+        }
+
     }
 }

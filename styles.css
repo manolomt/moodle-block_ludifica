@@ -459,3 +459,13 @@
 }
 
 /* End of unavailable badge */
+
+/* Local badges admin */
+#badges-list .onebadge.notactive .card-body.badgecontent {
+    background-color: lightgray;
+}
+
+#badges-list .onebadge .improvecriteria .badge {
+    color: #fff;
+}
+/* End of Local badges admin */

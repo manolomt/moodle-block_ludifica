@@ -37,7 +37,7 @@ class avatar_updated extends \core\event\base {
      */
     protected function init() {
         $this->data['objecttable'] = 'block_ludifica_avatars';
-        $this->data['crud'] = 'c';
+        $this->data['crud'] = 'u';
         $this->data['edulevel'] = self::LEVEL_OTHER;
     }
 
@@ -56,7 +56,7 @@ class avatar_updated extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return "The user with id '$this->userid' created the avatar with id '$this->objectid'.";
+        return "The user with id '$this->userid' updated the avatar with id '$this->objectid'.";
     }
 
     /**
@@ -65,7 +65,7 @@ class avatar_updated extends \core\event\base {
      * @return \moodle_url
      */
     public function get_url() {
-        return new \moodle_url('/blocks/ludifica/avatar_edit.php', array('id' => $this->objectid));
+        return new \moodle_url('/blocks/ludifica/avatar_edit.php', ['id' => $this->objectid]);
     }
 
 }
