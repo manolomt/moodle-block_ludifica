@@ -16,6 +16,10 @@ Documentation: https://bambuco.co/ludifica/
 
 IN VERSION
 =============
+2021031208:
+Improve criteria to assign badges:
+- Implemented "N courses completed" criteria.
+
 2021031207:
 New point allocation criteria: valid / invalid mail change
 

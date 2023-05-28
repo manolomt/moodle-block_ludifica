@@ -74,7 +74,7 @@ function($,
 
             var $badge = $('#badge-' + badge.id);
 
-            badge.thumbnail = $badge.find('.picture-box .shareurl img').attr('src');
+            badge.thumbnail = $badge.find('.picture-box img').attr('src');
             badge.url = $badge.find('.shareurl').attr('href');
             badge.name = $badge.data('name');
             badge.year = $badge.data('year');
