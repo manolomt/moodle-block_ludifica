@@ -124,6 +124,7 @@ $string['helptitle_pointsbycoursemodule'] = 'Este curso da puntos por completar 
 $string['home'] = 'Inicio';
 $string['improvecriteria'] = 'Mejora de criterio para insignia';
 $string['improvecriteria_ncourses'] = 'Finalización de N cursos';
+$string['improvecriteria_ncourses_label'] = 'Finalización de {$a} cursos';
 $string['improvecriteria_ncourses_n'] = 'Valor de N';
 $string['improvecriteria_ncourses_n_help'] = 'Número de cursos finalizados requerido para aplicar el criterio de asignación de la insignia.';
 $string['improvecriterianot'] = 'La insignia no tiene mejora de criterios';
