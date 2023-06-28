@@ -83,7 +83,7 @@ class avatars implements renderable, templatable {
             if ($allowdelete) {
                 $canbedeleted = true;
             } else {
-                // If 'deleteavatars' is set to 'No', we can't delete avatars, unless it has not been used by any user yet
+                // If 'deleteavatars' is set to 'No', we can't delete avatars, unless it has not been used by any user yet.
                 if ($anyuserhasthisavatar == 0) {
                     $canbedeleted = true;
                 }
