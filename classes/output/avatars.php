@@ -95,7 +95,7 @@ class avatars implements renderable, templatable {
             // If the user use the avatar.
             $avatar->inuse = $player->general->avatarid == $avatar->id;
 
-            // If avatar can be deleted
+            // If the avatar can be deleted.
             $avatar->canbedeleted = $canbedeleted;
 
             if ($player->general->coins < $avatar->cost && !$avatar->userhas) {
