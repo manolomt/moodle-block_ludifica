@@ -214,7 +214,7 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configselect($name, $title, $help, 'default', $options);
     $generalsettings->add($setting);
 
-    // Can we delete avatars 
+    // Can we delete avatars
     $name = 'block_ludifica/deleteavatars';
     $title = get_string('deleteavatars', 'block_ludifica');
     $help = get_string('deleteavatars_help', 'block_ludifica');
