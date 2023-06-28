@@ -80,12 +80,12 @@ class avatars implements renderable, templatable {
             $allowdelete = get_config('block_ludifica', 'deleteavatars');
             $anyuserhasthisavatar = $DB->count_records('block_ludifica_useravatars', ['avatarid' => $avatar->id]);
             $canbedeleted = false;
-            if($allowdelete) {
-               $canbedeleted = true;
+            if ($allowdelete) {
+                $canbedeleted = true;
             } else {
                 //If 'deleteavatars' is set to 'No', we can't delete avatars, unless it has not been used by any user yet
-                if($anyuserhasthisavatar == 0) {
-                   $canbedeleted = true;
+                if ($anyuserhasthisavatar == 0) {
+                    $canbedeleted = true;
                 }
             }
 
